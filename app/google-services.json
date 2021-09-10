@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "820988367725",
+    "project_id": "comp6442groupassignment",
+    "storage_bucket": "comp6442groupassignment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820988367725:android:8ca9192af188e19c2c4064",
+        "android_client_info": {
+          "package_name": "au.edu.anu.cecs.COMP6442GroupAssignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820988367725-4doe1p9hrq3t97qjum4hlbn2n9rfm6e2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0bIst_f86OlWtlKHXklxu9d_VmfnAwRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820988367725-4doe1p9hrq3t97qjum4hlbn2n9rfm6e2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

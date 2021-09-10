@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">COMP6442GroupAssignment</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forget_pass">Forget password</string>
+    <string name="Sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="register">Register</string>
 </resources>
