@@ -3,6 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email_signin);
         password = findViewById(R.id.password_signin);
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     @Override
@@ -40,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     public void signIn(View v) {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -49,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Login successfully.", Toast.LENGTH_SHORT).show();
                             //updateUI(user);
+
+
+
+
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     "Authentication failed.", Toast.LENGTH_SHORT).show();
