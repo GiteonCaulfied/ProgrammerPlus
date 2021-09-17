@@ -14,6 +14,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import au.edu.cecs.COMP6442GroupAssignment.Utils.Post;
+
 public class PostActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
@@ -26,16 +31,15 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         database = FirebaseDatabase.getInstance();
         content = findViewById(R.id.content);
-        myRef = database.getReference("message");
+        myRef = database.getReference();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
                 Toast.makeText(getApplicationContext(),
-                        "Got value: " + value, Toast.LENGTH_SHORT).show();
+                        "Updated.", Toast.LENGTH_SHORT).show();
                 //Log.d(TAG, "Value is: " + value);
             }
 
@@ -52,10 +56,20 @@ public class PostActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        myRef.setValue("Hello!");
     }
 
-    public void newPost() {
-        myRef.setValue(content.getText().toString());
+    public void newPost(View v) {
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        String key = myRef.child("posts").push().getKey();
+        Post post = new Post("1", "Qinyu", "123",
+                content.getText().toString());
+        Map<String, Object> postValues = post.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/posts/" + key, postValues);
+        childUpdates.put("/user-posts/" + "1" + "/" + key, postValues);
+
+        myRef.updateChildren(childUpdates);
     }
 }
