@@ -45,9 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     public void signIn(View v) {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-
-
-
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -57,10 +54,8 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Login successfully.", Toast.LENGTH_SHORT).show();
                             //updateUI(user);
-
-
-
-
+                            Intent intent = new Intent(LoginActivity.this, PostActivity.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     "Authentication failed.", Toast.LENGTH_SHORT).show();
