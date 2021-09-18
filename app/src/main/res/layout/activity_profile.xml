@@ -18,8 +18,8 @@
 
     <TextView
         android:id="@+id/name_Text"
-        android:layout_width="92dp"
-        android:layout_height="40dp"
+        android:layout_width="89dp"
+        android:layout_height="34dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="112dp"
@@ -37,20 +37,47 @@
         android:layout_height="37dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="44dp"
-        android:text="age"
+        android:text="posts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
         android:id="@+id/age_Text"
-        android:layout_width="80dp"
-        android:layout_height="29dp"
+        android:layout_width="86dp"
+        android:layout_height="26dp"
         android:layout_marginStart="37dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="126dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/age"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Intro_content"
+        android:layout_width="409dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="306dp"
+        android:layout_marginBottom="387dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Intro"
+        android:layout_width="57dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="274dp"
+        android:layout_marginEnd="338dp"
+        android:layout_marginBottom="438dp"
+        android:text="Intro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package au.edu.cecs.COMP6442GroupAssignment.Utils;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -10,7 +11,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class JsonUtils {
 
@@ -66,19 +70,30 @@ public class JsonUtils {
 
     }
 
-    public List<Profile> getProfiles (Context context){
-        List<Profile> profiles = new ArrayList<>();
+    public HashMap<String,Profile> getProfiles (Context context){
+        HashMap<String,  Profile> profiles = null;
         InputStream is = null;
         try {
             is = context.getResources().getAssets().open("profile.json");
             String json = read(is); // invoke the read method to transfer the json file to String
 
             Gson gson = new Gson();
+//
+//            Type MapType = new TypeToken<HashMap<String,Profile>>(){}.getType();
+//
+//
+//            profiles=gson.fromJson(json,MapType);
+            Config c = gson.fromJson(json, Config.class);
 
-            Type listType = new TypeToken<List<Profile>>(){}.getType();
+            profiles = c.getProfiles();
 
-
-            profiles=gson.fromJson(json,listType);
+//            Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
+//                    .create();
+//
+//            profiles = gson.fromJson(
+//                    json,
+//                    new TypeToken<HashMap<String, Profile>>() {
+//                    }.getType());
 
 
         }catch (Exception ex){
@@ -90,7 +105,7 @@ public class JsonUtils {
                 ex.printStackTrace();
             }
         }
-        return profiles;
+        return profiles ;
     }
 
 

@@ -2,6 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -71,5 +72,12 @@ public class PostActivity extends AppCompatActivity {
         childUpdates.put("/user-posts/" + "1" + "/" + key, postValues);
 
         myRef.updateChildren(childUpdates);
+    }
+
+    public void Go_to_Profile(View view) {
+        Intent from_intent = getIntent();
+        Intent intent = new Intent(PostActivity.this, ProfileActivity.class);
+        intent.putExtra("account",from_intent.getStringExtra("account"));
+        startActivity(intent);
     }
 }

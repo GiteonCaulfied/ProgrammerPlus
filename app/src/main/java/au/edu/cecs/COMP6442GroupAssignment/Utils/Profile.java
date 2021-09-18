@@ -2,12 +2,8 @@ package au.edu.cecs.COMP6442GroupAssignment.Utils;
 
 public class Profile {
     String name ;
-    Integer age;
-
-    public Profile(String name, Integer age) {
-        this.name = name;
-        this.age = age;
-    }
+    Integer posts;
+    String intro;
 
     public String getName() {
         return name;
@@ -17,11 +13,19 @@ public class Profile {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getPosts() {
+        return posts;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setPosts(Integer posts) {
+        this.posts = posts;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 }
