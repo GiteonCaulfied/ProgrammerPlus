@@ -2,7 +2,7 @@
   "profiles": {
     "adm01@gg.com": {
       "name": "Adm01",
-      "posts": 2,
+      "posts": 2211,
       "intro": "CHECKINHG"
     },
     "adm02gg.com": {
@@ -12,28 +12,23 @@
     },
     "adm03gg.com": {
       "name": "Adm02",
-      "posts": 4,
+      "posts": 44,
       "intro": "CHECKINHG"
     },
-    "u7654320@anu.edu.au": {
-      "name": "Jack Po",
-      "Posts": 51,
-      "intro": "flying"
-    },
-    "u7654321@anu.edu.au": {
-      "name": "Sam God",
-      "Posts": 3,
-      "intro": "go!"
-    },
-    "u7654322@anu.edu.au": {
-      "name": "Fed Egg",
-      "Posts": 55,
-      "intro": "java No.1!"
+    "adm04gg.com": {
+      "name": "Adm test",
+      "posts": 44,
+      "intro": "ddd ddd"
     },
     "qinyu.zhao@anu.edu.au": {
       "name": "Qinyu Zhao",
-      "Posts": 999,
-      "intro": "hard only!"
+      "posts": 666,
+      "intro": "yyds"
+    },
+    "u7654321@anu.edu.au": {
+      "name": "Af Jk",
+      "posts": 333,
+      "intro": "flying"
     }
   }
 }

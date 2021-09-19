@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,11 +29,13 @@ public class PostActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent from_intent = getIntent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         database = FirebaseDatabase.getInstance();
         content = findViewById(R.id.content);
         myRef = database.getReference();
+        Log.d("hello",from_intent.getStringExtra("account"));
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
