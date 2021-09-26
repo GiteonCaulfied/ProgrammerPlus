@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import au.edu.cecs.COMP6442GroupAssignment.Utils.*;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataBase;
 
 public class MainActivity extends AppCompatActivity {
     private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
