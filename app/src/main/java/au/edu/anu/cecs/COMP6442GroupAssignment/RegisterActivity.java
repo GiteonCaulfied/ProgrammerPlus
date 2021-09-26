@@ -53,10 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            reload();
-//        }
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            mAuth.signOut();
+        }
     }
 
     public void signUp(View v) {

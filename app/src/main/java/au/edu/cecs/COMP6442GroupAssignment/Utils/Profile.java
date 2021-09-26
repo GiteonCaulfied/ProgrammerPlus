@@ -48,32 +48,12 @@ public class Profile {
         return result;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
     public String getName() {
         return name;
     }
 
     public String getEmail() {
         return email;
-    }
-
-    public Date getCreation_date() {
-        return creation_date;
-    }
-
-    public ArrayList<Integer> getPosts() {
-        return posts;
-    }
-
-    public Tree<String> getFriends() {
-        return friends;
-    }
-
-    public Tree<String> getBlocked() {
-        return blocked;
     }
 
     public String getIntro() {

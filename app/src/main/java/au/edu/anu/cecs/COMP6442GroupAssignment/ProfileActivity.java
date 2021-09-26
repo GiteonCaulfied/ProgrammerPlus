@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,7 +28,6 @@ import au.edu.cecs.COMP6442GroupAssignment.Utils.*;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView name, email, intro;
-    private Map<String, Object> profile;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
 
@@ -60,7 +60,11 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             };
 
-            myRef.child("user-profile").child("1").addValueEventListener(postListener);
+            myRef.child("user-profile").child(currentUser.getUid()).addValueEventListener(postListener);
         }
+    }
+
+    public void logOut(View v) {
+        FirebaseAuth.getInstance().signOut();
     }
 }

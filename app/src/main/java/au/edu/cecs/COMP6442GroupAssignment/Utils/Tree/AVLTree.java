@@ -12,6 +12,8 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     public AVLTree() {
         super();
+        this.leftNode = new EmptyAVL<>();
+        this.rightNode = new EmptyAVL<>();
     }
 
     public AVLTree(T value) {
