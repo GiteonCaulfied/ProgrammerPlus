@@ -1,4 +1,4 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils.Tree;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree;
 
 public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     /*

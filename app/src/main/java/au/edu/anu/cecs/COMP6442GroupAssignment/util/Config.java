@@ -1,7 +1,6 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Config {
     private HashMap<String, Profile> profiles;//package the map

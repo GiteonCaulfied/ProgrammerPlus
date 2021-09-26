@@ -24,7 +24,7 @@
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".Profile"
+            android:name=".util.Profile"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"

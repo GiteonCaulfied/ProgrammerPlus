@@ -16,15 +16,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import au.edu.cecs.COMP6442GroupAssignment.Utils.Profile;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -63,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email_str = email.getText().toString();
         String pass_str = password.getText().toString();
         String conf_str = confirm.getText().toString();
+        String name_str = name.getText().toString();
+
         if (!pass_str.equals(conf_str)) {
             Toast.makeText(getApplicationContext(),
                     "Passwords inconsistent!", Toast.LENGTH_SHORT).show();
@@ -98,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Profile profile = new Profile(
                             uid,
                             email_str,
-                            name.getText().toString(),
+                            name_str,
                             intro.getText().toString());
                     Map<String, Object> postValues = profile.toMap();
                     Map<String, Object> childUpdates = new HashMap<>();
@@ -112,6 +113,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(RegisterActivity.this, HomepageActivity.class);
                     startActivity(intent);
+
+                    // Update Firebase the user name
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name_str)
+                            .build();
+                    mAuth.getCurrentUser().updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("Register", "User profile updated.");
+                                    }
+                                }
+                            });
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Authentication failed.", Toast.LENGTH_SHORT).show();

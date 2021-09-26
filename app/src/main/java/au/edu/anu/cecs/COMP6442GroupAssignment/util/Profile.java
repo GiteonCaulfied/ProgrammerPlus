@@ -1,13 +1,11 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import au.edu.cecs.COMP6442GroupAssignment.Utils.Tree.AVLTree;
-import au.edu.cecs.COMP6442GroupAssignment.Utils.Tree.AVLTree.EmptyAVL;
-import au.edu.cecs.COMP6442GroupAssignment.Utils.Tree.Tree;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree.AVLTree;
 
 public class Profile {
     private String uid;

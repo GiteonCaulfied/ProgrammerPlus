@@ -1,4 +1,4 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
-
 
 
 public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapter.TimelinePostViewHolder>{

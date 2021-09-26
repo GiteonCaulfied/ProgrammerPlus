@@ -1,10 +1,8 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import android.content.Context;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 public class DataBase {
     private static HashMap<String ,Profile> profiles ;

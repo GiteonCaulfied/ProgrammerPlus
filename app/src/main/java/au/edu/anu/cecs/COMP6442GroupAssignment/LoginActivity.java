@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -30,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email_signin);
         password = findViewById(R.id.password_signin);
         mAuth = FirebaseAuth.getInstance();
-
 
     }
 

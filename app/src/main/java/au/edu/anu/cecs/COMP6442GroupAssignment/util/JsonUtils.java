@@ -1,20 +1,13 @@
-package au.edu.cecs.COMP6442GroupAssignment.Utils;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 public class JsonUtils {
 
