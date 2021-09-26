@@ -8,13 +8,13 @@
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_post.xml" value="0.23333333333333334" />
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_profile.xml" value="0.4375" />
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_register.xml" value="0.4" />
-        <entry key="app/src/main/res/drawable/button_states.xml" value="0.24739583333333334" />
-        <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.2609375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.41204013772366455" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.711274117128041" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.296195652173913" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.25364583333333335" />
-        <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2755208333333333" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.22083333333333333" />
       </map>
     </option>
   </component>

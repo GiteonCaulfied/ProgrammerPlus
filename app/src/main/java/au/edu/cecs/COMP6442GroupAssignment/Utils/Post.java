@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Post {
 
-    public String uid;
+    public String pid;
     public String author;
     public String title;
     public String body;
@@ -17,7 +17,7 @@ public class Post {
     }
 
     public Post(String uid, String author, String title, String body) {
-        this.uid = uid;
+        this.pid = uid;
         this.author = author;
         this.title = title;
         this.body = body;
@@ -25,7 +25,7 @@ public class Post {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
+        result.put("pid", pid);
         result.put("author", author);
         result.put("title", title);
         result.put("body", body);

@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DataBase.getProfiles(this);
+//        DataBase.getProfiles(this);
     }
 
     public void signIn(View v) {

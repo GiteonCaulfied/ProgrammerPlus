@@ -35,7 +35,6 @@ public class PostActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         content = findViewById(R.id.content);
         myRef = database.getReference();
-        Log.d("hello",from_intent.getStringExtra("account"));
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,12 +74,5 @@ public class PostActivity extends AppCompatActivity {
         childUpdates.put("/user-posts/" + "1" + "/" + key, postValues);
 
         myRef.updateChildren(childUpdates);
-    }
-
-    public void Go_to_Profile(View view) {
-        Intent from_intent = getIntent();
-        Intent intent = new Intent(PostActivity.this, ProfileActivity.class);
-        intent.putExtra("account",from_intent.getStringExtra("account"));
-        startActivity(intent);
     }
 }

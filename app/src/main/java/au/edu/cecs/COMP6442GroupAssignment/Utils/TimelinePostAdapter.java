@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+//import com.bumptech.glide.Glide;
+//import com.bumptech.glide.load.engine.DiskCacheStrategy;
+//import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -53,11 +53,11 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         holder.getText_title().setText(posts.get(position).title);
 
 
-        //Display Image From Internet (Currently Not Working)
-        Glide.with(context).load("http://picsum.photos/id/" + id + "/300/200").apply(new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true))
-                .into(holder.getImage());
+//        //Display Image From Internet (Currently Not Working)
+//        Glide.with(context).load("http://picsum.photos/id/" + id + "/300/200").apply(new RequestOptions()
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .skipMemoryCache(true))
+//                .into(holder.getImage());
 
         holder.bind(posts.get(position), listener);
 

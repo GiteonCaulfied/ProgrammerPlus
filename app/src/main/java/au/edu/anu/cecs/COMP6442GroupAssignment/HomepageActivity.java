@@ -53,4 +53,11 @@ public class HomepageActivity extends AppCompatActivity {
         intent.putExtra("account",from_intent.getStringExtra("account"));
         startActivity(intent);
     }
+
+    public void Go_to_Profile(View view) {
+        Intent from_intent = getIntent();
+        Intent intent = new Intent(HomepageActivity.this, ProfileActivity.class);
+        intent.putExtra("account",from_intent.getStringExtra("account"));
+        startActivity(intent);
+    }
 }
