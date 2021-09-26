@@ -2,6 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree.UserProfileDao;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -23,8 +25,9 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState ) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         myRef = FirebaseDatabase.getInstance().getReference();
@@ -34,12 +37,19 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.email_Text);
         intro = findViewById(R.id.intro_Text);
 
-        if (currentUser.getEmail() != null) {
+
+        UserProfileDao userProfileDao = UserProfileDao.getInstance();
+        Profile userprofile = userProfileDao.getUserprofile();
+
+
+
+        if (currentUser.getEmail() != null && userprofile == null) {
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // Get Post object and use the values to update the UI
                     Profile profile = dataSnapshot.getValue(Profile.class);
+//                    userProfileDao.updateProfile(profile);
                     name.setText(profile.getName());
                     email.setText(profile.getEmail());
                     intro.setText(profile.getIntro());
@@ -53,11 +63,19 @@ public class ProfileActivity extends AppCompatActivity {
             };
 
             myRef.child("user-profile").child(currentUser.getUid()).addValueEventListener(postListener);
+        }else{
+            name.setText(userprofile.getName());
+            email.setText(userprofile.getEmail());
+            intro.setText(userprofile.getIntro());
         }
+
+
     }
 
     public void logOut(View v) {
         FirebaseAuth.getInstance().signOut();
+        UserProfileDao userProfileDao = UserProfileDao.getInstance();
+        userProfileDao.clear();
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

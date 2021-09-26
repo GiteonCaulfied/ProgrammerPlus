@@ -49,21 +49,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="102dp"
+        android:layout_marginTop="282dp"
         android:layout_marginEnd="99dp"
+        android:layout_marginBottom="405dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/email"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="281dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="129dp"
         android:layout_height="139dp"
-        app:srcCompat="@drawable/face_id_1"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="103dp" />
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="489dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/face_id_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

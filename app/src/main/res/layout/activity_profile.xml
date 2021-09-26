@@ -93,8 +93,14 @@
         android:id="@+id/imageView8"
         android:layout_width="101dp"
         android:layout_height="90dp"
-        app:srcCompat="@drawable/face_id_1"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="119dp" />
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="119dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="522dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/face_id_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+//amd01@gg.com
     private FirebaseAuth mAuth;
     private EditText email, password;
 
