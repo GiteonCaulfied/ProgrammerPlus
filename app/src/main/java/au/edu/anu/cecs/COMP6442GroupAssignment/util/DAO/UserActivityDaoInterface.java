@@ -7,7 +7,7 @@ public interface UserActivityDaoInterface {
 
     public void update();
 
-    public void create(String key, Map<String, Object> postValues);
+    public void create(String key, Map<String, Object> newValues);
 
     public void delete();
 

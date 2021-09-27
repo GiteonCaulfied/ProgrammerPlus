@@ -21,14 +21,13 @@ import java.util.List;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelinePostAdapter;
 
 public class SessionState implements UserState{
     private MainActivity main;
     private DatabaseReference myRef;
-    private List<Post> allPosts;
-    private TimelinePostAdapter timelinePostAdapter;
     private FirebaseUser currentUser;
 
     public SessionState(MainActivity main) {
@@ -46,39 +45,10 @@ public class SessionState implements UserState{
         myRef = FirebaseDatabase.getInstance().getReference();
 
         //Data
-        allPosts = new ArrayList<>();
+        UserPostDAO userPostDAO = UserPostDAO.getInstance(main);
+        userPostDAO.getData();
 
-        //Adapter
-        timelinePostAdapter = new TimelinePostAdapter(main.getApplicationContext(), allPosts,
-                new TimelinePostAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Post item) {
-                        Toast.makeText(main.getApplicationContext(), "Post Clicked: " + item.title, Toast.LENGTH_LONG).show();
-                    }
-
-                });
-        timelinePostView.setAdapter(timelinePostAdapter);
+        timelinePostView.setAdapter(userPostDAO.getPostsAdapter());
         timelinePostView.setLayoutManager(new LinearLayoutManager(main));
-
-        // Query
-        Query postsQuery = myRef.child("user-posts")
-                .orderByChild("date").limitToLast(10);
-        postsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, Object> postsMap = (HashMap<String, Object>) snapshot.getValue();
-                if (postsMap == null) return;
-                allPosts.clear();
-                for (Object v: postsMap.values()) {
-                    allPosts.add(new Post((HashMap<String, Object>) v));
-                }
-                timelinePostAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Post", "loadPost:onCancelled", error.toException());
-            }
-        });
     }
 }

@@ -65,17 +65,17 @@ public class UserProfileDAO implements UserActivityDaoInterface {
     }
 
     @Override
-    public void create(String key, Map<String, Object> postValues) {
+    public void create(String key, Map<String, Object> newValues) {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/user-profile/" + key + "/", postValues);
+        childUpdates.put("/user-profile/" + key + "/", newValues);
 
         myRef.updateChildren(childUpdates);
 
         // Update Firebase the user name
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName((String) postValues.get("name"))
+                .setDisplayName((String) newValues.get("name"))
                 .build();
         currentUser.updateProfile(profileUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class PostActivity extends AppCompatActivity {
@@ -44,18 +46,18 @@ public class PostActivity extends AppCompatActivity {
         String key = myRef.child("posts").push().getKey();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = currentUser.getUid();
-        String name = currentUser.getDisplayName();
 
         Post post = new Post(key,
-                name,
+                uid,
                 title.getText().toString(),
-                content.getText().toString());
+                content.getText().toString(),
+                "");
         Map<String, Object> postValues = post.toMap();
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/user-posts/" + key, postValues);
-
-        myRef.updateChildren(childUpdates);
+        UserPostDAO userPostDAO = UserPostDAO.getInstance(this);
+        userPostDAO.create(key, postValues);
+        Toast.makeText(getApplicationContext(),
+                "Post successfully.", Toast.LENGTH_SHORT).show();
 
         finish();
     }

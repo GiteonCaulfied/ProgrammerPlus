@@ -36,23 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         currentState.setContent();
         currentState.onCreate();
-
-//        DataBase.getProfiles(this);
-//
-//        mScheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.e("lzp", "Stream updated" + System.currentTimeMillis() / 1000);
-////                Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, 1, 1, TimeUnit.SECONDS);
-//
-
     }
 
     public void signIn(View v) {
