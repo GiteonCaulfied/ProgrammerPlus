@@ -68,8 +68,6 @@ public class ProfileActivity extends AppCompatActivity {
             email.setText(userprofile.getEmail());
             intro.setText(userprofile.getIntro());
         }
-
-
     }
 
     public void logOut(View v) {

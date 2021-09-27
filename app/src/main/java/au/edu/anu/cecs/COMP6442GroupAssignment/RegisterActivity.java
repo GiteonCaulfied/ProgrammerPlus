@@ -111,9 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Register successfully.", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(RegisterActivity.this, HomepageActivity.class);
-                    startActivity(intent);
-
                     // Update Firebase the user name
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name_str)
@@ -127,6 +124,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+                    Intent intent = new Intent();
+                    intent.setClass(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Authentication failed.", Toast.LENGTH_SHORT).show();

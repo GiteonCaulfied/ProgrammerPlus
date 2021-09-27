@@ -52,8 +52,9 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Login successfully.", Toast.LENGTH_SHORT).show();
                             //updateUI(user);
-                            Intent intent = new Intent(LoginActivity.this, HomepageActivity.class);
-                            intent.putExtra("account",email.getText().toString());
+                            Intent intent = new Intent();
+                            intent.setClass(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(),
