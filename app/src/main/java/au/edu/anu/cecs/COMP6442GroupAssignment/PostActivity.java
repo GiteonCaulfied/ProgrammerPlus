@@ -48,8 +48,8 @@ public class PostActivity extends AppCompatActivity {
         String uid = currentUser.getUid();
 
         Post post = new Post(key,
-                uid,
                 currentUser.getDisplayName(),
+                uid,
                 title.getText().toString(),
                 content.getText().toString(),
                 "");

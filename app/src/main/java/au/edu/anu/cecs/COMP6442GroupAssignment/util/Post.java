@@ -26,7 +26,7 @@ public class Post {
                 String title, String body, String imageAddress) {
         this.pid = pid;
         this.author = author;
-        this.author = authorID;
+        this.authorID = authorID;
         this.title = title;
         this.tags = new ArrayList<>();
         this.body = body;
