@@ -48,8 +48,8 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         int max = 100;
         int min = 0;
         int id = (int) (Math.random()*(max-min+1));
-        holder.getText_username().setText(posts.get(position).author);
-        holder.getText_title().setText(posts.get(position).title);
+        holder.getText_username().setText(posts.get(position).getAuthor());
+        holder.getText_title().setText(posts.get(position).getTitle());
 
 
         //Randomly Display Image From Internet
@@ -62,7 +62,6 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         Glide.with(context).load("http://picsum.photos/id/"+ id +"/300/200").apply(options).into(holder.getImage());
 
         holder.bind(posts.get(position), listener);
-
     }
 
 

@@ -18,6 +18,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
@@ -40,7 +41,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
                     @Override
                     public void onItemClick(Post item) {
                         Toast.makeText(act.getApplicationContext(),
-                                "Post Clicked: " + item.title, Toast.LENGTH_LONG).show();
+                                "Post Clicked: " + item.getTitle(), Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -70,6 +71,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
                     for (DocumentSnapshot document : value.getDocuments()) {
                         posts.add(new Post(document.getData()));
                     }
+                    Collections.reverse(posts);
                     timelinePostAdapter.notifyDataSetChanged();
                 } else {
                     Log.d("Read posts", "Current data: null");

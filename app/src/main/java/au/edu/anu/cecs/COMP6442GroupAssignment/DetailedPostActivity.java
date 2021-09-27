@@ -48,15 +48,10 @@ public class DetailedPostActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 HashMap<String, Object> post = (HashMap<String, Object>) task.getResult().getValue();
                 Post p = new Post(post);
-                author.setText(p.author);
-                title.setText(p.title);
-                body.setText(p.body);
-
+                author.setText(p.getAuthor());
+                title.setText(p.getTitle());
+                body.setText(p.getBody());
                 }
             });
-
-
-
-
     }
 }

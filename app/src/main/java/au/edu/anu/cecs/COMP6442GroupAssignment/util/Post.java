@@ -7,24 +7,26 @@ import java.util.Map;
 
 public class Post {
 
-    public String pid;
-    public String author;
-    public String title;
-    public String imageAddress;
-    public ArrayList<String> tags;
-    public String body;
-    public long date;
-    public ArrayList<String> usersWhoLike;
-    public ArrayList<String> usersNotLike;
+    private String pid;
+    private String author;
+    private String authorID;
+    private String title;
+    private String imageAddress;
+    private ArrayList<String> tags;
+    private String body;
+    private long date;
+    private ArrayList<String> usersWhoLike;
+    private ArrayList<String> usersNotLike;
 
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Post(String pid, String author, String title, String body,
-                String imageAddress) {
+    public Post(String pid, String author, String authorID,
+                String title, String body, String imageAddress) {
         this.pid = pid;
         this.author = author;
+        this.author = authorID;
         this.title = title;
         this.tags = new ArrayList<>();
         this.body = body;
@@ -37,6 +39,7 @@ public class Post {
     public Post(Map<String, Object> value) {
         this.pid = (String) value.get("pid");
         this.author = (String) value.get("author");
+        this.authorID = (String) value.get("authorID");
         this.title = (String) value.get("title");
         this.tags = (ArrayList<String>) value.get("tags");;
         this.body = (String) value.get("body");
@@ -50,6 +53,7 @@ public class Post {
         HashMap<String, Object> result = new HashMap<>();
         result.put("pid", pid);
         result.put("author", author);
+        result.put("authorID", authorID);
         result.put("title", title);
         result.put("body", body);
         result.put("date", date);
@@ -59,5 +63,17 @@ public class Post {
         result.put("usersNotLike", usersNotLike);
 
         return result;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

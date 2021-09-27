@@ -49,6 +49,7 @@ public class PostActivity extends AppCompatActivity {
 
         Post post = new Post(key,
                 uid,
+                currentUser.getDisplayName(),
                 title.getText().toString(),
                 content.getText().toString(),
                 "");
