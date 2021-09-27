@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree.UserProfileDao;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -38,9 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
         intro = findViewById(R.id.intro_Text);
 
 
-        UserProfileDao userProfileDao = UserProfileDao.getInstance();
+        UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
         Profile userprofile = userProfileDao.getUserprofile();
-
 
 
         if (currentUser.getEmail() != null && userprofile == null) {
@@ -68,13 +67,11 @@ public class ProfileActivity extends AppCompatActivity {
             email.setText(userprofile.getEmail());
             intro.setText(userprofile.getIntro());
         }
-
-
     }
 
     public void logOut(View v) {
         FirebaseAuth.getInstance().signOut();
-        UserProfileDao userProfileDao = UserProfileDao.getInstance();
+        UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
         userProfileDao.clear();
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), MainActivity.class);
