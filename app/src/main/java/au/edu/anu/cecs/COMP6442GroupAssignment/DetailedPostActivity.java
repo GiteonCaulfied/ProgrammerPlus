@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,19 +43,27 @@ public class DetailedPostActivity extends AppCompatActivity {
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
 
-        List<Post> allPost = new ArrayList<>();
+        DocumentReference myRef = FirebaseFirestore.getInstance().collection("user-posts").document(pid);
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("user-posts").child(pid);
-
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                HashMap<String, Object> post = (HashMap<String, Object>) task.getResult().getValue();
-                Post p = new Post(post);
-                author.setText(p.getAuthor());
-                title.setText(p.getTitle());
-                body.setText(p.getBody());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Post p = new Post(document.getData());
+                        author.setText(p.getAuthor());
+                        title.setText(p.getTitle());
+                        body.setText(p.getBody());
+                    } else {
+                        System.out.println("No such document!");
+                    }
+                } else {
+
                 }
-            });
-    }
+            }
+        });
+
+
+}
 }

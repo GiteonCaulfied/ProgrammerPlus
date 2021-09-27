@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelinePostAdapter;
 
@@ -40,8 +42,9 @@ public class UserPostDAO implements UserActivityDaoInterface {
                 new TimelinePostAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(Post item) {
-                        Toast.makeText(act.getApplicationContext(),
-                                "Post Clicked: " + item.getTitle(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(act.getApplicationContext(), DetailedPostActivity.class);
+                        intent.putExtra("pid",item.getPid());
+                        act.startActivity(intent);
                     }
                 }
         );

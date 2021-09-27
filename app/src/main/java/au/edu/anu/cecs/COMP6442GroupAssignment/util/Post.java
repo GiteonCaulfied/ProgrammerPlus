@@ -76,4 +76,8 @@ public class Post {
     public String getBody() {
         return body;
     }
+
+    public String getPid(){
+        return pid;
+    }
 }
