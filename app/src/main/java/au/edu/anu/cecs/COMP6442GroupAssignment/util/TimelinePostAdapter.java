@@ -56,7 +56,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.drawable.face_id_1)
+                .error(R.mipmap.ic_launcher_round)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(false);
         Glide.with(context).load("http://picsum.photos/id/"+ id +"/300/200").apply(options).into(holder.getImage());

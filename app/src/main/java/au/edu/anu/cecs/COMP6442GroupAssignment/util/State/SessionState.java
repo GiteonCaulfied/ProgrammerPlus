@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.State;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
@@ -28,6 +30,8 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelinePostAdapter;
 public class SessionState implements UserState{
     private MainActivity main;
     private DatabaseReference myRef;
+    private List<Post> allPosts;
+    private TimelinePostAdapter timelinePostAdapter;
     private FirebaseUser currentUser;
 
     public SessionState(MainActivity main) {
