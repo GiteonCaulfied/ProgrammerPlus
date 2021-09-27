@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.bumptech.glide.Glide;
-//import com.bumptech.glide.load.engine.DiskCacheStrategy;
-//import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -47,16 +47,19 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
     public void onBindViewHolder(@NonNull TimelinePostAdapter.TimelinePostViewHolder holder, int position) {
         int max = 100;
         int min = 0;
-        int id = (int) (Math.random()*(max-min+1) + min);
+        int id = (int) (Math.random()*(max-min+1));
         holder.getText_username().setText(posts.get(position).author);
         holder.getText_title().setText(posts.get(position).title);
 
 
-//        //Display Image From Internet (Currently Not Working)
-//        Glide.with(context).load("http://picsum.photos/id/" + id + "/300/200").apply(new RequestOptions()
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true))
-//                .into(holder.getImage());
+        //Randomly Display Image From Internet
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false);
+        Glide.with(context).load("http://picsum.photos/id/"+ id +"/300/200").apply(options).into(holder.getImage());
 
         holder.bind(posts.get(position), listener);
 
