@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree.UserProfileDao;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserProfileDao;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        if (currentUser.getEmail() != null && userprofile == null) {
+        if (currentUser.getEmail() != null && !userProfileDao.profile_init()) {
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

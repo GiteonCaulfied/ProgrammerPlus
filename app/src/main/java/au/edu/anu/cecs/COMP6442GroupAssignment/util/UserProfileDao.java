@@ -1,11 +1,5 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,8 +7,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class UserProfileDao {
 
@@ -33,7 +25,7 @@ public class UserProfileDao {
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    // Get Post object and use the values to update the UI
+                    // if detected that the realtime updated the userprofile then update local userprofile
                     userprofile = dataSnapshot.getValue(Profile.class);
                 }
 
@@ -65,6 +57,12 @@ public class UserProfileDao {
         }
     }
 
+    public boolean profile_init (){
+        if (userprofile != null){
+            return true;
+        }
+        return false;
+    }
 
     public static UserProfileDao getInstance() {
         if (instance == null) {
