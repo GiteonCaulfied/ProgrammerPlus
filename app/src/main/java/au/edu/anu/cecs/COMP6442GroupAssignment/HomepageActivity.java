@@ -50,6 +50,9 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Post item) {
                 Toast.makeText(getApplicationContext(), "Post Clicked: " + item.title, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(HomepageActivity.this, DetailedPostActivity.class);
+                intent.putExtra("pid",item.pid);
+                startActivity(intent);
             }
 
         });
