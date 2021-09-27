@@ -16,13 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -78,23 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Register", "createUserWithEmail:success");
-                    myRef = FirebaseDatabase.getInstance().getReference();
-
-                    /*myRef.child("user-profile").child("number-of-users").get()
-                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data", task.getException());
-                                    } else {
-                                        Log.d("firebase", "Get profile data");
-                                        int userNum = (int) Objects.requireNonNull(task.getResult()).getValue();
-                                        System.out.println(userNum);
-                                        userNum ++;
-
-
-                                    }
-                                }});*/
                     String uid = mAuth.getCurrentUser().getUid();
                     Profile profile = new Profile(
                             uid,
@@ -102,28 +84,12 @@ public class RegisterActivity extends AppCompatActivity {
                             name_str,
                             intro.getText().toString());
                     Map<String, Object> postValues = profile.toMap();
-                    Map<String, Object> childUpdates = new HashMap<>();
 
-                    childUpdates.put("/user-profile/" + uid + "/", postValues);
-
-                    myRef.updateChildren(childUpdates);
+                    UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
+                    userProfileDao.create(uid, postValues);
 
                     Toast.makeText(getApplicationContext(),
                             "Register successfully.", Toast.LENGTH_SHORT).show();
-
-                    // Update Firebase the user name
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(name_str)
-                            .build();
-                    mAuth.getCurrentUser().updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("Register", "User profile updated.");
-                                    }
-                                }
-                            });
 
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), MainActivity.class);
