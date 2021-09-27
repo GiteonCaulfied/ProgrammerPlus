@@ -80,4 +80,8 @@ public class Post {
     public String getPid(){
         return pid;
     }
+
+    public void setImageAddress(String address){
+        this.imageAddress = address;
+    }
 }
