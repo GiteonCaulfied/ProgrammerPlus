@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.State;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
@@ -53,17 +55,11 @@ public class SessionState implements UserState{
                 new TimelinePostAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Post item) {
-                Toast.makeText(getApplicationContext(), "Post Clicked: " + item.title, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomepageActivity.this, DetailedPostActivity.class);
+                Intent intent = new Intent(main.getApplicationContext(), DetailedPostActivity.class);
                 intent.putExtra("pid",item.pid);
-                startActivity(intent);
+                main.startActivity(intent);
             }
-                    @Override
-                    public void onItemClick(Post item) {
-                        Toast.makeText(main.getApplicationContext(), "Post Clicked: " + item.title, Toast.LENGTH_LONG).show();
-                    }
-
-                });
+        });
         timelinePostView.setAdapter(timelinePostAdapter);
         timelinePostView.setLayoutManager(new LinearLayoutManager(main));
 
