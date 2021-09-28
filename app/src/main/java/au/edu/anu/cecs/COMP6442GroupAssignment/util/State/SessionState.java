@@ -46,6 +46,7 @@ public class SessionState implements UserState{
     @Override
     public void onCreate() {
         RecyclerView timelinePostView = (RecyclerView) main.findViewById(R.id.timelinePostView);
+
         myRef = FirebaseDatabase.getInstance().getReference();
 
         //Data
@@ -53,6 +54,8 @@ public class SessionState implements UserState{
         userPostDAO.getData();
 
         timelinePostView.setAdapter(userPostDAO.getPostsAdapter());
-        timelinePostView.setLayoutManager(new LinearLayoutManager(main));
+        LinearLayoutManager layoutManager= new LinearLayoutManager(main);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        timelinePostView.setLayoutManager(layoutManager);
     }
 }

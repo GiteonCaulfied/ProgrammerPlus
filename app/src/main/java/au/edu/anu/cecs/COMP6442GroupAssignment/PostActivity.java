@@ -9,14 +9,17 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +56,7 @@ public class PostActivity extends AppCompatActivity {
 
     // views for button
     private Button btnSelect;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +166,7 @@ public class PostActivity extends AppCompatActivity {
             post.setImageAddress(filePath.getPath());
 
             // Code for showing progressDialog while uploading
-            ProgressDialog progressDialog
-                    = new ProgressDialog(this);
+            progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
@@ -187,12 +190,26 @@ public class PostActivity extends AppCompatActivity {
 
                                     // Image uploaded successfully
                                     // Dismiss dialog
-                                    progressDialog.dismiss();
-                                    Toast
-                                            .makeText(PostActivity.this,
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
+                                    //
+
+
+                                    ref.child("images/"
+                                            + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.e("==>",uri.toString());
+                                        }
+                                    });
+                                    if(progressDialog !=null){
+
+                                        progressDialog.dismiss();
+                                        Toast
+                                                .makeText(PostActivity.this,
+                                                        "Image Uploaded!!",
+                                                        Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+
                                 }
                             })
 
@@ -240,4 +257,13 @@ public class PostActivity extends AppCompatActivity {
 
         finish();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (null != progressDialog) {
+            progressDialog.dismiss();
+        }
+    }
+
 }
