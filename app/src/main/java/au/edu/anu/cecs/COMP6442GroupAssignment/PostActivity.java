@@ -1,8 +1,5 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,10 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,30 +28,25 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class PostActivity extends AppCompatActivity {
 
+    // request code
+    private final int PICK_IMAGE_REQUEST = 22;
     private FirebaseDatabase database;
     private EditText title, content;
     private DatabaseReference myRef;
-
-    FirebaseStorage storage;
-    StorageReference storageReference;
-
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
     // view for image view
     private ImageView imageView;
-
     // Uri indicates, where the image will be picked from
     private Uri filePath;
-
-    // request code
-    private final int PICK_IMAGE_REQUEST = 22;
-
     // views for button
     private Button btnSelect;
     private ProgressDialog progressDialog;
@@ -62,23 +55,24 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        database = FirebaseDatabase.getInstance();
+        FirebaseRef fb = FirebaseRef.getInstance();
+
+        database = fb.getDatabase();
         title = findViewById(R.id.post_title);
         content = findViewById(R.id.post_content);
-        myRef = database.getReference();
+        myRef = fb.getDatabaseRef();
 
         imageView = findViewById(R.id.post_uploaded_image);
         btnSelect = findViewById(R.id.post_select_button);
 
         // get the Firebase  storage reference
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        storage = fb.getStorage();
+        storageReference = fb.getStorageReference();
 
         // on pressing btnSelect SelectImage() is called
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 SelectImage();
             }
         });
@@ -90,8 +84,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     // Select Image method
-    private void SelectImage()
-    {
+    private void SelectImage() {
 
         // Defining Implicit Intent to mobile gallery
         Intent intent = new Intent();
@@ -108,8 +101,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode,
-                                    Intent data)
-    {
+                                    Intent data) {
 
         super.onActivityResult(requestCode,
                 resultCode,
@@ -136,9 +128,7 @@ public class PostActivity extends AppCompatActivity {
                                 getContentResolver(),
                                 filePath);
                 imageView.setImageBitmap(bitmap);
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
@@ -185,8 +175,7 @@ public class PostActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
+                                        UploadTask.TaskSnapshot taskSnapshot) {
 
                                     // Image uploaded successfully
                                     // Dismiss dialog
@@ -197,10 +186,10 @@ public class PostActivity extends AppCompatActivity {
                                             + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            Log.e("==>",uri.toString());
+                                            Log.e("==>", uri.toString());
                                         }
                                     });
-                                    if(progressDialog !=null){
+                                    if (progressDialog != null) {
 
                                         progressDialog.dismiss();
                                         Toast
@@ -215,8 +204,7 @@ public class PostActivity extends AppCompatActivity {
 
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                        public void onFailure(@NonNull Exception e) {
 
                             // Error, Image not uploaded
                             progressDialog.dismiss();
@@ -234,15 +222,14 @@ public class PostActivity extends AppCompatActivity {
                                 // percentage on the dialog box
                                 @Override
                                 public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
+                                        UploadTask.TaskSnapshot taskSnapshot) {
                                     double progress
                                             = (100.0
                                             * taskSnapshot.getBytesTransferred()
                                             / taskSnapshot.getTotalByteCount());
                                     progressDialog.setMessage(
                                             "Uploaded "
-                                                    + (int)progress + "%");
+                                                    + (int) progress + "%");
                                 }
                             });
         }
@@ -257,6 +244,7 @@ public class PostActivity extends AppCompatActivity {
 
         finish();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

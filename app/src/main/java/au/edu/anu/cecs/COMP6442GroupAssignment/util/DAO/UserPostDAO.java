@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelinePostAdapter;
 
@@ -34,7 +35,8 @@ public class UserPostDAO implements UserActivityDaoInterface {
     private final ArrayList<Post> posts;
 
     public UserPostDAO(AppCompatActivity act) {
-        db = FirebaseFirestore.getInstance();
+        FirebaseRef firebaseRef = FirebaseRef.getInstance();
+        db = firebaseRef.getFirestore();
         posts = new ArrayList<>();
         //Adapter
         timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),

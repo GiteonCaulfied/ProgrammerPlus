@@ -16,6 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataBase;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.NoSessionState;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.SessionState;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.UserState;
@@ -24,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
 //    private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
     private UserState currentState;
     private FirebaseUser currentUser;
+    private FirebaseRef firebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseRef = FirebaseRef.getInstance();
+        currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
         if (currentUser == null)
             currentState = new NoSessionState(this);
         else

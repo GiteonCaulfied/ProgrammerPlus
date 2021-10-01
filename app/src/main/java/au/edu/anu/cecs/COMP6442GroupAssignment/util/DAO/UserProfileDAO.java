@@ -18,20 +18,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class UserProfileDAO implements UserActivityDaoInterface {
 
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
-
+    private FirebaseRef fb;
     private Profile userprofile;
 
     private static UserProfileDAO instance;
 
-    private UserProfileDAO() { // use constructor to initialize
-        myRef = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private UserProfileDAO() {
+        fb = FirebaseRef.getInstance();
+        myRef = fb.getDatabaseRef();
+        currentUser = fb.getFirebaseAuth().getCurrentUser();
     }
 
 
@@ -66,7 +68,7 @@ public class UserProfileDAO implements UserActivityDaoInterface {
 
     @Override
     public void create(String key, Map<String, Object> newValues) {
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = fb.getFirebaseAuth().getCurrentUser();
         Map<String, Object> childUpdates = new HashMap<>();
 
         childUpdates.put("/user-profile/" + key + "/", newValues);
