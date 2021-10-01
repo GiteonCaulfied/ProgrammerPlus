@@ -54,7 +54,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_newpost);
         FirebaseRef fb = FirebaseRef.getInstance();
 
         database = fb.getDatabase();
