@@ -30,7 +30,7 @@ public class PostFragment extends Fragment {
 
             timelinePostView.setAdapter(userPostDAO.getPostsAdapter());
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             timelinePostView.setLayoutManager(layoutManager);
 
             return view;
