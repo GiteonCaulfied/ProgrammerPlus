@@ -65,6 +65,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
 
         //Randomly Display Image From Internet
         RequestOptions options = new RequestOptions()
+                .override(400, 300)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round)
@@ -74,7 +75,10 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             @Override
             public void onSuccess(Uri uri) {
 
-                Glide.with(context).load(uri.toString()).apply(options).into(holder.getImage());
+                Glide.with(context)
+                        .load(uri.toString())
+                        .apply(options)
+                        .into(holder.getImage());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
