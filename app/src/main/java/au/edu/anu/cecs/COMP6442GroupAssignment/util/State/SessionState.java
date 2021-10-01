@@ -1,15 +1,12 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.State;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.PageAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.PageAdapter;
 
 public class SessionState implements UserState {
     private final MainActivity main;

@@ -1,4 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,6 +14,10 @@ import java.util.HashMap;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.ChatFragment;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.FriendFragment;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.PostFragment;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.ProfileFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
@@ -48,11 +52,11 @@ public class PageAdapter extends FragmentPagerAdapter {
                     Log.i("fragment", "fragment1");
                     break;
                 case 1:
-                    fragment = new PostFragment();
+                    fragment = new FriendFragment();
                     Log.i("fragment", "fragment2");
                     break;
                 case 2:
-                    fragment = new PostFragment();
+                    fragment = new ChatFragment();
                     Log.i("fragment", "fragment3");
                     break;
                 case 3:

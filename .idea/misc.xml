@@ -30,6 +30,9 @@
         <entry key="app/src/main/res/layout/activity_session.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/activity_user.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/friend_item.xml" value="1.5531694131396248" />
+        <entry key="app/src/main/res/layout/layout_chat.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/layout_friend.xml" value="0.32382246376811596" />
         <entry key="app/src/main/res/layout/layout_post.xml" value="0.32382246376811596" />
         <entry key="app/src/main/res/layout/layout_profile.xml" value="0.18958333333333333" />
       </map>

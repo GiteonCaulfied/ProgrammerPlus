@@ -18,8 +18,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post"
-            android:id="@+id/postItem"/>
+            android:text="Post"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -29,13 +28,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Messages" />
+            android:text="Chat" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Me"
-            android:id="@+id/meItem"/>
+            android:text="Me"/>
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -53,7 +51,7 @@
         android:id="@+id/new_post_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="23dp"
         android:background="@drawable/button_states"
         android:onClick="newPostButtonClick"
         android:text="@string/new_post_button"

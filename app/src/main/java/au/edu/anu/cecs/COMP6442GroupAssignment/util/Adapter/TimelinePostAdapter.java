@@ -1,8 +1,7 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 
 public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapter.TimelinePostViewHolder>{

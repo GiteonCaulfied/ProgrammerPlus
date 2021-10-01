@@ -2,7 +2,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +24,7 @@ import java.util.Map;
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelinePostAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 
 public class UserPostDAO implements UserActivityDaoInterface {
     private static UserPostDAO instance;
