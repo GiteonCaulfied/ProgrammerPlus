@@ -63,9 +63,8 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         holder.getText_title().setText(posts.get(position).getTitle());
 
 
-        //Randomly Display Image From Internet
+        //Display Image of the Post
         RequestOptions options = new RequestOptions()
-                .override(400, 300)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round)

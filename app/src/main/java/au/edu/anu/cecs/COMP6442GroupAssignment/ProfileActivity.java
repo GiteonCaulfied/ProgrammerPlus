@@ -33,7 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
         myRef = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        name = findViewById(R.id.email_Text);
+        name = findViewById(R.id.name_Text);
         email = findViewById(R.id.email_Text);
         intro = findViewById(R.id.intro_Text);
 
