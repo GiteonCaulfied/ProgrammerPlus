@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(),
-                                    "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -62,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pass_str = password.getText().toString();
         String conf_str = confirm.getText().toString();
         String name_str = name.getText().toString();
+        String intro_str = intro.getText().toString();
 
         if (!pass_str.equals(conf_str)) {
             Toast.makeText(getApplicationContext(),
@@ -82,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                             uid,
                             email_str,
                             name_str,
-                            intro.getText().toString());
+                            intro_str);
                     Map<String, Object> postValues = profile.toMap();
 
                     UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
@@ -97,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

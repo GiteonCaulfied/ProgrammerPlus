@@ -1,25 +1,29 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class DetailedPostActivity extends AppCompatActivity {
@@ -32,31 +36,61 @@ public class DetailedPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_post);
 
-        author = (TextView) findViewById(R.id.post_page_author);
-        title = (TextView) findViewById(R.id.post_page_title);
-        body = (TextView) findViewById(R.id.post_page_body);
+        author = findViewById(R.id.post_page_author);
+        title = findViewById(R.id.post_page_title);
+        body = findViewById(R.id.post_page_body);
+        image = findViewById(R.id.post_page_image);
 
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
 
-        List<Post> allPost = new ArrayList<>();
+        FirebaseRef fb = FirebaseRef.getInstance();
+        DocumentReference myRef = fb.getFirestore().collection("user-posts").document(pid);
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("user-posts").child(pid);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference sto_ref = storage.getReference();
 
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                HashMap<String, Object> post = (HashMap<String, Object>) task.getResult().getValue();
-                Post p = new Post(post);
-                author.setText(p.author);
-                title.setText(p.title);
-                body.setText(p.body);
-
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Post p = new Post(document.getData());
+                        author.setText(p.getAuthor());
+                        title.setText(p.getTitle());
+                        body.setText(p.getBody());
+                    } else {
+                        System.out.println("No such document!");
+                    }
+                } else {
+                    System.out.println("No such document!");
                 }
-            });
+            }
+        });
 
+        //Display Image of the Post
+        RequestOptions options = new RequestOptions()
+                .override(800, 600)
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false);
+        sto_ref.child("images/"+ pid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
 
-
-
+                Glide.with(getApplicationContext())
+                        .load(uri.toString())
+                        .apply(options)
+                        .into(image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
 }
