@@ -16,13 +16,13 @@
         android:theme="@style/Theme.COMP6442GroupAssignment"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MessageActivity"
+            android:exported="true" />
+        <activity
             android:name=".DetailedPostActivity"
             android:exported="true" />
         <activity
             android:name=".PostActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ProfileActivity"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"
