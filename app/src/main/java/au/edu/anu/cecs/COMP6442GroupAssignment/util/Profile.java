@@ -57,4 +57,8 @@ public class Profile {
     public String getIntro() {
         return intro;
     }
+
+    public String getUid() {
+        return uid;
+    }
 }

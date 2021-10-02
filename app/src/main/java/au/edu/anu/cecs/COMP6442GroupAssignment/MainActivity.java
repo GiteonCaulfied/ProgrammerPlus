@@ -42,10 +42,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
-
-    // New Post Button is Clicked, Send the account message and turn to PostActivity
-    public void newPostButtonClick(View v){
-        Intent intent = new Intent(MainActivity.this, PostActivity.class);
-        startActivity(intent);
-    }
 }

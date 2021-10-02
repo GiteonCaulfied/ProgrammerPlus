@@ -20,12 +20,24 @@
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/comp6442groupassignment/app/src/main/res/layout/activity_profile.xml" value="0.31875" />
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/comp6442groupassignment/app/src/main/res/layout/activity_register.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/comp6442groupassignment/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.33489583333333334" />
+        <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.32382246376811596" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.41204013772366455" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.711274117128041" />
+        <entry key="app/src/main/res/layout/activity_message.xml" value="0.27998233422618274" />
+        <entry key="app/src/main/res/layout/activity_newpost.xml" value="0.2635416666666667" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.296195652173913" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/activity_session.xml" value="0.3249619516576271" />
         <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.23125" />
-        <entry key="app/src/main/res/layout/layout_profile.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/activity_user.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/friend_item.xml" value="1.5531694131396248" />
+        <entry key="app/src/main/res/layout/layout_chat.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/layout_friend.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/layout_post.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/layout_profile.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/message_received.xml" value="0.3188405797101449" />
+        <entry key="app/src/main/res/layout/message_sent.xml" value="0.3188405797101449" />
       </map>
     </option>
   </component>

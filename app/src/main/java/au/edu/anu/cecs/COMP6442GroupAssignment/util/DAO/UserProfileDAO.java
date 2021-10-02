@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class UserProfileDAO implements UserActivityDaoInterface {
     private FirebaseUser currentUser;
     private FirebaseRef fb;
     private Profile userprofile;
+    private TextView name, email, intro;
 
     private static UserProfileDAO instance;
 
@@ -36,10 +38,25 @@ public class UserProfileDAO implements UserActivityDaoInterface {
         currentUser = fb.getFirebaseAuth().getCurrentUser();
     }
 
+    private UserProfileDAO(TextView name, TextView email, TextView intro) {
+        fb = FirebaseRef.getInstance();
+        myRef = fb.getDatabaseRef();
+        currentUser = fb.getFirebaseAuth().getCurrentUser();
+        this.name = name;
+        this.email = email;
+        this.intro = intro;
+    }
 
     public static UserProfileDAO getInstance() {
         if (instance == null) {
             instance = new UserProfileDAO();
+        }
+        return instance;
+    }
+
+    public static UserProfileDAO getInstance(TextView name, TextView email, TextView intro) {
+        if (instance == null) {
+            instance = new UserProfileDAO(name, email, intro);
         }
         return instance;
     }
@@ -56,6 +73,9 @@ public class UserProfileDAO implements UserActivityDaoInterface {
                 }
                 else {
                     userprofile = Objects.requireNonNull(task.getResult()).getValue(Profile.class);
+                    name.setText(userprofile.getName());
+                    email.setText(userprofile.getEmail());
+                    intro.setText(userprofile.getIntro());
                 }
             }
         });
@@ -100,6 +120,8 @@ public class UserProfileDAO implements UserActivityDaoInterface {
     }
 
     public Profile getUserprofile() {
+        if (userprofile == null)
+            getData();
         return userprofile;
     }
 }
