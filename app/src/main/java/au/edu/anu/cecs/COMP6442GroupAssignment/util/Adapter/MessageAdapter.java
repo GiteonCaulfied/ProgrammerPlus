@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
@@ -19,11 +21,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private final Context context;
     private final ArrayList<Message> messages;
+    private final String userID;
 
     public MessageAdapter(Context context,
-                          ArrayList<Message> messages) {
+                          ArrayList<Message> messages,
+                          String userID) {
         this.context = context;
         this.messages = messages;
+        this.userID = userID;
     }
 
     @NonNull
@@ -47,6 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = messages.get(position);
         holder.text.setText(message.getText());
         //TODO ImageView
+        holder.userImage.setImageResource(R.drawable.face_id_1);
     }
 
     @Override
@@ -56,7 +62,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (messages.get(position).isWhoSent()) return 1;
+        Message m = messages.get(position);
+        if (m.isWhoSent().equals(userID)) return 1;
         else return 0;
     }
 

@@ -37,7 +37,7 @@ public class MessageActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private String user1;
     private String user2;
-    private boolean whoSent;
+    private String whoSent;
 
     private RecyclerView histMessages;
     private EditText message;
@@ -69,6 +69,14 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userid");
+        whoSent = currentUser.getUid();
+        if (currentUser.getUid().compareTo(userId) < 0) {
+            user1 = currentUser.getUid();
+            user2 = userId;
+        } else {
+            user1 = userId;
+            user2 = currentUser.getUid();
+        }
 
         myRef.child("user-profile").child(userId)
                 .addValueEventListener(new ValueEventListener() {
@@ -77,16 +85,6 @@ public class MessageActivity extends AppCompatActivity {
                         user = snapshot.getValue(Profile.class);
                         username.setText(user.getName());
                         //TODO 用户头像
-
-                        if (currentUser.getUid().compareTo(user.getUid()) < 0) {
-                            user1 = currentUser.getUid();
-                            user2 = user.getUid();
-                            whoSent = true;
-                        } else {
-                            user1 = user.getUid();
-                            user2 = currentUser.getUid();
-                            whoSent = false;
-                        }
                     }
 
                     @Override
@@ -105,8 +103,8 @@ public class MessageActivity extends AppCompatActivity {
                 String text = message.getText().toString();
                 if (!text.equals("")) {
                     MessageDAO messageDAO = MessageDAO.getInstance();
-                    messageDAO.sendMessage(currentUser.getUid(),
-                            user.getUid(), text, whoSent);
+                    messageDAO.sendMessage(user1,
+                            user2, text, whoSent);
                 } else {
                     Toast.makeText(MessageActivity.this,
                             "Cannot send empty message!", Toast.LENGTH_LONG);
@@ -115,36 +113,38 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        messageAdapter = new MessageAdapter(getApplicationContext(), messages);
+        messages = new ArrayList<>();
+        messageAdapter = new MessageAdapter(getApplicationContext(), messages,
+                currentUser.getUid());
         histMessages = findViewById(R.id.histMessages);
         histMessages.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         histMessages.setLayoutManager(linearLayoutManager);
+        histMessages.setAdapter(messageAdapter);
 
         // What we said
-        messages = new ArrayList<>();
-//        myRef.child("user-chat")
-//                .child(user1).child(user2)
-//                .addValueEventListener(new ValueEventListener() {
-//                    @SuppressLint("NotifyDataSetChanged")
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        messages.clear();
-//                        for (DataSnapshot ss : snapshot.getChildren()) {
-//                            Message m = ss.getValue(Message.class);
-//                            messages.add(m);
-//                        }
-//
-//                        Collections.sort(messages);
-//                        messageAdapter.notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
+        myRef.child("user-chat")
+                .child(user1).child(user2)
+                .addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messages.clear();
+                        for (DataSnapshot ss : snapshot.getChildren()) {
+                            Message m = ss.getValue(Message.class);
+                            messages.add(m);
+                        }
+
+                        Collections.sort(messages);
+                        messageAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     public void setSupportActionBar(Toolbar toolbar) {

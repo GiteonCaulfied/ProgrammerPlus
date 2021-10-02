@@ -5,9 +5,12 @@ import java.util.HashMap;
 public class Message implements Comparable {
     private long time;
     private String text;
-    private boolean whoSent;
+    private String whoSent;
 
-    public Message(String text, boolean whoSent) {
+    public Message() {
+    }
+
+    public Message(String text, String whoSent) {
         this.time = System.currentTimeMillis();
         this.text = text;
         this.whoSent = whoSent;
@@ -17,7 +20,7 @@ public class Message implements Comparable {
         HashMap<String, Object> map = new HashMap<>();
         map.put("time", time);
         map.put("text", text);
-        map.put("sent", whoSent);
+        map.put("whoSent", whoSent);
         return map;
     }
 
@@ -29,7 +32,7 @@ public class Message implements Comparable {
         return text;
     }
 
-    public boolean isWhoSent() {
+    public String isWhoSent() {
         return whoSent;
     }
 

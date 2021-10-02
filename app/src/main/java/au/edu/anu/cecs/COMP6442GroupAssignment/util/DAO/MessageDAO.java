@@ -19,7 +19,7 @@ public class MessageDAO {
     }
 
     public void sendMessage(String user1, String user2,
-                            String message, boolean whoSent) {
+                            String message, String whoSent) {
         Message mes = new Message(message, whoSent);
         myRef.child("user-chat")
                 .child(user1)
