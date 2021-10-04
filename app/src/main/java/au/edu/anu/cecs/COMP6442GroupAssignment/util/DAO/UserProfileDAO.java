@@ -61,6 +61,11 @@ public class UserProfileDAO implements UserActivityDaoInterface {
         return instance;
     }
 
+    public void updateViews (TextView name, TextView email, TextView intro) {
+        this.name = name;
+        this.email = email;
+        this.intro = intro;
+    }
 
     @Override
     public void getData() {
@@ -85,6 +90,43 @@ public class UserProfileDAO implements UserActivityDaoInterface {
     public void update() {
 
     }
+
+    public void updateIntro(String intro){
+        userprofile.setIntro(intro);
+
+        currentUser = fb.getFirebaseAuth().getCurrentUser();
+        String uid = currentUser.getUid();
+
+        Map<String, Object> postValues = userprofile.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put("/user-profile/" + uid + "/", postValues);
+
+        myRef.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                            Log.d("Register", "User profile updated.");
+                        }
+            }
+        });
+
+        // Update Firebase the user name
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setDisplayName((String) newValues.get("name"))
+//                .build();
+//        currentUser.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d("Register", "User profile updated.");
+//                        }
+//                    }
+//                });
+    }
+
 
     @Override
     public void create(String key, Map<String, Object> newValues) {

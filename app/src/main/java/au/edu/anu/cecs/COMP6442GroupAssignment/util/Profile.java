@@ -61,4 +61,8 @@ public class Profile {
     public String getUid() {
         return uid;
     }
+
+    public void setIntro( String new_intro ){
+        this.intro = new_intro;
+    }
 }

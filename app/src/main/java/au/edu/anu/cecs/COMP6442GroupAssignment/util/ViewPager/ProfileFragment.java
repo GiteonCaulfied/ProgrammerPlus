@@ -22,8 +22,8 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class ProfileFragment extends Fragment {
-    private TextView name, email, intro;
-    private Button logOut;
+    private TextView name, email, intro, intro_edit;
+    private Button logOut, edit, save;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
 
@@ -40,9 +40,14 @@ public class ProfileFragment extends Fragment {
         name = view.findViewById(R.id.name_Text);
         email = view.findViewById(R.id.email_Text);
         intro = view.findViewById(R.id.intro_Text);
-        logOut = view.findViewById(R.id.LogOut);
+        intro_edit = view.findViewById(R.id.intro_edit);
 
-        UserProfileDAO userProfileDao = UserProfileDAO.getInstance(name, email, intro);
+        logOut = view.findViewById(R.id.LogOut);
+        edit = view.findViewById(R.id.edit);
+        save = view.findViewById(R.id.save);
+
+        UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
+        userProfileDao.updateViews(name, email, intro);
         userProfileDao.getData();
 
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +59,28 @@ public class ProfileFragment extends Fragment {
                 intent.setClass(view.getContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        });
+
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intro_edit.setVisibility(View.VISIBLE);
+                save.setVisibility(View.VISIBLE);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String new_intro = intro_edit.getText().toString();
+                intro.setText(new_intro);
+                userProfileDao.updateIntro(new_intro);
+
+                save.setVisibility(View.GONE);
+                intro_edit.setVisibility(View.GONE);
+
             }
         });
 
