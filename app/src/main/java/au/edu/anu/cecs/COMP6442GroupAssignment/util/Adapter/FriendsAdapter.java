@@ -3,6 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -20,12 +29,16 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
+    private final StorageReference reference;
+
     private Context context;
     private ArrayList<Profile> friends;
 
     public FriendsAdapter(Context context, ArrayList<Profile> friends) {
         this.context = context;
         this.friends = friends;
+        FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
+        reference = instance.getReference();
     }
 
 
@@ -43,6 +56,30 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         Profile friend = friends.get(position);
         holder.name.setText(friend.getName());
         //TODO ImageView
+
+        //Display Portrait Image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.face_id_1)
+                .error(R.drawable.face_id_1)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false);
+        reference.child("portrait/"+friend.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Glide.with(context)
+                        .load(uri.toString())
+                        .apply(options)
+                        .into(holder.imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
