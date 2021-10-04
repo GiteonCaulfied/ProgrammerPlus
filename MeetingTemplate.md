@@ -11,7 +11,7 @@ This following is a team meeting template. You may change this template as you l
 5. ✅ Use Firebase to implement user Authentication/Authorisation. (easy)
 6. ✅ Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)
 7. ✅ Using Firebase or another remote database to store user posts and having a user’s timeline update as the remote database is updated without restarting the application. E.g. User A makes a post, user B on a separate instance of the application sees user A’s post appear on their timeline without restarting their application. (very hard)
-**Lead/scribe:**
+8. The ability to micro-interact with 'posts' (e.g. like, report, etc.) [stored in-memory]. (easy)
 
 ## Agreed Procedure
 Stand up Procedure: 
@@ -36,7 +36,7 @@ Stand up Procedure:
 | Learning B-tree | Everyone |
 | User profile activity containing a media file (image, animation (e.g. gif), video). (easy) | Xuzeng |
 | The ability to ‘block’ users. | Qinyu |
-
+| The ability to micro-interact with 'posts' | Yikai |
 
 ## Scribe Rotation
 The following dictates who will be scribe in this and the next meeting.
