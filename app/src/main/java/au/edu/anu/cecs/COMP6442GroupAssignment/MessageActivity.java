@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -42,6 +47,7 @@ public class MessageActivity extends AppCompatActivity {
     private TextView username;
     private ImageView imageView;
     private FirebaseUser currentUser;
+    private FirebaseFirestore db;
     private DatabaseReference myRef;
     private String whoSent;
 
@@ -81,47 +87,42 @@ public class MessageActivity extends AppCompatActivity {
         String userId = intent.getStringExtra("userid");
         whoSent = currentUser.getUid();
 
-        myRef.child("user-profile").child(userId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        user = snapshot.getValue(Profile.class);
-                        username.setText(user.getName());
+        db = firebaseRef.getFirestore();
+        db.collection("user-profiles")
+                .document(userId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                user = new Profile(value.getData());
+                username.setText(user.getName());
 
-                        if (user.isPortraitUploaded()){
-                            //Display Portrait Image When Messaging
-                            RequestOptions options = new RequestOptions()
-                                    .centerCrop()
-                                    .placeholder(R.drawable.face_id_1)
-                                    .error(R.drawable.face_id_1)
-                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .skipMemoryCache(false);
-                            reference.child("portrait/"+ user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
+                if (user.isPortraitUploaded()){
+                    //Display Portrait Image When Messaging
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.face_id_1)
+                            .error(R.drawable.face_id_1)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false);
+                    reference.child("portrait/"+ user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                                    Glide.with(getApplicationContext())
-                                            .load(uri.toString())
-                                            .apply(options)
-                                            .into(imageView);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle any errors
-                                }
-                            });
-                        } else {
-                            imageView.setImageResource(R.drawable.face_id_1);
+                            Glide.with(getApplicationContext())
+                                    .load(uri.toString())
+                                    .apply(options)
+                                    .into(imageView);
                         }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+                } else {
+                    imageView.setImageResource(R.drawable.face_id_1);
+                }
+            }
+        });
 
         // Messages
         message = findViewById(R.id.messageText);
