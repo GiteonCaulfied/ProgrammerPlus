@@ -42,15 +42,6 @@ public class UserProfileDAO {
         currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
     }
 
-    private UserProfileDAO(TextView name, TextView email, TextView intro) {
-        FirebaseRef firebaseRef = FirebaseRef.getInstance();
-        db = firebaseRef.getFirestore();
-        currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
-        this.name = name;
-        this.email = email;
-        this.intro = intro;
-    }
-
     public static UserProfileDAO getInstance() {
         if (instance == null) {
             instance = new UserProfileDAO();
@@ -65,7 +56,7 @@ public class UserProfileDAO {
     }
 
     public void getDataInProfileFrag() {
-        final DocumentReference docRef = db.collection("user-profile").document(currentUser.getUid());
+        final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
