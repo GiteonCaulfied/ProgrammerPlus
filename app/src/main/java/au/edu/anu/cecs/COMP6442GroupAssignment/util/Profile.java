@@ -11,10 +11,10 @@ public class Profile {
     private String uid;
     private String name;
     private String email;
-    private Date creation_date;
-    private ArrayList<Integer> posts;
-    private AVLTree<String> friends;
-    private AVLTree<String> blocked;
+    private long creation_time;
+    private ArrayList<String> posts;
+    private ArrayList<String> friends;
+    private ArrayList<String> blocked;
     private String intro;
     private boolean portraitUploaded;
 
@@ -26,12 +26,24 @@ public class Profile {
         this.uid = uid;
         this.email = email;
         this.name = name;
-        this.creation_date = new Date();
-        this.posts = new ArrayList<Integer>();
-        this.friends = new AVLTree<>();
-        this.blocked = new AVLTree<>();
+        this.creation_time = System.currentTimeMillis();
+        this.posts = new ArrayList<>();
+        this.friends = new ArrayList<>();
+        this.blocked = new ArrayList<>();
         this.intro = intro;
         this.portraitUploaded = false;
+    }
+
+    public Profile(Map<String, Object> m) {
+        this.uid = (String) m.get("uid");
+        this.email = (String) m.get("email");
+        this.name = (String) m.get("name");
+        this.creation_time = (long) m.get("date");
+        this.posts = (ArrayList<String>) m.get("posts");
+        this.friends = (ArrayList<String>) m.get("friends");
+        this.blocked = (ArrayList<String>) m.get("blocked");
+        this.intro = (String) m.get("intro");
+        this.portraitUploaded = (boolean) m.get("portraitUploaded");
     }
 
     public Map<String, Object> toMap() {
@@ -39,7 +51,7 @@ public class Profile {
         result.put("uid", uid);
         result.put("email", email);
         result.put("name", name);
-        result.put("date", creation_date);
+        result.put("date", creation_time);
         result.put("posts", posts);
         result.put("friends", friends);
         result.put("blocked", blocked);
@@ -71,6 +83,11 @@ public class Profile {
 
     public Boolean isPortraitUploaded(){
         return portraitUploaded;
+    }
+
+    public Boolean friendContain(String name) {
+        if (friends == null) return false;
+        return friends.contains(name);
     }
 
     public void setPortraitUploadedStatus(){

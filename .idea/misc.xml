@@ -33,11 +33,13 @@
         <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/activity_user.xml" value="0.32382246376811596" />
         <entry key="app/src/main/res/layout/chat_item.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/dialog_friend.xml" value="0.5" />
         <entry key="app/src/main/res/layout/friend_item.xml" value="1.5531694131396248" />
+        <entry key="app/src/main/res/layout/friend_request.xml" value="0.5741923717673603" />
         <entry key="app/src/main/res/layout/layout_chat.xml" value="0.32382246376811596" />
-        <entry key="app/src/main/res/layout/layout_friend.xml" value="0.32382246376811596" />
+        <entry key="app/src/main/res/layout/layout_friend.xml" value="0.43282675788352354" />
         <entry key="app/src/main/res/layout/layout_post.xml" value="0.32382246376811596" />
-        <entry key="app/src/main/res/layout/layout_profile.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/layout_profile.xml" value="0.4112879155682614" />
         <entry key="app/src/main/res/layout/message_received.xml" value="0.3188405797101449" />
         <entry key="app/src/main/res/layout/message_sent.xml" value="0.3188405797101449" />
       </map>

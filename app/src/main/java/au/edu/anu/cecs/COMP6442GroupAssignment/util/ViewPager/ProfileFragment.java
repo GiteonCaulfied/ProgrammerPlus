@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment {
 
         UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
         userProfileDao.updateViews(name, email, intro);
-        userProfileDao.getData();
+        userProfileDao.getDataInProfileFrag();
 
         //Display Portrait Image
         RequestOptions options = new RequestOptions()
