@@ -119,10 +119,12 @@ public class FriendFragment extends Fragment {
                 req_emails.clear();
                 req_uids.clear();
                 dataSnapShot = (HashMap<String, Object>) value.getData();
-                for (String key: dataSnapShot.keySet()) {
-                    Object o = dataSnapShot.get(key);
-                    req_emails.add((String) o);
-                    req_uids.add(key);
+                if (dataSnapShot != null) {
+                    for (String key : dataSnapShot.keySet()) {
+                        Object o = dataSnapShot.get(key);
+                        req_emails.add((String) o);
+                        req_uids.add(key);
+                    }
                 }
                 requestsAdapter.notifyDataSetChanged();
             }
