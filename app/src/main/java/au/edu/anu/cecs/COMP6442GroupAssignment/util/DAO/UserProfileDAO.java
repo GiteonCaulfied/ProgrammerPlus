@@ -68,7 +68,7 @@ public class UserProfileDAO {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d("Read profile", "Current data: " + snapshot.getData());
-                    userprofile = snapshot.toObject(Profile.class);
+                    userprofile = new Profile(snapshot.getData());
                     name.setText(userprofile.getName());
                     email.setText(userprofile.getEmail());
                     intro.setText(userprofile.getIntro());
