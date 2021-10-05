@@ -63,7 +63,7 @@ public class ChatFragment extends Fragment {
                 latestMess.clear();
                 HashMap<String, Object> chats = (HashMap<String, Object>) snapshot.getValue();
                 // Loop for all chats
-
+                if (chats == null) return;
                 for (String key: chats.keySet()) {
                     friends.add(key);
 
