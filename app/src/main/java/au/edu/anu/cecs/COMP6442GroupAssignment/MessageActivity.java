@@ -97,28 +97,33 @@ public class MessageActivity extends AppCompatActivity {
                         user = snapshot.getValue(Profile.class);
                         username.setText(user.getName());
 
-                        //Display Portrait Image When Messaging
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop()
-                                .placeholder(R.drawable.face_id_1)
-                                .error(R.drawable.face_id_1)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false);
-                        reference.child("portrait/"+ user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                        if (user.isPortraitUploaded()){
+                            //Display Portrait Image When Messaging
+                            RequestOptions options = new RequestOptions()
+                                    .centerCrop()
+                                    .placeholder(R.drawable.face_id_1)
+                                    .error(R.drawable.face_id_1)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(false);
+                            reference.child("portrait/"+ user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                                Glide.with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .apply(options)
-                                        .into(imageView);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                            }
-                        });
+                                    Glide.with(getApplicationContext())
+                                            .load(uri.toString())
+                                            .apply(options)
+                                            .into(imageView);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
+                        } else {
+                            imageView.setImageResource(R.drawable.face_id_1);
+                        }
+
                     }
 
                     @Override

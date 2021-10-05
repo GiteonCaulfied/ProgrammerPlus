@@ -57,28 +57,33 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         holder.name.setText(friend.getName());
         //TODO ImageView
 
-        //Display Portrait Image
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.face_id_1)
-                .error(R.drawable.face_id_1)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false);
-        reference.child("portrait/"+friend.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        if (friend.isPortraitUploaded()){
+            //Display Portrait Image
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.face_id_1)
+                    .error(R.drawable.face_id_1)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false);
+            reference.child("portrait/"+friend.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                Glide.with(context)
-                        .load(uri.toString())
-                        .apply(options)
-                        .into(holder.imageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .apply(options)
+                            .into(holder.imageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        } else {
+            holder.imageView.setImageResource(R.drawable.face_id_1);
+        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

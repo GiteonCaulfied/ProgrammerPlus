@@ -16,6 +16,7 @@ public class Profile {
     private AVLTree<String> friends;
     private AVLTree<String> blocked;
     private String intro;
+    private boolean portraitUploaded;
 
     public Profile() {
         // Default constructor required for calls to DataSnapshot.getValue(Profile.class)
@@ -30,6 +31,7 @@ public class Profile {
         this.friends = new AVLTree<>();
         this.blocked = new AVLTree<>();
         this.intro = intro;
+        this.portraitUploaded = false;
     }
 
     public Map<String, Object> toMap() {
@@ -42,6 +44,7 @@ public class Profile {
         result.put("friends", friends);
         result.put("blocked", blocked);
         result.put("intro", intro);
+        result.put("portraitUploaded",portraitUploaded);
 
         return result;
     }
@@ -64,5 +67,13 @@ public class Profile {
 
     public void setIntro( String new_intro ){
         this.intro = new_intro;
+    }
+
+    public Boolean isPortraitUploaded(){
+        return portraitUploaded;
+    }
+
+    public void setPortraitUploadedStatus(){
+        this.portraitUploaded = true;
     }
 }

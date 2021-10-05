@@ -231,6 +231,9 @@ public class ProfileFragment extends Fragment {
                                     });
                 }
 
+                // Update the User Profile
+                userProfileDao.updatePortraitUploadedStatus();
+
                 save.setVisibility(View.GONE);
                 uploadImageBtn.setVisibility(View.GONE);
                 intro_edit.setVisibility(View.GONE);

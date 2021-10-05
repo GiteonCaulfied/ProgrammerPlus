@@ -127,6 +127,28 @@ public class UserProfileDAO implements UserActivityDaoInterface {
 //                });
     }
 
+    public void updatePortraitUploadedStatus(){
+        userprofile.setPortraitUploadedStatus();
+
+        currentUser = fb.getFirebaseAuth().getCurrentUser();
+        String uid = currentUser.getUid();
+
+        Map<String, Object> postValues = userprofile.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put("/user-profile/" + uid + "/", postValues);
+
+        myRef.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Register", "User profile updated.");
+                }
+            }
+        });
+    }
+
 
     @Override
     public void create(String key, Map<String, Object> newValues) {
