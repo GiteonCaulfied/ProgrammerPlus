@@ -43,8 +43,6 @@ public class MessageActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseUser currentUser;
     private DatabaseReference myRef;
-    private String user1;
-    private String user2;
     private String whoSent;
 
     private RecyclerView histMessages;
@@ -82,13 +80,6 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userid");
         whoSent = currentUser.getUid();
-        if (currentUser.getUid().compareTo(userId) < 0) {
-            user1 = currentUser.getUid();
-            user2 = userId;
-        } else {
-            user1 = userId;
-            user2 = currentUser.getUid();
-        }
 
         myRef.child("user-profile").child(userId)
                 .addValueEventListener(new ValueEventListener() {
@@ -142,8 +133,10 @@ public class MessageActivity extends AppCompatActivity {
                 String text = message.getText().toString();
                 if (!text.equals("")) {
                     MessageDAO messageDAO = MessageDAO.getInstance();
-                    messageDAO.sendMessage(user1,
-                            user2, text, whoSent);
+                    messageDAO.sendMessage(currentUser.getUid(),
+                            userId, text, whoSent);
+                    messageDAO.sendMessage(userId,
+                            currentUser.getUid(), text, whoSent);
                 } else {
                     Toast.makeText(MessageActivity.this,
                             "Cannot send empty message!", Toast.LENGTH_LONG);
@@ -164,7 +157,7 @@ public class MessageActivity extends AppCompatActivity {
 
         // What we said
         myRef.child("user-chat")
-                .child(user1).child(user2)
+                .child(currentUser.getUid()).child(userId)
                 .addValueEventListener(new ValueEventListener() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
