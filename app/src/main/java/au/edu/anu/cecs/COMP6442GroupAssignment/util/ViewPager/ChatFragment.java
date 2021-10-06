@@ -2,6 +2,9 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,7 +27,6 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.ChatsAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.FriendsAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class ChatFragment extends Fragment {
     private FriendsAdapter friendsAdapter;
@@ -57,36 +59,36 @@ public class ChatFragment extends Fragment {
 
         myRef.child("user-chat").child(currentUser.getUid())
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                friends.clear();
-                latestMess.clear();
-                HashMap<String, Object> chats = (HashMap<String, Object>) snapshot.getValue();
-                // Loop for all chats
-                if (chats == null) return;
-                for (String key: chats.keySet()) {
-                    friends.add(key);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        friends.clear();
+                        latestMess.clear();
+                        HashMap<String, Object> chats = (HashMap<String, Object>) snapshot.getValue();
+                        // Loop for all chats
+                        if (chats == null) return;
+                        for (String key : chats.keySet()) {
+                            friends.add(key);
 
-                    HashMap<String, Object> messages = (HashMap<String, Object>) chats.get(key);
-                    long bt = -1;
-                    String last = "";
-                    for (Object value: messages.values()){
-                        HashMap<String, Object> message = (HashMap<String, Object>) value;
-                        if ((long) message.get("time") > bt) {
-                            bt = (long) message.get("time");
-                            last = (String) message.get("text");
+                            HashMap<String, Object> messages = (HashMap<String, Object>) chats.get(key);
+                            long bt = -1;
+                            String last = "";
+                            for (Object value : messages.values()) {
+                                HashMap<String, Object> message = (HashMap<String, Object>) value;
+                                if ((long) message.get("time") > bt) {
+                                    bt = (long) message.get("time");
+                                    last = (String) message.get("text");
+                                }
+                            }
+                            latestMess.add(last);
                         }
+                        chatsAdapter.notifyDataSetChanged();
                     }
-                    latestMess.add(last);
-                }
-                chatsAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
 
         return view;
     }

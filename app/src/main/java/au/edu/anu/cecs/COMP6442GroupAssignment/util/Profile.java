@@ -81,6 +81,14 @@ public class Profile {
         this.intro = new_intro;
     }
 
+    public boolean addNewFriend(String uid) {
+        return friends.add(uid);
+    }
+
+    public boolean addNewBlock(String uid) {
+        return blocked.add(uid);
+    }
+
     public Boolean isPortraitUploaded(){
         return portraitUploaded;
     }
@@ -88,6 +96,11 @@ public class Profile {
     public Boolean friendContain(String name) {
         if (friends == null) return false;
         return friends.contains(name);
+    }
+
+    public Boolean blockContain(String name) {
+        if (blocked == null) return false;
+        return blocked.contains(name);
     }
 
     public void setPortraitUploadedStatus(){

@@ -80,7 +80,7 @@ public class UserProfileDAO {
     }
 
     public void getData() {
-        final DocumentReference docRef = db.collection("user-profile").document(currentUser.getUid());
+        final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -92,7 +92,7 @@ public class UserProfileDAO {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d("Read profile", "Current data: " + snapshot.getData());
-                    userprofile = snapshot.toObject(Profile.class);
+                    userprofile = new Profile(snapshot.getData());
                 } else {
                     Log.d("Read profile", "Current data: null");
                 }
@@ -152,12 +152,26 @@ public class UserProfileDAO {
     }
 
     public void addNewFriend(String uid) {
+        userprofile.addNewFriend(uid);
         db.collection("user-profiles")
                 .document(currentUser.getUid())
                 .update("friends", FieldValue.arrayUnion(uid));
         db.collection("user-profiles")
                 .document(uid)
                 .update("friends", FieldValue.arrayUnion(currentUser.getUid()));
+    }
+
+    public void addNewBlocked(String uid) {
+        userprofile.addNewBlock(uid);
+        db.collection("user-profiles")
+                .document(currentUser.getUid())
+                .update("blocked", FieldValue.arrayUnion(uid));
+    }
+
+    public void cancelBlocked(String uid) {
+        db.collection("user-profiles")
+                .document(currentUser.getUid())
+                .update("blocked", FieldValue.arrayRemove(uid));
     }
 
     public void clear() {

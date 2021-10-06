@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -39,6 +44,7 @@ import java.util.Collections;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.MessageAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Message;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
@@ -50,6 +56,10 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private DatabaseReference myRef;
     private String whoSent;
+    private MessageDAO messageDAO;
+    private String userId;
+    private Profile me;
+    private UserProfileDAO userProfileDAO;
 
     private RecyclerView histMessages;
     private EditText message;
@@ -82,9 +92,10 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+        toolbar.inflateMenu(R.menu.menu_chat);
 
         Intent intent = getIntent();
-        String userId = intent.getStringExtra("userid");
+        userId = intent.getStringExtra("userid");
         whoSent = currentUser.getUid();
 
         db = firebaseRef.getFirestore();
@@ -127,13 +138,13 @@ public class MessageActivity extends AppCompatActivity {
         // Messages
         message = findViewById(R.id.messageText);
         sendBut = findViewById(R.id.sendMess);
+        messageDAO = MessageDAO.getInstance();
 
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String text = message.getText().toString();
                 if (!text.equals("")) {
-                    MessageDAO messageDAO = MessageDAO.getInstance();
                     messageDAO.sendMessage(currentUser.getUid(),
                             userId, text, whoSent);
                     messageDAO.sendMessage(userId,
@@ -145,6 +156,14 @@ public class MessageActivity extends AppCompatActivity {
                 message.setText("");
             }
         });
+
+        // Block or not?
+        userProfileDAO = UserProfileDAO.getInstance();
+        me = userProfileDAO.getUserprofile();
+//        if (me.blockContain(userId)) {
+//            MenuItem item = findViewById(R.id.block_him);
+//            item.setTitle("Unblocked");
+//        }
 
         messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(getApplicationContext(), messages,
@@ -181,5 +200,30 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void setSupportActionBar(Toolbar toolbar) {
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+    }
+
+    public void block(MenuItem item) {
+        if (me.blockContain(userId)) {
+            userProfileDAO.cancelBlocked(userId);
+            Toast.makeText(getApplicationContext(), "Unblocked!",
+                    Toast.LENGTH_LONG).show();
+        }
+        else {
+            userProfileDAO.addNewBlocked(userId);
+            Toast.makeText(getApplicationContext(), "Blocked!",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void deleteChat(MenuItem item) {
+        messageDAO.deleteChat(userId, currentUser.getUid());
+        messageDAO.deleteChat(currentUser.getUid(), userId);
+        finish();
     }
 }
