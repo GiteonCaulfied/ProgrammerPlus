@@ -81,6 +81,12 @@ public class Post {
         return pid;
     }
 
+    public ArrayList<String> getUsersWhoLike(){
+        return usersWhoLike;
+    }
+    public void setUsersWhoLike(ArrayList<String> usersWhoLike){
+        this.usersWhoLike = usersWhoLike;
+    }
     public void setImageAddress(String address){
         this.imageAddress = address;
     }

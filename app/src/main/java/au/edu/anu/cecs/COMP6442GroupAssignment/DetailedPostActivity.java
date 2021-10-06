@@ -3,6 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,13 +25,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class DetailedPostActivity extends AppCompatActivity {
 
     private ImageView image;
-    private TextView author, title, body;
+    private TextView author, title, body,textView4;
+    private String uid;
+    private Post p;
+    private UserPostDAO instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +45,17 @@ public class DetailedPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_post);
 
         author = findViewById(R.id.post_page_author);
+        textView4 = findViewById(R.id.textView4);
         title = findViewById(R.id.post_page_title);
         body = findViewById(R.id.post_page_body);
         image = findViewById(R.id.post_page_image);
-
+        instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
 
         FirebaseRef fb = FirebaseRef.getInstance();
         DocumentReference myRef = fb.getFirestore().collection("user-posts").document(pid);
-
+        uid = FirebaseAuth.getInstance().getUid();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sto_ref = storage.getReference();
 
@@ -56,10 +65,41 @@ public class DetailedPostActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Post p = new Post(document.getData());
+                        p = new Post(document.getData());
                         author.setText(p.getAuthor());
                         title.setText(p.getTitle());
                         body.setText(p.getBody());
+
+
+                        textView4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                if ( p.getUsersWhoLike().contains(uid)){
+                                    ArrayList<String> usersWhoLike =  p.getUsersWhoLike();
+                                    usersWhoLike.remove(uid);
+                                    p.setUsersWhoLike(usersWhoLike);
+                                    instance.update( p.getPid(), p.toMap());
+                                }else {
+                                    ArrayList<String> usersWhoLike =  p.getUsersWhoLike();
+                                    usersWhoLike.add(uid);
+                                    p.setUsersWhoLike(usersWhoLike);
+                                    instance.update( p.getPid(), p.toMap());
+                                }
+                                textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
+                                        getApplicationContext().getResources().getColor(R.color.gray));
+                                textView4.setText( p.getUsersWhoLike().contains(uid)?("Cancle"+" ("+ p.getUsersWhoLike().size()+"stars)")
+                                        :("Star"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+                            }
+                        });
+
+                        textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
+                                getApplicationContext().getResources().getColor(R.color.gray));
+                        textView4.setText( p.getUsersWhoLike().contains(uid)?("Cancle"+" ("+ p.getUsersWhoLike().size()+"stars)")
+                                :("Star"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+
+
+
                     } else {
                         System.out.println("No such document!");
                     }
@@ -92,5 +132,7 @@ public class DetailedPostActivity extends AppCompatActivity {
                 // Handle any errors
             }
         });
+
+
     }
 }
