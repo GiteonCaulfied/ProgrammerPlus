@@ -169,6 +169,7 @@ public class UserProfileDAO {
     }
 
     public void cancelBlocked(String uid) {
+        userprofile.cancelBlock(uid);
         db.collection("user-profiles")
                 .document(currentUser.getUid())
                 .update("blocked", FieldValue.arrayRemove(uid));

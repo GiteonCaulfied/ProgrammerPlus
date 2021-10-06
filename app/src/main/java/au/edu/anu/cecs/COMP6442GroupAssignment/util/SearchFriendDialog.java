@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +64,8 @@ public class SearchFriendDialog extends Dialog {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("Friend request", "Sent new request!");
+                                Toast.makeText(getContext(),
+                                        "Sent new request!", Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

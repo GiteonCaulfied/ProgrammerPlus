@@ -60,6 +60,7 @@ public class MessageActivity extends AppCompatActivity {
     private String userId;
     private Profile me;
     private UserProfileDAO userProfileDAO;
+    private MenuItem item;
 
     private RecyclerView histMessages;
     private EditText message;
@@ -145,13 +146,20 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String text = message.getText().toString();
                 if (!text.equals("")) {
+                    if (user.blockContain(currentUser.getUid())) {
+                        Toast.makeText(MessageActivity.this,
+                                "Cannot send a message! You have been blocked!",
+                                Toast.LENGTH_LONG).show();
+                        message.setText("");
+                        return;
+                    }
                     messageDAO.sendMessage(currentUser.getUid(),
                             userId, text, whoSent);
                     messageDAO.sendMessage(userId,
                             currentUser.getUid(), text, whoSent);
                 } else {
                     Toast.makeText(MessageActivity.this,
-                            "Cannot send empty message!", Toast.LENGTH_LONG);
+                            "Cannot send empty message!", Toast.LENGTH_LONG).show();
                 }
                 message.setText("");
             }
@@ -160,10 +168,10 @@ public class MessageActivity extends AppCompatActivity {
         // Block or not?
         userProfileDAO = UserProfileDAO.getInstance();
         me = userProfileDAO.getUserprofile();
-//        if (me.blockContain(userId)) {
-//            MenuItem item = findViewById(R.id.block_him);
-//            item.setTitle("Unblocked");
-//        }
+        if (me.blockContain(userId)) {
+            item = toolbar.getMenu().findItem(R.id.block_him);
+            item.setTitle("Unblocked");
+        }
 
         messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(getApplicationContext(), messages,
@@ -213,16 +221,17 @@ public class MessageActivity extends AppCompatActivity {
             userProfileDAO.cancelBlocked(userId);
             Toast.makeText(getApplicationContext(), "Unblocked!",
                     Toast.LENGTH_LONG).show();
+            item.setTitle("Block");
         }
         else {
             userProfileDAO.addNewBlocked(userId);
             Toast.makeText(getApplicationContext(), "Blocked!",
                     Toast.LENGTH_LONG).show();
+            item.setTitle("Unblock");
         }
     }
 
     public void deleteChat(MenuItem item) {
-        messageDAO.deleteChat(userId, currentUser.getUid());
         messageDAO.deleteChat(currentUser.getUid(), userId);
         finish();
     }

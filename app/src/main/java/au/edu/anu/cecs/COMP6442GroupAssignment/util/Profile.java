@@ -89,6 +89,10 @@ public class Profile {
         return blocked.add(uid);
     }
 
+    public boolean cancelBlock(String uid) {
+        return blocked.remove(uid);
+    }
+
     public Boolean isPortraitUploaded(){
         return portraitUploaded;
     }
