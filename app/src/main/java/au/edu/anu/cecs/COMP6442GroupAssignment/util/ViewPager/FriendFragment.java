@@ -93,11 +93,14 @@ public class FriendFragment extends Fragment {
                         me = p;
                 }
 
-                for (Profile p: allUsers) {
-                    if (me.friendContain(p.getUid())) {
-                        friends.add(p);
+                if (me != null){
+                    for (Profile p: allUsers) {
+                        if (me.friendContain(p.getUid())) {
+                            friends.add(p);
+                        }
                     }
                 }
+
                 friendsAdapter.notifyDataSetChanged();
             }
         });

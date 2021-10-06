@@ -3,28 +3,44 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
+    private final int PICK_IMAGE_REQUEST = 21;
+    private Uri filePath;
+
 
     private EditText email, name, password, confirm, intro;
     private ImageView profile;
@@ -32,6 +48,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
+    private Button selectPortraitBtn;
+
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +65,23 @@ public class RegisterActivity extends AppCompatActivity {
         confirm = findViewById(R.id.confirm_signup);
         intro = findViewById(R.id.intro_signup);
 
+        profile = findViewById(R.id.portrait_signup);
+        selectPortraitBtn = findViewById(R.id.selectImage_signup);
+
         mAuth = FirebaseAuth.getInstance();
+
+        // get the Firebase  storage reference
+        FirebaseRef fb = FirebaseRef.getInstance();
+        storage = fb.getStorage();
+        storageReference = fb.getStorageReference();
+
+        // on pressing btnSelect SelectImage() is called
+        selectPortraitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectImage();
+            }
+        });
     }
 
     @Override
@@ -54,6 +91,57 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             mAuth.signOut();
+        }
+    }
+
+    // Select Image method
+    private void SelectImage() {
+
+        // Defining Implicit Intent to mobile gallery
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(
+                Intent.createChooser(
+                        intent,
+                        "Select Image from here..."),
+                PICK_IMAGE_REQUEST);
+    }
+
+    // Override onActivityResult method
+    @Override
+    public void onActivityResult(int requestCode,
+                                 int resultCode,
+                                 Intent data) {
+
+        super.onActivityResult(requestCode,
+                resultCode,
+                data);
+
+        // checking request code and result code
+        // if request code is PICK_IMAGE_REQUEST and
+        // resultCode is RESULT_OK
+        // then set image in the image view
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+
+            // Get the Uri of data
+            filePath = data.getData();
+            try {
+
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(getContentResolver(),
+                                filePath);
+                profile.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
         }
     }
 
@@ -88,6 +176,53 @@ public class RegisterActivity extends AppCompatActivity {
 
                     UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
                     userProfileDao.create(uid, postValues);
+
+                    if (filePath != null) {
+
+
+
+                        // Defining the child of storageReference
+                        StorageReference ref
+                                = storageReference
+                                .child(
+                                        "portrait/"
+                                                + uid);
+
+                        // adding listeners on upload
+                        // or failure of image
+                        ref.putFile(filePath)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                            @Override
+                                            public void onSuccess(
+                                                    UploadTask.TaskSnapshot taskSnapshot) {
+
+                                                // Image uploaded successfully
+                                                // Dismiss dialog
+                                                //
+
+
+                                                ref.child("portrait/"
+                                                        + uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        Log.e("==>", uri.toString());
+                                                    }
+                                                });
+
+
+                                            }
+                                        })
+
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                    }
 
                     Toast.makeText(getApplicationContext(),
                             "Register successfully.", Toast.LENGTH_SHORT).show();

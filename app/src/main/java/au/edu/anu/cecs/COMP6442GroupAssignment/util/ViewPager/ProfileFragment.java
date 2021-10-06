@@ -104,6 +104,7 @@ public class ProfileFragment extends Fragment {
                         .load(uri.toString())
                         .apply(options)
                         .into(NowImage);
+                userProfileDao.updatePortraitUploadedStatus();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
