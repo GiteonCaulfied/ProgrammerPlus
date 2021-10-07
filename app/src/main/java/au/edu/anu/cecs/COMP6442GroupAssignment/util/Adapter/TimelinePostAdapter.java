@@ -116,8 +116,8 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
 
         holder.getText_star().setTextColor(posts.get(position).getUsersWhoLike().contains(uid)?context.getResources().getColor(R.color.red):
                 context.getResources().getColor(R.color.gray));
-        holder.getText_star().setText(posts.get(position).getUsersWhoLike().contains(uid)?("Cancle"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)")
-                :("Star"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)"));
+        holder.getText_star().setText(posts.get(position).getUsersWhoLike().contains(uid)?("Take Back"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)")
+                :("Give Star!"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)"));
         holder.bind(posts.get(position), listener);
     }
 

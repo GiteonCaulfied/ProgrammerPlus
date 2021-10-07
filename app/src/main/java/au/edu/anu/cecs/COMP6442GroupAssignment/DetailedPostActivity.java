@@ -88,15 +88,15 @@ public class DetailedPostActivity extends AppCompatActivity {
                                 }
                                 textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
                                         getApplicationContext().getResources().getColor(R.color.gray));
-                                textView4.setText( p.getUsersWhoLike().contains(uid)?("Cancle"+" ("+ p.getUsersWhoLike().size()+"stars)")
-                                        :("Star"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+                                textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
+                                        :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
                             }
                         });
 
                         textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
                                 getApplicationContext().getResources().getColor(R.color.gray));
-                        textView4.setText( p.getUsersWhoLike().contains(uid)?("Cancle"+" ("+ p.getUsersWhoLike().size()+"stars)")
-                                :("Star"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+                        textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
+                                :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
 
 
 

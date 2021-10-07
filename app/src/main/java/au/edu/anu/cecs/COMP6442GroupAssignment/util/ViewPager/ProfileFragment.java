@@ -133,6 +133,7 @@ public class ProfileFragment extends Fragment {
                 save.setVisibility(View.VISIBLE);
                 uploadImageBtn.setVisibility(View.VISIBLE);
                 selectedImage.setVisibility(View.VISIBLE);
+                intro.setVisibility(View.GONE);
             }
         });
 
@@ -239,6 +240,7 @@ public class ProfileFragment extends Fragment {
                 uploadImageBtn.setVisibility(View.GONE);
                 intro_edit.setVisibility(View.GONE);
                 selectedImage.setVisibility(View.GONE);
+                intro.setVisibility(View.VISIBLE);
 
             }
         });

@@ -133,12 +133,11 @@
         android:id="@+id/intro_edit"
         android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="content"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/intro_Text"
+        app:layout_constraintTop_toBottomOf="@+id/Intro"
         tools:visibility="invisible" />
 
     <Button
