@@ -5,15 +5,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,29 +28,18 @@ import java.util.Objects;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
-public class UserProfileDAO implements UserActivityDaoInterface {
+public class UserProfileDAO {
 
-    private DatabaseReference myRef;
-    private FirebaseUser currentUser;
-    private FirebaseRef fb;
+    private static UserProfileDAO instance;
+    private final FirebaseUser currentUser;
+    private final FirebaseFirestore db;
     private Profile userprofile;
     private TextView name, email, intro;
 
-    private static UserProfileDAO instance;
-
     private UserProfileDAO() {
-        fb = FirebaseRef.getInstance();
-        myRef = fb.getDatabaseRef();
-        currentUser = fb.getFirebaseAuth().getCurrentUser();
-    }
-
-    private UserProfileDAO(TextView name, TextView email, TextView intro) {
-        fb = FirebaseRef.getInstance();
-        myRef = fb.getDatabaseRef();
-        currentUser = fb.getFirebaseAuth().getCurrentUser();
-        this.name = name;
-        this.email = email;
-        this.intro = intro;
+        FirebaseRef firebaseRef = FirebaseRef.getInstance();
+        db = firebaseRef.getFirestore();
+        currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
     }
 
     public static UserProfileDAO getInstance() {
@@ -54,88 +49,75 @@ public class UserProfileDAO implements UserActivityDaoInterface {
         return instance;
     }
 
-    public static UserProfileDAO getInstance(TextView name, TextView email, TextView intro) {
-        if (instance == null) {
-            instance = new UserProfileDAO(name, email, intro);
-        }
-        return instance;
-    }
-
-    public void updateViews (TextView name, TextView email, TextView intro) {
+    public void updateViews(TextView name, TextView email, TextView intro) {
         this.name = name;
         this.email = email;
         this.intro = intro;
     }
 
-    @Override
-    public void getData() {
-        myRef.child("user-profile").child(currentUser.getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+    public void getDataInProfileFrag() {
+        final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("Read profile", "Listen failed.", e);
+                    return;
                 }
-                else {
-                    userprofile = Objects.requireNonNull(task.getResult()).getValue(Profile.class);
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d("Read profile", "Current data: " + snapshot.getData());
+                    userprofile = new Profile(snapshot.getData());
                     name.setText(userprofile.getName());
                     email.setText(userprofile.getEmail());
                     intro.setText(userprofile.getIntro());
+                } else {
+                    Log.d("Read profile", "Current data: null");
                 }
             }
         });
     }
 
-    @Override
-    public void update() {
-
-    }
-
-    public void updateIntro(String intro){
-        userprofile.setIntro(intro);
-
-        currentUser = fb.getFirebaseAuth().getCurrentUser();
-        String uid = currentUser.getUid();
-
-        Map<String, Object> postValues = userprofile.toMap();
-
-        Map<String, Object> childUpdates = new HashMap<>();
-
-        childUpdates.put("/user-profile/" + uid + "/", postValues);
-
-        myRef.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void getData() {
+        final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                            Log.d("Register", "User profile updated.");
-                        }
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("Read profile", "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d("Read profile", "Current data: " + snapshot.getData());
+                    userprofile = new Profile(snapshot.getData());
+                } else {
+                    Log.d("Read profile", "Current data: null");
+                }
             }
         });
-
-        // Update Firebase the user name
-//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                .setDisplayName((String) newValues.get("name"))
-//                .build();
-//        currentUser.updateProfile(profileUpdates)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d("Register", "User profile updated.");
-//                        }
-//                    }
-//                });
     }
 
 
-    @Override
+    public void updateIntro(String intro) {
+        userprofile.setIntro(intro);
+        String uid = currentUser.getUid();
+        Map<String, Object> postValues = userprofile.toMap();
+        writeNewProfile(uid, postValues);
+    }
+
+    public void updatePortraitUploadedStatus() {
+        userprofile.setPortraitUploadedStatus();
+        String uid = currentUser.getUid();
+        Map<String, Object> postValues = userprofile.toMap();
+        writeNewProfile(uid, postValues);
+    }
+
+
     public void create(String key, Map<String, Object> newValues) {
-        currentUser = fb.getFirebaseAuth().getCurrentUser();
-        Map<String, Object> childUpdates = new HashMap<>();
-
-        childUpdates.put("/user-profile/" + key + "/", newValues);
-
-        myRef.updateChildren(childUpdates);
+        writeNewProfile(key, newValues);
 
         // Update Firebase the user name
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -152,9 +134,45 @@ public class UserProfileDAO implements UserActivityDaoInterface {
                 });
     }
 
-    @Override
-    public void delete() {
+    private void writeNewProfile(String key, Map<String, Object> newValues) {
+        db.collection("user-profiles").document(key)
+                .set(newValues)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Profile", "New profile successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Profile", "Error writing profile", e);
+                    }
+                });
+    }
 
+    public void addNewFriend(String uid) {
+        userprofile.addNewFriend(uid);
+        db.collection("user-profiles")
+                .document(currentUser.getUid())
+                .update("friends", FieldValue.arrayUnion(uid));
+        db.collection("user-profiles")
+                .document(uid)
+                .update("friends", FieldValue.arrayUnion(currentUser.getUid()));
+    }
+
+    public void addNewBlocked(String uid) {
+        userprofile.addNewBlock(uid);
+        db.collection("user-profiles")
+                .document(currentUser.getUid())
+                .update("blocked", FieldValue.arrayUnion(uid));
+    }
+
+    public void cancelBlocked(String uid) {
+        userprofile.cancelBlock(uid);
+        db.collection("user-profiles")
+                .document(currentUser.getUid())
+                .update("blocked", FieldValue.arrayRemove(uid));
     }
 
     public void clear() {

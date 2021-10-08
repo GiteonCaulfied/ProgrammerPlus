@@ -2,7 +2,12 @@ package au.edu.anu.cecs.COMP6442GroupAssignment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,22 +15,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.MessageAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Message;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
@@ -34,10 +53,14 @@ public class MessageActivity extends AppCompatActivity {
     private TextView username;
     private ImageView imageView;
     private FirebaseUser currentUser;
+    private FirebaseFirestore db;
     private DatabaseReference myRef;
-    private String user1;
-    private String user2;
     private String whoSent;
+    private MessageDAO messageDAO;
+    private String userId;
+    private Profile me;
+    private UserProfileDAO userProfileDAO;
+    private MenuItem item;
 
     private RecyclerView histMessages;
     private EditText message;
@@ -45,6 +68,7 @@ public class MessageActivity extends AppCompatActivity {
     private Profile user;
     private MessageAdapter messageAdapter;
     private ArrayList<Message> messages;
+    private StorageReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +82,9 @@ public class MessageActivity extends AppCompatActivity {
         imageView = findViewById(R.id.fri_image);
         username = findViewById(R.id.fri_name);
 
+        FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
+        reference = instance.getReference();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -66,52 +93,85 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+        toolbar.inflateMenu(R.menu.menu_chat);
 
         Intent intent = getIntent();
-        String userId = intent.getStringExtra("userid");
+        userId = intent.getStringExtra("userid");
         whoSent = currentUser.getUid();
-        if (currentUser.getUid().compareTo(userId) < 0) {
-            user1 = currentUser.getUid();
-            user2 = userId;
-        } else {
-            user1 = userId;
-            user2 = currentUser.getUid();
-        }
 
-        myRef.child("user-profile").child(userId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        user = snapshot.getValue(Profile.class);
-                        username.setText(user.getName());
-                        //TODO 用户头像
-                    }
+        db = firebaseRef.getFirestore();
+        db.collection("user-profiles")
+                .document(userId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                user = new Profile(value.getData());
+                username.setText(user.getName());
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                if (user.isPortraitUploaded()){
+                    //Display Portrait Image When Messaging
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.face_id_1)
+                            .error(R.drawable.face_id_1)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false);
+                    reference.child("portrait/"+ user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                    }
-                });
+                            Glide.with(getApplicationContext())
+                                    .load(uri.toString())
+                                    .apply(options)
+                                    .into(imageView);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+                } else {
+                    imageView.setImageResource(R.drawable.face_id_1);
+                }
+            }
+        });
 
         // Messages
         message = findViewById(R.id.messageText);
         sendBut = findViewById(R.id.sendMess);
+        messageDAO = MessageDAO.getInstance();
 
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String text = message.getText().toString();
                 if (!text.equals("")) {
-                    MessageDAO messageDAO = MessageDAO.getInstance();
-                    messageDAO.sendMessage(user1,
-                            user2, text, whoSent);
+                    if (user.blockContain(currentUser.getUid())) {
+                        Toast.makeText(MessageActivity.this,
+                                "Cannot send a message! You have been blocked!",
+                                Toast.LENGTH_LONG).show();
+                        message.setText("");
+                        return;
+                    }
+                    messageDAO.sendMessage(currentUser.getUid(),
+                            userId, text, whoSent);
+                    messageDAO.sendMessage(userId,
+                            currentUser.getUid(), text, whoSent);
                 } else {
                     Toast.makeText(MessageActivity.this,
-                            "Cannot send empty message!", Toast.LENGTH_LONG);
+                            "Cannot send empty message!", Toast.LENGTH_LONG).show();
                 }
                 message.setText("");
             }
         });
+
+        // Block or not?
+        userProfileDAO = UserProfileDAO.getInstance();
+        me = userProfileDAO.getUserprofile();
+        if (me.blockContain(userId)) {
+            item = toolbar.getMenu().findItem(R.id.block_him);
+            item.setTitle("Unblocked");
+        }
 
         messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(getApplicationContext(), messages,
@@ -125,7 +185,7 @@ public class MessageActivity extends AppCompatActivity {
 
         // What we said
         myRef.child("user-chat")
-                .child(user1).child(user2)
+                .child(currentUser.getUid()).child(userId)
                 .addValueEventListener(new ValueEventListener() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
@@ -148,5 +208,31 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void setSupportActionBar(Toolbar toolbar) {
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+    }
+
+    public void block(MenuItem item) {
+        if (me.blockContain(userId)) {
+            userProfileDAO.cancelBlocked(userId);
+            Toast.makeText(getApplicationContext(), "Unblocked!",
+                    Toast.LENGTH_LONG).show();
+            item.setTitle("Block");
+        }
+        else {
+            userProfileDAO.addNewBlocked(userId);
+            Toast.makeText(getApplicationContext(), "Blocked!",
+                    Toast.LENGTH_LONG).show();
+            item.setTitle("Unblock");
+        }
+    }
+
+    public void deleteChat(MenuItem item) {
+        messageDAO.deleteChat(currentUser.getUid(), userId);
+        finish();
     }
 }

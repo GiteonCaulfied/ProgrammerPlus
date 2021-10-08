@@ -48,7 +48,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
                         act.startActivity(intent);
                     }
                 }
-        );
+        ,this);
     }
 
     public static UserPostDAO getInstance(AppCompatActivity act) {
@@ -85,8 +85,21 @@ public class UserPostDAO implements UserActivityDaoInterface {
     }
 
     @Override
-    public void update() {
-
+    public void update(String key, Map<String, Object> newValues) {
+        db.collection("user-posts").document(key)
+                .update(newValues)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Post", "Star suc!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Post", "Star err", e);
+                    }
+                });
     }
 
     @Override

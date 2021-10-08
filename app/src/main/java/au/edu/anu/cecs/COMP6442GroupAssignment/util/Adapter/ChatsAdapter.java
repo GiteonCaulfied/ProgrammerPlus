@@ -2,7 +2,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,22 +20,25 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.MessageActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
-public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
+public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
     private final StorageReference reference;
 
-    private Context context;
-    private ArrayList<Profile> friends;
+    private final Context context;
+    private final ArrayList<String> uids;
+    private final ArrayList<String> friends;
+    private final ArrayList<String> latestMess;
 
-    public FriendsAdapter(Context context, ArrayList<Profile> friends) {
+    public ChatsAdapter(Context context, ArrayList<String> uids,
+                        ArrayList<String> friends, ArrayList<String> latestMess) {
         this.context = context;
+        this.uids = uids;
         this.friends = friends;
+        this.latestMess = latestMess;
         FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
         reference = instance.getReference();
     }
@@ -45,7 +47,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.friend_item,
+        View view = LayoutInflater.from(context).inflate(R.layout.chat_item,
                 parent,
                 false);
         return new ViewHolder(view);
@@ -53,43 +55,41 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Profile friend = friends.get(position);
-        holder.name.setText(friend.getName());
-        //TODO ImageView
+        String friend = friends.get(position);
+        String key = uids.get(position);
+        String latest = latestMess.get(position);
+        holder.name.setText(friend);
+        holder.text.setText(latest);
 
-        if (friend.isPortraitUploaded()){
-            //Display Portrait Image
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.face_id_1)
-                    .error(R.drawable.face_id_1)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(false);
-            reference.child("portrait/"+friend.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
+        //Display Portrait Image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.face_id_1)
+                .error(R.drawable.face_id_1)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false);
+        reference.child("portrait/" + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
 
-                    Glide.with(context)
-                            .load(uri.toString())
-                            .apply(options)
-                            .into(holder.imageView);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
-        } else {
-            holder.imageView.setImageResource(R.drawable.face_id_1);
-        }
+                Glide.with(context)
+                        .load(uri.toString())
+                        .apply(options)
+                        .into(holder.imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("userid", friend.getUid());
+                intent.putExtra("userid", key);
                 context.startActivity(intent);
             }
         });
@@ -103,12 +103,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ImageView imageView;
+        public TextView text;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.username);
             imageView = itemView.findViewById(R.id.portrait);
+            text = itemView.findViewById(R.id.latestMess);
         }
     }
 }

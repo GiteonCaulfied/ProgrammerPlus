@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="au.edu.anu.cecs.textmenu.MainActivity">
+    <item
+        android:id="@+id/block_him"
+        android:onClick="block"
+        android:orderInCategory="100"
+        android:title="Block"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/delete_chat"
+        android:onClick="deleteChat"
+        android:orderInCategory="100"
+        android:title="Delete chat"
+        app:showAsAction="never" />
+</menu>

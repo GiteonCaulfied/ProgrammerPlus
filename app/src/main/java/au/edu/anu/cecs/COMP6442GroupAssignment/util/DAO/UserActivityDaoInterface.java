@@ -5,7 +5,7 @@ import java.util.Map;
 public interface UserActivityDaoInterface {
     public void getData();
 
-    public void update();
+    public void update(String key, Map<String, Object> newValues);
 
     public void create(String key, Map<String, Object> newValues);
 

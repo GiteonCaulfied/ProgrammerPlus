@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,18 +18,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 
 public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapter.TimelinePostViewHolder>{
 
     private final StorageReference reference;
+    private final String uid;
+    private final UserPostDAO instance1;
 
     public interface OnItemClickListener {
         void onItemClick(Post item);
@@ -36,14 +43,17 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
     private final Context context;
     private final List<Post> posts;
     private final OnItemClickListener listener;
+    AppCompatActivity appCompatActivity;
 
-
-    public TimelinePostAdapter(Context context, List<Post> posts, OnItemClickListener listener) {
+    public TimelinePostAdapter(Context context, List<Post> posts, OnItemClickListener listener, UserPostDAO instance1) {
         this.context = context;
         this.posts = posts;
         this.listener = listener;
+        this.appCompatActivity = appCompatActivity;
         FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
         reference = instance.getReference();
+        uid = FirebaseAuth.getInstance().getUid();
+        this.instance1 = instance1;
     }
 
     @NonNull
@@ -55,7 +65,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimelinePostAdapter.TimelinePostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TimelinePostAdapter.TimelinePostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         int max = 100;
         int min = 0;
         int id = (int) (Math.random()*(max-min+1));
@@ -86,7 +96,28 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             }
         });
 
+        holder.getText_star().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                if (posts.get(position).getUsersWhoLike().contains(uid)){
+                    ArrayList<String> usersWhoLike = posts.get(position).getUsersWhoLike();
+                    usersWhoLike.remove(uid);
+                    posts.get(position).setUsersWhoLike(usersWhoLike);
+                    instance1.update(posts.get(position).getPid(),posts.get(position).toMap());
+                }else {
+                    ArrayList<String> usersWhoLike = posts.get(position).getUsersWhoLike();
+                    usersWhoLike.add(uid);
+                    posts.get(position).setUsersWhoLike(usersWhoLike);
+                    instance1.update(posts.get(position).getPid(),posts.get(position).toMap());
+                }
+            }
+        });
+
+        holder.getText_star().setTextColor(posts.get(position).getUsersWhoLike().contains(uid)?context.getResources().getColor(R.color.red):
+                context.getResources().getColor(R.color.gray));
+        holder.getText_star().setText(posts.get(position).getUsersWhoLike().contains(uid)?("Take Back"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)")
+                :("Give Star!"+" ("+posts.get(position).getUsersWhoLike().size()+"stars)"));
         holder.bind(posts.get(position), listener);
     }
 
@@ -102,6 +133,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         private final ImageView image;
         private final TextView text_username;
         private final TextView text_title;
+        private final TextView star;
 
         public TimelinePostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +141,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             image = (ImageView) itemView.findViewById(R.id.tv_post_image);
             text_username = (TextView) itemView.findViewById(R.id.tv_post_username);
             text_title = (TextView) itemView.findViewById(R.id.tv_post_title);
+            star = (TextView) itemView.findViewById(R.id.textView3);
         }
 
         public ImageView getImage() {
@@ -121,6 +154,10 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
 
         public TextView getText_title() {
             return text_title;
+        }
+
+        public TextView getText_star() {
+            return star;
         }
 
         public void bind(final Post item, final OnItemClickListener listener) {

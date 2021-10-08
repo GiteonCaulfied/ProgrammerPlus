@@ -32,7 +32,7 @@
     </androidx.viewpager.widget.ViewPager>
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/profile_image_now"
         android:layout_width="101dp"
         android:layout_height="90dp"
         android:layout_marginStart="155dp"
@@ -52,7 +52,7 @@
         android:layout_marginBottom="10dp"
         android:background="#CAB3B3"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,12 +73,14 @@
         android:id="@+id/LogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:onClick="logOut"
         android:text="Log out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_select" />
 
     <TextView
         android:id="@+id/email_Text"
@@ -123,7 +125,7 @@
         android:layout_marginTop="79dp"
         android:background="#CAB3B3"
         android:text="name"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image_now"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,12 +133,11 @@
         android:id="@+id/intro_edit"
         android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="content"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/intro_Text"
+        app:layout_constraintTop_toBottomOf="@+id/Intro"
         tools:visibility="invisible" />
 
     <Button
@@ -152,12 +153,36 @@
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
         android:text="SAVE"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/edit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro_edit"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_upload"
         tools:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/profile_image_select"
+        android:layout_width="101dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_edit"
+        app:srcCompat="@drawable/face_id_1" />
+
+    <Button
+        android:id="@+id/profile_image_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:text="Select Image"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
