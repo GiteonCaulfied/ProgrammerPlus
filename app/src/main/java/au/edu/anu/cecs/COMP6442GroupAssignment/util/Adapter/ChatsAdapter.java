@@ -29,11 +29,14 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     private final StorageReference reference;
 
     private final Context context;
+    private final ArrayList<String> uids;
     private final ArrayList<String> friends;
     private final ArrayList<String> latestMess;
 
-    public ChatsAdapter(Context context, ArrayList<String> friends, ArrayList<String> latestMess) {
+    public ChatsAdapter(Context context, ArrayList<String> uids,
+                        ArrayList<String> friends, ArrayList<String> latestMess) {
         this.context = context;
+        this.uids = uids;
         this.friends = friends;
         this.latestMess = latestMess;
         FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
@@ -53,6 +56,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String friend = friends.get(position);
+        String key = uids.get(position);
         String latest = latestMess.get(position);
         holder.name.setText(friend);
         holder.text.setText(latest);
@@ -64,7 +68,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
                 .error(R.drawable.face_id_1)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(false);
-        reference.child("portrait/" + friend).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        reference.child("portrait/" + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
@@ -85,7 +89,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("userid", friend);
+                intent.putExtra("userid", key);
                 context.startActivity(intent);
             }
         });

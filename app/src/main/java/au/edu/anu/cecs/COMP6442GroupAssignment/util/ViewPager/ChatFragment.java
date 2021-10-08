@@ -27,10 +27,12 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.ChatsAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.FriendsAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class ChatFragment extends Fragment {
     private FriendsAdapter friendsAdapter;
     private ArrayList<String> friends;
+    private ArrayList<String> uids;
     private ArrayList<String> latestMess;
     private FirebaseRef firebaseRef;
     private FirebaseUser currentUser;
@@ -53,8 +55,9 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         friends = new ArrayList<>();
+        uids = new ArrayList<>();
         latestMess = new ArrayList<>();
-        ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), friends, latestMess);
+        ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), uids, friends, latestMess);
         recyclerView.setAdapter(chatsAdapter);
 
         myRef.child("user-chat").child(currentUser.getUid())
@@ -62,12 +65,15 @@ public class ChatFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         friends.clear();
+                        uids.clear();
                         latestMess.clear();
+                        UserManager userManager = UserManager.getInstance();
                         HashMap<String, Object> chats = (HashMap<String, Object>) snapshot.getValue();
                         // Loop for all chats
                         if (chats == null) return;
                         for (String key : chats.keySet()) {
-                            friends.add(key);
+                            friends.add(userManager.getNameFromID(key));
+                            uids.add(key);
 
                             HashMap<String, Object> messages = (HashMap<String, Object>) chats.get(key);
                             long bt = -1;

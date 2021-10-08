@@ -43,6 +43,7 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.SearchFriendDialog;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class FriendFragment extends Fragment {
     private ArrayList<Profile> friends;
@@ -72,6 +73,15 @@ public class FriendFragment extends Fragment {
         friendsAdapter = new FriendsAdapter(getContext(), friends);
         recyclerFriends.setAdapter(friendsAdapter);
 
+        // Friend request
+        req_emails = new ArrayList<>();
+        req_uids = new ArrayList<>();
+        dataSnapShot = new HashMap<>();
+        RequestsAdapter requestsAdapter = new RequestsAdapter(getContext(), req_emails, dataSnapShot, req_uids);
+        RecyclerView recyclerRequest = view.findViewById(R.id.requestRecycler);
+        recyclerRequest.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerRequest.setAdapter(requestsAdapter);
+
         final CollectionReference colRef = db.collection("user-profiles");
         colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -83,9 +93,12 @@ public class FriendFragment extends Fragment {
 
                 friends.clear();
                 allUsers = new ArrayList<>();
+                UserManager userManager = UserManager.getInstance();
 
                 for (DocumentSnapshot ss: value.getDocuments()) {
                     Profile p = new Profile(ss.getData());
+                    userManager.addUser(p);
+
                     assert p != null;
                     if (!p.getUid().equals(currentUser.getUid()))
                         allUsers.add(p);
@@ -102,34 +115,25 @@ public class FriendFragment extends Fragment {
                 }
 
                 friendsAdapter.notifyDataSetChanged();
-            }
-        });
 
-        // Friend request
-        req_emails = new ArrayList<>();
-        req_uids = new ArrayList<>();
-        dataSnapShot = new HashMap<>();
-        RequestsAdapter requestsAdapter = new RequestsAdapter(getContext(), req_emails, dataSnapShot, req_uids);
-        RecyclerView recyclerRequest = view.findViewById(R.id.requestRecycler);
-        recyclerRequest.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerRequest.setAdapter(requestsAdapter);
-
-        final DocumentReference friRef = db.collection("friend-request")
-                .document(currentUser.getEmail());
-        friRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                req_emails.clear();
-                req_uids.clear();
-                dataSnapShot = (HashMap<String, Object>) value.getData();
-                if (dataSnapShot != null) {
-                    for (String key : dataSnapShot.keySet()) {
-                        Object o = dataSnapShot.get(key);
-                        req_emails.add((String) o);
-                        req_uids.add(key);
+                final DocumentReference friRef = db.collection("friend-request")
+                        .document(currentUser.getEmail());
+                friRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        req_emails.clear();
+                        req_uids.clear();
+                        dataSnapShot = (HashMap<String, Object>) value.getData();
+                        if (dataSnapShot != null) {
+                            for (String key : dataSnapShot.keySet()) {
+                                req_emails.add(userManager.getEmailFromID(key));
+                                req_uids.add(userManager.getNameFromID(key));
+                            }
+                        }
+                        requestsAdapter.notifyDataSetChanged();
                     }
-                }
-                requestsAdapter.notifyDataSetChanged();
+                });
             }
         });
 
