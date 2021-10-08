@@ -77,7 +77,15 @@ public class Profile {
         return uid;
     }
 
-    public void setIntro( String new_intro ){
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIntro(String new_intro ){
         this.intro = new_intro;
     }
 

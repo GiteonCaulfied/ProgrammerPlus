@@ -37,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.EditProfile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.PostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
@@ -129,11 +130,8 @@ public class ProfileFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intro_edit.setVisibility(View.VISIBLE);
-                save.setVisibility(View.VISIBLE);
-                uploadImageBtn.setVisibility(View.VISIBLE);
-                selectedImage.setVisibility(View.VISIBLE);
-                intro.setVisibility(View.GONE);
+                Intent intent = new Intent(getContext(), EditProfile.class);
+                startActivity(intent);
             }
         });
 

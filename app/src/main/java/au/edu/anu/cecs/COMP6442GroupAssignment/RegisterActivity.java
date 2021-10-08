@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private Button selectPortraitBtn;
+    private Button selectPortraitBtn, signUp;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password_signup);
         confirm = findViewById(R.id.confirm_signup);
         intro = findViewById(R.id.intro_signup);
+        signUp = findViewById(R.id.signUp);
 
         profile = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
@@ -82,6 +83,8 @@ public class RegisterActivity extends AppCompatActivity {
                 SelectImage();
             }
         });
+
+        signUp.setOnClickListener(this::signUp);
     }
 
     @Override
