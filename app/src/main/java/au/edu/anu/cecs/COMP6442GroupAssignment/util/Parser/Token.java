@@ -2,7 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
 
 public class Token {
 
-    public enum Type {Title,Author,Tag,Likes}
+    public enum Type {Title,Author,Tag,Id,LBRA, RBRA,AND,OR}
     public static class IllegalTokenException extends IllegalArgumentException {
         public IllegalTokenException(String errorMessage) {
             super(errorMessage);
@@ -17,6 +17,8 @@ public class Token {
         this.token = token;
         this.type = type;
     }
+
+
 
     public String getToken() {
         return token;

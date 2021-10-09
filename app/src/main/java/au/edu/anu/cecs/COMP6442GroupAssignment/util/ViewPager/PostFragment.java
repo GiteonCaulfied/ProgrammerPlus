@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,12 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.PostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 
 public class PostFragment extends Fragment {
+
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater,
@@ -36,6 +38,18 @@ public class PostFragment extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             timelinePostView.setLayoutManager(layoutManager);
+
+            TextView search_bar =view.findViewById(R.id.searchText);
+            Button do_search = view.findViewById(R.id.search_posts);
+
+            do_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String text =search_bar.getText().toString();
+                    userPostDAO.searchPost(text);
+                }
+            });
+
 
             Button newPost = view.findViewById(R.id.new_post_button);
             newPost.setOnClickListener(new View.OnClickListener() {

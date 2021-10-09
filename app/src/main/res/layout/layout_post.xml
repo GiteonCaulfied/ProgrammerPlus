@@ -30,4 +30,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="407dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="104dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/timelinePostView"
+        tools:layout_editor_absoluteX="4dp" />
+
+    <Button
+        android:id="@+id/search_posts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="searchPosts"
+        android:text="search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
