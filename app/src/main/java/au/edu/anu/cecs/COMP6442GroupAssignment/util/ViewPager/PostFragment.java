@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,11 +43,34 @@ public class PostFragment extends Fragment {
             TextView search_bar =view.findViewById(R.id.searchText);
             Button do_search = view.findViewById(R.id.search_posts);
 
+            Button round_search_button = view.findViewById(R.id.round_search_button);
+
+            round_search_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (do_search.getVisibility() == View.VISIBLE){
+                        do_search.setVisibility(View.INVISIBLE);
+                        search_bar.setVisibility(View.INVISIBLE);
+                        timelinePostView.setVisibility(View.VISIBLE);
+                    } else {
+                        do_search.setVisibility(View.VISIBLE);
+                        search_bar.setVisibility(View.VISIBLE);
+                        timelinePostView.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
+
             do_search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String text =search_bar.getText().toString();
-                    userPostDAO.searchPost(text);
+                    if (text.length()!=0){
+                        userPostDAO.searchPost(text);
+
+                        do_search.setVisibility(View.INVISIBLE);
+                        search_bar.setVisibility(View.INVISIBLE);
+                        timelinePostView.setVisibility(View.VISIBLE);
+                    }
                 }
             });
 
