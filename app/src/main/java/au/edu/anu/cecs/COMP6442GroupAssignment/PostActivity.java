@@ -39,7 +39,7 @@ public class PostActivity extends AppCompatActivity {
     // request code
     private final int PICK_IMAGE_REQUEST = 22;
     private FirebaseDatabase database;
-    private EditText title, content;
+    private EditText title, content, tags;
     private DatabaseReference myRef;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -60,6 +60,7 @@ public class PostActivity extends AppCompatActivity {
         database = fb.getDatabase();
         title = findViewById(R.id.post_title);
         content = findViewById(R.id.post_content);
+        tags = findViewById(R.id.post_tag);
         myRef = fb.getDatabaseRef();
 
         imageView = findViewById(R.id.post_uploaded_image);
@@ -149,6 +150,10 @@ public class PostActivity extends AppCompatActivity {
                 title.getText().toString(),
                 content.getText().toString(),
                 "");
+
+        if (tags.getText().toString().length() != 0){
+            post.setTags(tags.getText().toString());
+        }
 
         if (filePath != null) {
 

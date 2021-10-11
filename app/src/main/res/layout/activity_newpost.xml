@@ -27,6 +27,7 @@
         android:layout_marginBottom="400dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="What you want to say?"
         android:inputType="textMultiLine"
         android:selectAllOnFocus="false"
         android:singleLine="false"
@@ -43,8 +44,8 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="15dp"
         android:ems="10"
+        android:hint="Your Title"
         android:inputType="textPersonName"
-        android:text="Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
         android:id="@+id/post_select_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="130dp"
         android:layout_marginEnd="15dp"
         android:text="Select Image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,5 +70,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_content"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/post_tag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:ems="10"
+        android:hint="Tag (Seperate them by Semicolon)"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,5 +90,18 @@ public class Post {
     }
     public void setImageAddress(String address){
         this.imageAddress = address;
+    }
+
+    public String getAuthorID(){
+        return authorID;
+    }
+
+    public void setTags(String raw){
+        String[] raw_arr = raw.split(";");
+        tags = new ArrayList<>(Arrays.asList(raw_arr));
+    }
+
+    public ArrayList<String> getTags(){
+        return tags;
     }
 }

@@ -35,25 +35,21 @@
         android:id="@+id/profile_image_now"
         android:layout_width="101dp"
         android:layout_height="90dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="119dp"
-        android:layout_marginEnd="155dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/face_id_1" />
 
     <TextView
         android:id="@+id/name_Text"
-        android:layout_width="89dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
         android:background="#CAB3B3"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/profile_image_now"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -61,7 +57,7 @@
         android:layout_width="57dp"
         android:layout_height="19dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="338dp"
         android:text="Intro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,35 +69,32 @@
         android:id="@+id/LogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:onClick="logOut"
         android:text="Log out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_select" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/email_Text"
-        android:layout_width="89dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="99dp"
-        android:layout_marginEnd="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:background="#CAB3B3"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/name_Text" />
 
     <TextView
         android:id="@+id/email"
-        android:layout_width="88dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="99dp"
-        android:background="#CAB3B3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:text="email"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image_now"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
@@ -119,26 +112,14 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="88dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="60dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="79dp"
-        android:background="#CAB3B3"
         android:text="name"
         app:layout_constraintBottom_toTopOf="@+id/profile_image_now"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image_now"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/intro_edit"
-        android:layout_width="408dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="content"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/Intro"
-        tools:visibility="invisible" />
 
     <Button
         android:id="@+id/edit"
@@ -148,41 +129,5 @@
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="@+id/LogOut"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="10dp"
-        android:text="SAVE"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_upload"
-        tools:visibility="invisible" />
-
-    <ImageView
-        android:id="@+id/profile_image_select"
-        android:layout_width="101dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro_edit"
-        app:srcCompat="@drawable/face_id_1" />
-
-    <Button
-        android:id="@+id/profile_image_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
-        android:text="Select Image"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

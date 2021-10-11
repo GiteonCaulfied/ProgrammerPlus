@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,13 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         holder.getText_username().setText(posts.get(position).getAuthor());
         holder.getText_title().setText(posts.get(position).getTitle());
 
+        //Display the Tags (if Any)
+        if (posts.get(position).getTags().size() == 0){
+            holder.getText_tags().setText("No Tags");
+        } else {
+            String tagString = posts.get(position).getTags().toString().replace("[", "").replace("]", "");
+            holder.getText_tags().setText(tagString);
+        }
 
         //Display Image of the Post
         RequestOptions options = new RequestOptions()
@@ -93,6 +102,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+                holder.getImage().setVisibility(View.GONE);
             }
         });
 
@@ -133,6 +143,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
         private final ImageView image;
         private final TextView text_username;
         private final TextView text_title;
+        private final TextView text_tags;
         private final TextView star;
 
         public TimelinePostViewHolder(@NonNull View itemView) {
@@ -141,6 +152,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             image = (ImageView) itemView.findViewById(R.id.tv_post_image);
             text_username = (TextView) itemView.findViewById(R.id.tv_post_username);
             text_title = (TextView) itemView.findViewById(R.id.tv_post_title);
+            text_tags = (TextView) itemView.findViewById(R.id.tv_post_tags);
             star = (TextView) itemView.findViewById(R.id.textView3);
         }
 
@@ -154,6 +166,10 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
 
         public TextView getText_title() {
             return text_title;
+        }
+
+        public TextView getText_tags(){
+            return text_tags;
         }
 
         public TextView getText_star() {

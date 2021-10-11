@@ -33,8 +33,8 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class DetailedPostActivity extends AppCompatActivity {
 
-    private ImageView image;
-    private TextView author, title, body,textView4;
+    private ImageView image, portrait;
+    private TextView author, title, body,textView4, tags;
     private String uid;
     private Post p;
     private UserPostDAO instance;
@@ -48,7 +48,9 @@ public class DetailedPostActivity extends AppCompatActivity {
         textView4 = findViewById(R.id.textView4);
         title = findViewById(R.id.post_page_title);
         body = findViewById(R.id.post_page_body);
+        tags =  findViewById(R.id.post_page_tags);
         image = findViewById(R.id.post_page_image);
+        portrait = findViewById(R.id.post_page_portrait);
         instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
@@ -70,6 +72,61 @@ public class DetailedPostActivity extends AppCompatActivity {
                         title.setText(p.getTitle());
                         body.setText(p.getBody());
 
+                        // Show Tags (if any)
+                        if (p.getTags().size() == 0){
+                            tags.setText("No Tags");
+                        } else {
+                            String tagString = p.getTags().toString().replace("[", "").replace("]", "");
+                            tags.setText(tagString);
+                        }
+
+                        //Display Portrait of the Author
+                        RequestOptions optionsPortrait = new RequestOptions()
+                                .override(800, 600)
+                                .centerCrop()
+                                .placeholder(R.drawable.face_id_1)
+                                .error(R.drawable.face_id_1)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(false);
+                        sto_ref.child("portrait/"+ p.getAuthorID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                Glide.with(getApplicationContext())
+                                        .load(uri.toString())
+                                        .apply(optionsPortrait)
+                                        .into(portrait);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
+
+                        //Display Image of the Post
+                        RequestOptions optionsPost = new RequestOptions()
+                                .override(800, 600)
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(false);
+                        sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                Glide.with(getApplicationContext())
+                                        .load(uri.toString())
+                                        .apply(optionsPost)
+                                        .into(image);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
 
                         textView4.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -109,29 +166,7 @@ public class DetailedPostActivity extends AppCompatActivity {
             }
         });
 
-        //Display Image of the Post
-        RequestOptions options = new RequestOptions()
-                .override(800, 600)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false);
-        sto_ref.child("images/"+ pid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
 
-                Glide.with(getApplicationContext())
-                        .load(uri.toString())
-                        .apply(options)
-                        .into(image);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
 
 
     }
