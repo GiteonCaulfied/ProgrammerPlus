@@ -20,9 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 public class DetailedPostActivity extends AppCompatActivity {
 
     private ImageView image, portrait;
-    private TextView author, title, body,textView4, tags;
+    private TextView author, title, body,textView4, tags, loc;
     private String uid;
     private Post p;
     private UserPostDAO instance;
@@ -45,12 +43,13 @@ public class DetailedPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_post);
 
         author = findViewById(R.id.post_page_author);
-        textView4 = findViewById(R.id.textView4);
+        textView4 = findViewById(R.id.TakeStars);
         title = findViewById(R.id.post_page_title);
         body = findViewById(R.id.post_page_body);
         tags =  findViewById(R.id.post_page_tags);
         image = findViewById(R.id.post_page_image);
         portrait = findViewById(R.id.post_page_portrait);
+        loc = findViewById(R.id.post_page_loc);
         instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
@@ -155,7 +154,9 @@ public class DetailedPostActivity extends AppCompatActivity {
                         textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
                                 :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
 
-
+                        loc.setText("GPS information - Longitude: " + p.getLongitude() +
+                                "; Latitude: " + p.getLatitude() +
+                                ";\nCity: " + p.getAddress());
 
                     } else {
                         System.out.println("No such document!");

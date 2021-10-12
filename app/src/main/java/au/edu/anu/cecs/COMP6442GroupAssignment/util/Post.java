@@ -2,7 +2,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +17,17 @@ public class Post {
     private long date;
     private ArrayList<String> usersWhoLike;
     private ArrayList<String> usersNotLike;
+    private long longitude;
+    private long latitude;
+    private String address;
 
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
     public Post(String pid, String author, String authorID,
-                String title, String body, String imageAddress) {
+                String title, String body, String imageAddress,
+                HashMap<String, Object> locationMap) {
         this.pid = pid;
         this.author = author;
         this.authorID = authorID;
@@ -35,6 +38,9 @@ public class Post {
         this.usersWhoLike = new ArrayList<>();
         this.usersNotLike = new ArrayList<>();
         this.imageAddress = imageAddress;
+        this.longitude = (long) locationMap.get("Longitude");
+        this.latitude = (long) locationMap.get("Latitude");
+        this.address = (String) locationMap.get("Address");
     }
 
     public Post(Map<String, Object> value) {
@@ -48,6 +54,9 @@ public class Post {
         this.usersWhoLike = (ArrayList<String>) value.get("usersWhoLike");
         this.usersNotLike = (ArrayList<String>) value.get("usersNotLike");
         this.imageAddress = (String) value.get("imageAddress");
+        this.longitude = (long) value.get("Longitude");
+        this.latitude = (long) value.get("Latitude");
+        this.address = (String) value.get("Address");
     }
 
     public Map<String, Object> toMap() {
@@ -62,6 +71,9 @@ public class Post {
         result.put("tags", tags);
         result.put("usersWhoLike", usersWhoLike);
         result.put("usersNotLike", usersNotLike);
+        result.put("Longitude", longitude);
+        result.put("Latitude", latitude);
+        result.put("Address", address);
 
         return result;
     }
@@ -103,5 +115,17 @@ public class Post {
 
     public ArrayList<String> getTags(){
         return tags;
+    }
+
+    public long getLongitude() {
+        return longitude;
+    }
+
+    public long getLatitude() {
+        return latitude;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,10 +29,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyLocationManager;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class PostActivity extends AppCompatActivity {
@@ -42,14 +45,16 @@ public class PostActivity extends AppCompatActivity {
     private EditText title, content, tags;
     private DatabaseReference myRef;
     private FirebaseStorage storage;
+    private TextView location;
     private StorageReference storageReference;
     // view for image view
     private ImageView imageView;
     // Uri indicates, where the image will be picked from
     private Uri filePath;
     // views for button
-    private Button btnSelect;
+    private Button btnSelect, shareMyLoc;
     private ProgressDialog progressDialog;
+    private HashMap<String, Object> locationMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,7 @@ public class PostActivity extends AppCompatActivity {
         myRef = fb.getDatabaseRef();
 
         imageView = findViewById(R.id.post_uploaded_image);
+        imageView.setImageResource(R.drawable.face_id_1);
         btnSelect = findViewById(R.id.post_select_button);
 
         // get the Firebase  storage reference
@@ -75,6 +81,22 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SelectImage();
+            }
+        });
+
+        // Share the user's GPS information
+        location = findViewById(R.id.LocationInfo);
+        shareMyLoc = findViewById(R.id.ShareMyLoc);
+        MyLocationManager mlm = new MyLocationManager(this);
+        shareMyLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                locationMap = mlm.getLocation();
+                if (locationMap != null) {
+                    location.setText("GPS information - Longitude: " + locationMap.get("Longitude") +
+                            "; Latitude: " + locationMap.get("Latitude") +
+                            ";\nCity: " + locationMap.get("Address"));
+                }
             }
         });
     }
@@ -149,7 +171,8 @@ public class PostActivity extends AppCompatActivity {
                 uid,
                 title.getText().toString(),
                 content.getText().toString(),
-                "");
+                "",
+                locationMap);
 
         if (tags.getText().toString().length() != 0){
             post.setTags(tags.getText().toString());
@@ -245,7 +268,6 @@ public class PostActivity extends AppCompatActivity {
         userPostDAO.create(key, postValues);
         Toast.makeText(getApplicationContext(),
                 "Post successfully.", Toast.LENGTH_SHORT).show();
-
 
         finish();
     }

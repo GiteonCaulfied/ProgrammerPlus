@@ -32,7 +32,7 @@ public class Parser {
         this.finished++;
     }
     public boolean whetherFinished(){
-        if (finished==keys){
+        if (finished.equals(keys)){
             return true;
         }
         return false;
