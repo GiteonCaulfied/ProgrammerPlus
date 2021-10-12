@@ -20,26 +20,25 @@
         android:id="@+id/searchText"
         android:layout_width="407dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginTop="150dp"
         android:ems="10"
         android:hint="Author=Someone"
         android:inputType="textPersonName"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/timelinePostView"
+        app:layout_constraintTop_toTopOf="@+id/timelinePostView"
         tools:layout_editor_absoluteX="4dp" />
 
     <Button
         android:id="@+id/search_posts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
+        android:layout_marginBottom="25dp"
         android:onClick="searchPosts"
-        android:text="search"
+        android:text="Confirm"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchText"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/new_post_button"
@@ -55,16 +54,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/round_search_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/button_states"
-        android:text="S"
+    <TextView
+        android:id="@+id/search_grammar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:text="Search Grammar: "
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/timelinePostView"
+        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+
+    <ListView
+        android:id="@+id/search_hist"
+        android:layout_width="341dp"
+        android:layout_height="298dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_grammar" />
+
+    <ImageView
+        android:id="@+id/searchPostBut"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="23dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964" />
+        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
