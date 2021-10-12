@@ -87,6 +87,7 @@ public class PostActivity extends AppCompatActivity {
         // Share the user's GPS information
         location = findViewById(R.id.LocationInfo);
         shareMyLoc = findViewById(R.id.ShareMyLoc);
+        locationMap = new HashMap<>();
         MyLocationManager mlm = new MyLocationManager(this);
         shareMyLoc.setOnClickListener(new View.OnClickListener() {
             @Override

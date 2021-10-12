@@ -17,8 +17,8 @@ public class Post {
     private long date;
     private ArrayList<String> usersWhoLike;
     private ArrayList<String> usersNotLike;
-    private long longitude;
-    private long latitude;
+    private String longitude;
+    private String latitude;
     private String address;
 
     public Post() {
@@ -38,9 +38,15 @@ public class Post {
         this.usersWhoLike = new ArrayList<>();
         this.usersNotLike = new ArrayList<>();
         this.imageAddress = imageAddress;
-        this.longitude = (long) locationMap.get("Longitude");
-        this.latitude = (long) locationMap.get("Latitude");
-        this.address = (String) locationMap.get("Address");
+        if (locationMap != null & locationMap.size() > 0) {
+            this.longitude = locationMap.get("Longitude").toString();
+            this.latitude = locationMap.get("Latitude").toString();
+            this.address = (String) locationMap.get("Address");
+        } else {
+            this.longitude = "Unknown";
+            this.latitude = "Unknown";
+            this.address = "Unknown";
+        }
     }
 
     public Post(Map<String, Object> value) {
@@ -54,8 +60,8 @@ public class Post {
         this.usersWhoLike = (ArrayList<String>) value.get("usersWhoLike");
         this.usersNotLike = (ArrayList<String>) value.get("usersNotLike");
         this.imageAddress = (String) value.get("imageAddress");
-        this.longitude = (long) value.get("Longitude");
-        this.latitude = (long) value.get("Latitude");
+        this.longitude = (String) value.get("Longitude");
+        this.latitude = (String) value.get("Latitude");
         this.address = (String) value.get("Address");
     }
 
@@ -117,11 +123,11 @@ public class Post {
         return tags;
     }
 
-    public long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 

@@ -154,7 +154,7 @@ public class DetailedPostActivity extends AppCompatActivity {
                         textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
                                 :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
 
-                        loc.setText("GPS information - Longitude: " + p.getLongitude() +
+                        loc.setText("GPS information - \nLongitude: " + p.getLongitude() +
                                 "; Latitude: " + p.getLatitude() +
                                 ";\nCity: " + p.getAddress());
 
