@@ -1,8 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Scanner;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 public class Parser {
     public static class IllegalProductionException extends IllegalArgumentException {

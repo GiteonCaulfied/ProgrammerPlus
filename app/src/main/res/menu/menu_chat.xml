@@ -16,4 +16,11 @@
         android:orderInCategory="100"
         android:title="Delete chat"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/template_mess"
+        android:onClick="templateMess"
+        android:orderInCategory="100"
+        android:title="Template messages"
+        app:showAsAction="never" />
 </menu>

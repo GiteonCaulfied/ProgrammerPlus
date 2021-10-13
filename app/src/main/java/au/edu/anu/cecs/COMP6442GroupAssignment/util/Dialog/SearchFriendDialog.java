@@ -1,4 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,13 +17,15 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.MessageActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FriendRequest;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class SearchFriendDialog extends Dialog {
     public SearchFriendDialog(@NonNull Context context) {
@@ -52,7 +53,7 @@ public class SearchFriendDialog extends Dialog {
         lp.width = 740;
         win.setAttributes(lp);
 
-        view.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText email = findViewById(R.id.email_search_friend);

@@ -1,10 +1,7 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Tokenizer {
 

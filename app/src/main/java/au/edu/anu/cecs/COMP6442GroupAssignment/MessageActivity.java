@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -35,19 +33,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.MessageAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Dialog.TemplateMessDialog;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Message;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Dialog.SearchFriendDialog;
 
 public class MessageActivity extends AppCompatActivity {
     private TextView username;
@@ -86,7 +86,6 @@ public class MessageActivity extends AppCompatActivity {
         reference = instance.getReference();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,5 +240,14 @@ public class MessageActivity extends AppCompatActivity {
     public void deleteChat(MenuItem item) {
         messageDAO.deleteChat(currentUser.getUid(), userId);
         finish();
+    }
+
+    public void templateMess(MenuItem item) {
+        long lastTime = messages.isEmpty() ? System.currentTimeMillis() : messages.get(messages.size() - 1).getTime();
+        TemplateMessDialog dialog = new TemplateMessDialog(
+                MessageActivity.this,
+                R.style.Dialog, this,
+                me, user, lastTime);
+        dialog.show();
     }
 }

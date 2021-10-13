@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button selectPortraitBtn, signUp;
     private Switch onlyFriends;
-    private Boolean onlyFriMess;
+    private boolean onlyFriMess;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
