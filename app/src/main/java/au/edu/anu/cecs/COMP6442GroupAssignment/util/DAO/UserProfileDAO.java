@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import android.util.Log;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class UserProfileDAO {
     private final FirebaseFirestore db;
     private Profile userprofile;
     private TextView name, email, intro;
+    private Switch profile_only_fri;
 
     private UserProfileDAO() {
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
@@ -50,10 +52,11 @@ public class UserProfileDAO {
         return instance;
     }
 
-    public void updateViews(TextView name, TextView email, TextView intro) {
+    public void updateViews(TextView name, TextView email, TextView intro, Switch profile_only_fri) {
         this.name = name;
         this.email = email;
         this.intro = intro;
+        this.profile_only_fri = profile_only_fri;
     }
 
     public void getDataInProfileFrag() {
@@ -73,6 +76,7 @@ public class UserProfileDAO {
                     name.setText(userprofile.getName());
                     email.setText(userprofile.getEmail());
                     intro.setText(userprofile.getIntro());
+                    profile_only_fri.setChecked(userprofile.isOnlyFriMess());
                 } else {
                     Log.d("Read profile", "Current data: null");
                 }

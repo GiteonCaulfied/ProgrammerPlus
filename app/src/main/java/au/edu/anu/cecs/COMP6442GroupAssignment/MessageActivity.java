@@ -153,6 +153,13 @@ public class MessageActivity extends AppCompatActivity {
                         message.setText("");
                         return;
                     }
+                    if (user.isOnlyFriMess() && !user.friendContain(currentUser.getUid())) {
+                        Toast.makeText(MessageActivity.this,
+                                "Only friends can send a message to this user!",
+                                Toast.LENGTH_LONG).show();
+                        message.setText("");
+                        return;
+                    }
                     messageDAO.sendMessage(currentUser.getUid(),
                             userId, text, whoSent);
                     messageDAO.sendMessage(userId,

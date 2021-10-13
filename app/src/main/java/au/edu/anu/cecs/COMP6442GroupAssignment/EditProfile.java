@@ -9,8 +9,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ public class EditProfile extends AppCompatActivity {
     private Uri filePath;
 
     private EditText email, name, password, confirm, intro;
+    private Switch profile_only_fri;
     private ImageView portrait;
     private FirebaseAuth mAuth;
 
@@ -51,6 +54,7 @@ public class EditProfile extends AppCompatActivity {
     private DatabaseReference myRef;
     private Profile user;
     private UserProfileDAO userProfileDAO;
+    private boolean onlyFriMess;
 
     private Button selectPortraitBtn, signUp;
 
@@ -69,6 +73,7 @@ public class EditProfile extends AppCompatActivity {
         confirm = findViewById(R.id.confirm_signup);
         intro = findViewById(R.id.intro_signup);
         signUp = findViewById(R.id.signUp);
+        profile_only_fri = findViewById(R.id.friend_switch);
 
         portrait = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
@@ -90,6 +95,7 @@ public class EditProfile extends AppCompatActivity {
 
         // Because it's modifying profile
         email.setEnabled(false);
+        name.setEnabled(false);
         signUp.setText("SAVE");
         signUp.setOnClickListener(this::save);
         userProfileDAO = UserProfileDAO.getInstance();
@@ -100,6 +106,15 @@ public class EditProfile extends AppCompatActivity {
         password.setText("********");
         confirm.setText("********");
         intro.setText(user.getIntro());
+
+        onlyFriMess = user.isOnlyFriMess();
+        profile_only_fri.setChecked(onlyFriMess);
+        profile_only_fri.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onlyFriMess = b;
+            }
+        });
 
         //Display Portrait Image
         RequestOptions options = new RequestOptions()
@@ -193,6 +208,7 @@ public class EditProfile extends AppCompatActivity {
         user.setName(name_str);
         user.setEmail(email_str);
         user.setIntro(intro_str);
+        user.setOnlyFriMess(onlyFriMess);
         Map<String, Object> postValues = user.toMap();
         userProfileDAO.create(uid, postValues);
 

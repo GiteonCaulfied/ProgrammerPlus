@@ -17,12 +17,13 @@ public class Profile {
     private ArrayList<String> blocked;
     private String intro;
     private boolean portraitUploaded;
+    private boolean onlyFriMess;
 
     public Profile() {
         // Default constructor required for calls to DataSnapshot.getValue(Profile.class)
     }
 
-    public Profile(String uid, String email, String name, String intro) {
+    public Profile(String uid, String email, String name, String intro, Boolean onlyFriMess) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -32,6 +33,7 @@ public class Profile {
         this.blocked = new ArrayList<>();
         this.intro = intro;
         this.portraitUploaded = false;
+        this.onlyFriMess = onlyFriMess;
     }
 
     public Profile(Map<String, Object> m) {
@@ -44,6 +46,7 @@ public class Profile {
         this.blocked = (ArrayList<String>) m.get("blocked");
         this.intro = (String) m.get("intro");
         this.portraitUploaded = (boolean) m.get("portraitUploaded");
+        this.onlyFriMess = (boolean) m.get("onlyFriMess");
     }
 
     public Map<String, Object> toMap() {
@@ -57,6 +60,7 @@ public class Profile {
         result.put("blocked", blocked);
         result.put("intro", intro);
         result.put("portraitUploaded",portraitUploaded);
+        result.put("onlyFriMess", onlyFriMess);
 
         return result;
     }
@@ -77,6 +81,10 @@ public class Profile {
         return uid;
     }
 
+    public boolean isOnlyFriMess() {
+        return onlyFriMess;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -87,6 +95,10 @@ public class Profile {
 
     public void setIntro(String new_intro ){
         this.intro = new_intro;
+    }
+
+    public void setOnlyFriMess(boolean onlyFriMess) {
+        this.onlyFriMess = onlyFriMess;
     }
 
     public boolean addNewFriend(String uid) {

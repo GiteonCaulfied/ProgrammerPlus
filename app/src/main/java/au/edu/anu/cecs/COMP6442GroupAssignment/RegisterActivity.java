@@ -12,8 +12,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
 
-
     private EditText email, name, password, confirm, intro;
     private ImageView profile;
     private FirebaseAuth mAuth;
@@ -50,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private Button selectPortraitBtn, signUp;
+    private Switch onlyFriends;
+    private Boolean onlyFriMess;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -68,6 +71,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         profile = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
+
+        onlyFriends = findViewById(R.id.friend_switch);
+        onlyFriMess = false;
+        onlyFriends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onlyFriMess = b;
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -174,7 +186,8 @@ public class RegisterActivity extends AppCompatActivity {
                             uid,
                             email_str,
                             name_str,
-                            intro_str);
+                            intro_str,
+                            onlyFriMess);
                     Map<String, Object> postValues = profile.toMap();
 
                     UserProfileDAO userProfileDao = UserProfileDAO.getInstance();

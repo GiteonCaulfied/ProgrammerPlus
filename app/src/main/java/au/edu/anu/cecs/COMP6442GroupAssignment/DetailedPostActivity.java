@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,6 +39,7 @@ public class DetailedPostActivity extends AppCompatActivity {
     private String uid;
     private Post p;
     private UserPostDAO instance;
+    private Button message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         image = findViewById(R.id.post_page_image);
         portrait = findViewById(R.id.post_page_portrait);
         loc = findViewById(R.id.post_page_loc);
+        message = findViewById(R.id.post_page_mess);
         instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
@@ -167,8 +172,20 @@ public class DetailedPostActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (p.getAuthorID().equals(currentUser.getUid())) {
+                    Toast.makeText(getApplicationContext(),
+                            "Don't send a message to yourself!",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                intent.putExtra("userid", p.getAuthorID());
+                startActivity(intent);
+            }
+        });
     }
 }

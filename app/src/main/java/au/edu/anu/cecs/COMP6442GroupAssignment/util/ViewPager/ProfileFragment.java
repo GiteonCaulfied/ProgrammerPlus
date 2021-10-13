@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser currentUser;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private Switch profile_only_fri;
 
     @Nullable
     @Override
@@ -60,6 +62,7 @@ public class ProfileFragment extends Fragment {
 
         logOut = view.findViewById(R.id.LogOut);
         edit = view.findViewById(R.id.edit);
+        profile_only_fri = view.findViewById(R.id.profile_only_fri);
 
         NowImage = view.findViewById(R.id.profile_image_now);
 
@@ -70,7 +73,7 @@ public class ProfileFragment extends Fragment {
         storageReference = fb.getStorageReference();
 
         UserProfileDAO userProfileDao = UserProfileDAO.getInstance();
-        userProfileDao.updateViews(name, email, intro);
+        userProfileDao.updateViews(name, email, intro, profile_only_fri);
         userProfileDao.getDataInProfileFrag();
 
         //Display Portrait Image

@@ -19,15 +19,13 @@
 
     <TextView
         android:id="@+id/post_page_author"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="247dp"
+        android:layout_height="22dp"
         android:layout_marginStart="70dp"
         android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="Author"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_page_image" />
 
@@ -115,5 +113,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_page_image"
         app:srcCompat="@drawable/face_id_1" />
+
+    <Button
+        android:id="@+id/post_page_mess"
+        android:layout_width="84dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="10dp"
+        android:text="Message"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
