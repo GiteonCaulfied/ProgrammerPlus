@@ -88,9 +88,12 @@ public class PostFragment extends Fragment {
                     .document(currentUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    hist_arr.clear();
-                    hist_arr.addAll((ArrayList<String>) value.get("searchHistory"));
-                    arrayAdapter.notifyDataSetChanged();
+                    Object his = value.get("searchHistory");
+                    if (his != null) {
+                        hist_arr.clear();
+                        hist_arr.addAll((ArrayList<String>) his);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
                 }
             });
 
