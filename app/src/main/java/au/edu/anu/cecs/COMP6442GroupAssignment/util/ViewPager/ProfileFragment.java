@@ -33,12 +33,13 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.JsonUtils;
 
 public class ProfileFragment extends Fragment {
 
     private TextView name, email, intro;
     private ImageView NowImage;
-    private Button logOut, edit;
+    private Button logOut, edit, localPostsAdd;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
     private FirebaseStorage storage;
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment {
 
         logOut = view.findViewById(R.id.LogOut);
         edit = view.findViewById(R.id.edit);
+        localPostsAdd = view.findViewById(R.id.add_local_posts);
         profile_only_fri = view.findViewById(R.id.profile_only_fri);
 
         NowImage = view.findViewById(R.id.profile_image_now);
@@ -118,6 +120,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
+            }
+        });
+
+        localPostsAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JsonUtils.getInstance().readLocalPosts(getContext());
             }
         });
         return view;
