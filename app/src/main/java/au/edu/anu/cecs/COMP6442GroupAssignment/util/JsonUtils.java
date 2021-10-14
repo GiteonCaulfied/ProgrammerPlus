@@ -128,12 +128,15 @@ public class JsonUtils {
         try {
             JSONObject object = new JSONObject(readJSON(context));
             JSONArray array = object.getJSONArray("data");
+
+            UserManager userManager = UserManager.getInstance();
+
             if (LocalPostCount < array.length()){
                 for (int i = LocalPostCount; i < LocalPostCount + 2; i++) {
 
                     JSONObject jsonObject = array.getJSONObject(i);
-                    String user_id = jsonObject.getString("user_id");
-                    String name = jsonObject.getString("name");
+                    String user_id = userManager.getRandomID();
+                    String name = userManager.getNameFromID(user_id);
                     String tweet = jsonObject.getString("tweet");
 
                     String key = myRef.child("posts").push().getKey();

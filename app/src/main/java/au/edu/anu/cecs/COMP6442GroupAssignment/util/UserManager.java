@@ -41,4 +41,13 @@ public class UserManager {
     public boolean emailIsValid(String email) {
         return email_id_map.containsKey(email);
     }
+
+    public String getRandomID(){
+        // Random Number to randomly select ID
+        int min = 0;
+        int max = id_name_map.keySet().toArray().length - 1;
+
+        int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+        return (String) id_name_map.keySet().toArray()[random_int];
+    }
 }
