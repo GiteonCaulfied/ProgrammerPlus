@@ -21,15 +21,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Exp;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Parser;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Tokenizer;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Exp;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Parser;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 

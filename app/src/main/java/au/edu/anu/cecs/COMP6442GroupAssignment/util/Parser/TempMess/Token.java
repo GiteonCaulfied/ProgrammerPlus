@@ -1,8 +1,7 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.TempMess;
 
 public class Token {
-
-    public enum Type {Title,Author,Tag,Id,LBRA, RBRA,AND,OR}
+    public enum Type {TEXT, FRI_USERNAME, MESSTIME_TO_CURR, MY_USERNAME, MY_EMAILADDRESS}
     public static class IllegalTokenException extends IllegalArgumentException {
         public IllegalTokenException(String errorMessage) {
             super(errorMessage);
@@ -13,19 +12,17 @@ public class Token {
     private final String token; // Token representation in String form.
     private final Type type;    // Type of the token.
 
-    public Token(String token, Type type) {
+    public Token(String token, Token.Type type) {
         this.token = token;
         this.type = type;
     }
-
 
 
     public String getToken() {
         return token;
     }
 
-    public Type getType() {
+    public Token.Type getType() {
         return type;
     }
-
 }

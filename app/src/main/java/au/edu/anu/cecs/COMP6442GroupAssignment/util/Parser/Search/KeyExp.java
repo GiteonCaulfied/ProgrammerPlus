@@ -1,10 +1,8 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 
 
 import static android.app.PendingIntent.getActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 

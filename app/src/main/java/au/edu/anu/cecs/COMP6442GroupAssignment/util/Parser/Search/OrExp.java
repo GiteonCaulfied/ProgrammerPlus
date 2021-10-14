@@ -1,4 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 import static java.util.stream.Collectors.toList;
 
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
-public class AndExp extends Exp{
+public class OrExp extends Exp{
+
     private Exp term;
     private Exp exp;
 
-    public AndExp(Exp term, Exp exp) {
+    public OrExp(Exp term, Exp exp) {
         this.term = term;
         this.exp = exp;
     }
@@ -24,8 +25,11 @@ public class AndExp extends Exp{
     public ArrayList<Post> evaluate() {
         ArrayList<Post>list1 = term.evaluate();
         ArrayList<Post>list2 = exp.evaluate();
-        ArrayList<Post> intersection = (ArrayList<Post>) list1.stream().filter(item -> list2.contains(item)).collect(toList());
-        return intersection;
+
+        ArrayList<Post> listAll = (ArrayList<Post>) list1.parallelStream().collect(toList());
+        ArrayList<Post> listAll2 = (ArrayList<Post>) list2.parallelStream().collect(toList());
+        listAll.addAll(listAll2);
+        return listAll;
 
     }
 }
