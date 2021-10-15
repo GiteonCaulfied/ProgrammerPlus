@@ -82,29 +82,34 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             holder.getText_tags().setText(tagString);
         }
 
-        //Display Image of the Post
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false);
-        reference.child("images/"+posts.get(position).getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        if (posts.get(position).getImageAddress().length() != 0){
+            //Display Image of the Post (If any)
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false);
+            reference.child("images/"+posts.get(position).getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                Glide.with(context)
-                        .load(uri.toString())
-                        .apply(options)
-                        .into(holder.getImage());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                holder.getImage().setVisibility(View.GONE);
-            }
-        });
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .apply(options)
+                            .into(holder.getImage());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                    holder.getImage().setVisibility(View.GONE);
+                }
+            });
+        } else {
+            holder.getImage().setVisibility(View.GONE);
+        }
+
 
         holder.getText_star().setOnClickListener(new View.OnClickListener() {
             @Override
