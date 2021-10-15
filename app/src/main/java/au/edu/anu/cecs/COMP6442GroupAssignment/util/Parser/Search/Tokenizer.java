@@ -68,7 +68,8 @@ public class Tokenizer {
             }else if (instruction.startsWith("Id=")){
                 currentToken = new Token(instruction, Token.Type.Id);
              }else {
-                throw new Token.IllegalTokenException("");
+//                throw new Token.IllegalTokenException("");
+                currentToken = new Token(instruction, Token.Type.Illegal);
             }
         }
 
