@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Post {
 
@@ -112,6 +113,19 @@ public class Post {
 
     public String getAuthorID(){
         return authorID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return date == post.date && Objects.equals(pid, post.pid) && Objects.equals(author, post.author) && Objects.equals(authorID, post.authorID) && Objects.equals(title, post.title) && Objects.equals(imageAddress, post.imageAddress) && Objects.equals(tags, post.tags) && Objects.equals(body, post.body) && Objects.equals(usersWhoLike, post.usersWhoLike) && Objects.equals(usersNotLike, post.usersNotLike) && Objects.equals(longitude, post.longitude) && Objects.equals(latitude, post.latitude) && Objects.equals(address, post.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pid, author, authorID, title, imageAddress, tags, body, date, usersWhoLike, usersNotLike, longitude, latitude, address);
     }
 
     public void setTags(String raw){

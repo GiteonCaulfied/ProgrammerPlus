@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         firebaseRef = FirebaseRef.getInstance();
         currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
+//        firebaseRef.getFirebaseAuth().signOut();
         if (currentUser == null)
             currentState = new NoSessionState(this);
         else
