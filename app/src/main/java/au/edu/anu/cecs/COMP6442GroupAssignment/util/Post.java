@@ -111,6 +111,10 @@ public class Post {
         this.imageAddress = address;
     }
 
+    public String getImageAddress(){
+        return imageAddress;
+    }
+
     public String getAuthorID(){
         return authorID;
     }
