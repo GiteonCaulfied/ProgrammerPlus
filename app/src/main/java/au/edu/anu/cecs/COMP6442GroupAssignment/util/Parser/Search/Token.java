@@ -2,7 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 public class Token {
 
-    public enum Type {Title,Author,Tag,Id,LBRA, RBRA,AND,OR}
+    public enum Type {Title,Author,Tag,Id,LBRA, RBRA,AND,OR,Illegal}
     public static class IllegalTokenException extends IllegalArgumentException {
         public IllegalTokenException(String errorMessage) {
             super(errorMessage);

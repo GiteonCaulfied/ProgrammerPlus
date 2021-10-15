@@ -2,6 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Exp;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Tokenizer;
@@ -118,12 +120,18 @@ public class UserPostDAO implements UserActivityDaoInterface {
 //                    }
 //                }
 //                ,this);
-        posts.clear();
-        Tokenizer tokenizer = new Tokenizer(text);
+        try {
+            posts.clear();
+            Tokenizer tokenizer = new Tokenizer(text);
 
 
-        Parser parser = new Parser(tokenizer);
-        temp_exp = parser.parseExp();
+            Parser parser = new Parser(tokenizer);
+            temp_exp = parser.parseExp();
+        }catch (Exception e){
+            Toast.makeText(MyApplication.context,
+                    "Illegal syntax", Toast.LENGTH_SHORT).show();
+        }
+
 
 
     }

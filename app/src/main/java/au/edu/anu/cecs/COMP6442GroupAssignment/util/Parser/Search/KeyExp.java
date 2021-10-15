@@ -16,6 +16,7 @@ public class KeyExp extends Exp{
 
     private ArrayList<Post> postList;
     Parser parent;
+
     public KeyExp( String field,String key ,Parser parent ){
         keyword = key;
         this.field=field;

@@ -1,5 +1,9 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
+import android.widget.Toast;
+
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
+
 public class Parser {
     public static class IllegalProductionException extends IllegalArgumentException {
         public IllegalProductionException(String errorMessage) {
@@ -117,7 +121,11 @@ public class Parser {
                     keyExp = new KeyExp("tags",raw[1],this);
                     keys++;
                     break;
-
+                case Illegal:
+                    keyExp = new NonExp();
+                    Toast.makeText(MyApplication.context,
+                            "Illegal syntax "+tokenizer.current().getToken(), Toast.LENGTH_SHORT).show();
+                    break;
             }
 
             tokenizer.next();
