@@ -25,6 +25,7 @@ import java.util.Map;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
 
@@ -32,6 +33,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     private final ArrayList<String> req_emails;
     private final HashMap<String, Object> dataSnapShot;
     private final ArrayList<String> req_uids;
+    private final UserManager userManager;
 
     public RequestsAdapter(Context context, ArrayList<String> req_emails,
                            HashMap<String, Object> dataSnapShot, ArrayList<String> req_uids) {
@@ -39,6 +41,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         this.req_emails = req_emails;
         this.dataSnapShot = dataSnapShot;
         this.req_uids = req_uids;
+        this.userManager = UserManager.getInstance();
     }
 
     @NonNull
@@ -55,6 +58,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         String email = req_emails.get(position);
         String uid = req_uids.get(position);
         holder.email.setText(email);
+        holder.name.setText(userManager.getNameFromID(uid));
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
