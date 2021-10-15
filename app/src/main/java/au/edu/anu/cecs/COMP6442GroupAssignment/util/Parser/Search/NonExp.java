@@ -10,6 +10,6 @@ public class NonExp extends Exp {
 
     @Override
     public ArrayList<Post> evaluate() {
-        return new ArrayList<Post>();
+        return null;
     }
 }

@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
@@ -94,7 +95,13 @@ public class UserPostDAO implements UserActivityDaoInterface {
                             }
                             parser.inc();
                             if (parser.whetherFinished()){
-                                posts.addAll(temp_exp.evaluate());
+                                List<Post> result =temp_exp.evaluate();
+                                if (result==null){
+                                    posts.addAll(new ArrayList<Post>());
+                                }else {
+                                    posts.addAll(result);
+                                }
+
                                 timelinePostAdapter.notifyDataSetChanged();
                             }
                         } else {

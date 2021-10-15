@@ -25,7 +25,11 @@ public class OrExp extends Exp{
     public ArrayList<Post> evaluate() {
         ArrayList<Post>list1 = term.evaluate();
         ArrayList<Post>list2 = exp.evaluate();
-
+        if (list1==null){
+            return list2;
+        }else if (list2==null){
+            return list1;
+        }
         ArrayList<Post> listAll = (ArrayList<Post>) list1.parallelStream().collect(toList());
         ArrayList<Post> listAll2 = (ArrayList<Post>) list2.parallelStream().collect(toList());
         listAll.addAll(listAll2);

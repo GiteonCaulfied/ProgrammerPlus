@@ -22,8 +22,14 @@ public class AndExp extends Exp{
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public ArrayList<Post> evaluate() {
+
         ArrayList<Post>list1 = term.evaluate();
         ArrayList<Post>list2 = exp.evaluate();
+        if (list1==null){
+            return list2;
+        }else if (list2==null){
+            return list1;
+        }
         ArrayList<Post> intersection = (ArrayList<Post>) list1.stream().filter(item -> list2.contains(item)).collect(toList());
         return intersection;
 
