@@ -117,7 +117,7 @@ public class FriendFragment extends Fragment {
                         if (dataSnapShot != null) {
                             for (String key : dataSnapShot.keySet()) {
                                 req_emails.add(userManager.getEmailFromID(key));
-                                req_uids.add(userManager.getNameFromID(key));
+                                req_uids.add(key);
                             }
                         }
                         requestsAdapter.notifyDataSetChanged();
