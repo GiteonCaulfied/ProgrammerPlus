@@ -57,6 +57,28 @@ public class PostFragment extends Fragment {
             userPostDAO.getData();
 
             timelinePostView.setAdapter(userPostDAO.getPostsAdapter());
+
+            timelinePostView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                    if (!userPostDAO.isLoading()) {
+                        if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == userPostDAO.getPosts().size() - 1) {
+                            //bottom of list!
+                            userPostDAO.loadMore();
+                            userPostDAO.setLoading();
+                        }
+                    }
+                }
+            });
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             timelinePostView.setLayoutManager(layoutManager);

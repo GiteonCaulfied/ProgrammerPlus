@@ -41,10 +41,10 @@
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.34193840579710144" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.3586853467380771" />
         <entry key="app/src/main/res/layout/activity_session.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_timeline_loading.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_timeline_post.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_friend.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/dialog_temp_mess.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/friend_request.xml" value="0.30932971014492755" />
         <entry key="app/src/main/res/layout/layout_post.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/layout_profile.xml" value="0.335" />
         <entry key="app/src/main/res/menu/menu_chat.xml" value="0.2557291666666667" />

@@ -351,6 +351,9 @@ public class JsonUtils {
             // Has Comma
         } else {
             int firstEndIndex = Math.min(content.indexOf(','),content.indexOf('.'));
+            if (firstEndIndex == -1){
+                firstEndIndex = content.length();
+            }
             String firstSentence = content.substring(0,firstEndIndex);
 
             if (firstSentence.length() < 10){
