@@ -6,6 +6,8 @@ public class Message implements Comparable {
     private long time;
     private String text;
     private String whoSent;
+    private String messageType;
+    private String pid;
 
     public Message() {
     }
@@ -16,11 +18,29 @@ public class Message implements Comparable {
         this.whoSent = whoSent;
     }
 
+    public Message(String text, String whoSent, String messageType, String pid) {
+        this.time = System.currentTimeMillis();
+        this.text = text;
+        this.whoSent = whoSent;
+        this.messageType = messageType;
+        this.pid = pid;
+    }
+
     public HashMap<String, Object> toMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("time", time);
         map.put("text", text);
         map.put("whoSent", whoSent);
+        return map;
+    }
+
+    public HashMap<String, Object> toMap2() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("time", time);
+        map.put("text", text);
+        map.put("whoSent", whoSent);
+        map.put("messageType", messageType);
+        map.put("pid", pid);
         return map;
     }
 
@@ -30,6 +50,10 @@ public class Message implements Comparable {
 
     public String getText() {
         return text;
+    }
+
+    public String getPid() {
+        return pid;
     }
 
     public String isWhoSent() {

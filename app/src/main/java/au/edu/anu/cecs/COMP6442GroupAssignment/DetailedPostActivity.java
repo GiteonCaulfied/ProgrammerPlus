@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
@@ -40,6 +41,7 @@ public class DetailedPostActivity extends AppCompatActivity {
     private Post p;
     private UserPostDAO instance;
     private Button message;
+    private MessageDAO messageDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
-
+        messageDAO = MessageDAO.getInstance();
         FirebaseRef fb = FirebaseRef.getInstance();
         DocumentReference myRef = fb.getFirestore().collection("user-posts").document(pid);
         uid = FirebaseAuth.getInstance().getUid();
@@ -146,6 +148,14 @@ public class DetailedPostActivity extends AppCompatActivity {
                                     usersWhoLike.add(uid);
                                     p.setUsersWhoLike(usersWhoLike);
                                     instance.update( p.getPid(), p.toMap());
+
+                                    messageDAO.sendAdminMessage(p.getAuthorID(),
+                                            "Upc8rDC8f0NlePlQCW2D2m7Bqin2", "{"+p.getTitle()+"} Get a like！"
+                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
+                                    messageDAO.sendAdminMessage("Upc8rDC8f0NlePlQCW2D2m7Bqin2",
+                                            p.getAuthorID(), "{"+p.getTitle()+"} Get a like！"
+                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
+
                                 }
                                 textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
                                         getApplicationContext().getResources().getColor(R.color.gray));

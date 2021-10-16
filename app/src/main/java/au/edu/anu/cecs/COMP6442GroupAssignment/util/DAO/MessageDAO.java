@@ -32,6 +32,15 @@ public class MessageDAO {
                 .push().setValue(mes.toMap());
     }
 
+    public void sendAdminMessage(String user1, String user2,
+                                 String message, String whoSent,String pid) {
+        Message mes = new Message(message, whoSent,"adminMessage",pid);
+        myRef.child("user-chat")
+                .child(user1)
+                .child(user2)
+                .push().setValue(mes.toMap2());
+    }
+
     public void deleteChat(String user1, String user2) {
         Map<String, Object> postValues = new HashMap<>();
         postValues.put(user2, null);
