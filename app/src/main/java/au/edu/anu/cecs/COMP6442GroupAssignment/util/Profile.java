@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Tree.AVLTree;
+
 
 public class Profile {
     private String uid;

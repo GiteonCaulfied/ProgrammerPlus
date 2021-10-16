@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.*;
 
 public class DetailedPostActivity extends AppCompatActivity {
 
@@ -73,15 +74,20 @@ public class DetailedPostActivity extends AppCompatActivity {
                     if (document.exists()) {
                         p = new Post(document.getData());
                         author.setText(p.getAuthor());
-                        title.setText(p.getTitle());
-                        body.setText(p.getBody());
+                        Parser parser1 = new Parser(new Tokenizer(p.getTitle()));
+                        title.setText(parser1.parse());
+
+                        Parser parser2 = new Parser(new Tokenizer(p.getBody()));
+                        body.setText(parser2.parse());
+
 
                         // Show Tags (if any)
                         if (p.getTags().size() == 0){
                             tags.setText("No Tags");
                         } else {
                             String tagString = p.getTags().toString().replace("[", "").replace("]", "");
-                            tags.setText(tagString);
+                            Parser parser3 = new Parser(new Tokenizer(tagString));
+                            tags.setText(parser3.parse());
                         }
 
                         //Display Portrait of the Author

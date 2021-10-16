@@ -7,12 +7,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
 
 public class JsonUtils {
 
@@ -84,6 +89,42 @@ public class JsonUtils {
         }
         return sb.toString();
 
+    }
+
+    public AVLTree<String> getSwearWordsTree (Context context){
+
+            Gson gson = new Gson();
+//            JsonReader jsonReader = null;
+            AVLTree<String> output = null;
+            String json = null;
+//        final Type CUS_LIST_TYPE = new TypeToken<AVLTree<String>>() {}.getType();
+            //or TypeToken.getParameterized(ArrayList.class, PersonJSON.class).getType();
+
+            try{
+                json = read(context.getResources().getAssets().open("swear_words.json"));
+                output = gson.fromJson(json, AVLTree.class);
+//                jsonReader = new JsonReader(new FileReader());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+//        Config c = gson.fromJson(jsonReader, AVLTree.class);
+//        AVLTree<String> w = gson.fromJson(jsonReader, new TypeToken<AVLTree<String>>(){}.getType());
+//        AVLTree<String> w = (AVLTree<String>) c.getWords();
+
+            return output;
+
+    }
+
+    public void saveSwearWordsTree(Context context,AVLTree<String> words) {
+        //Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try(FileWriter fw = new FileWriter(read(context.getResources().getAssets().open("swaer_words.json")))){
+            gson.toJson(words, fw);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public HashMap<String,Profile> getProfiles (Context context){
@@ -363,6 +404,8 @@ public class JsonUtils {
         out = tags.get(random_int);
         return out;
     }
+
+
 
 
 
