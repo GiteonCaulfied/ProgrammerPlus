@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class UserPostDAO implements UserActivityDaoInterface {
     private final ArrayList<Post> posts;
 
     private Exp temp_exp;
+
+    boolean isLoading = false;
 
 
     public UserPostDAO(AppCompatActivity act) {
@@ -210,6 +213,59 @@ public class UserPostDAO implements UserActivityDaoInterface {
                 });
     }
 
+    public void loadMore() {
+        posts.add(null);
+        timelinePostAdapter.notifyItemInserted(posts.size() - 1);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                posts.remove(posts.size() - 1);
+                int scrollPosition = posts.size();
+                timelinePostAdapter.notifyItemRemoved(scrollPosition);
+                int currentSize = scrollPosition;
+                int nextLimit = currentSize + 10;
+
+                Query query = db.collection("user-posts").orderBy("date").limitToLast(nextLimit);
+                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w("Read posts", "Listen failed.", error);
+                            return;
+                        }
+
+                        if (value != null) {
+                            Log.d("Read posts", "Current data: " + value);
+                            posts.clear();
+                            for (DocumentSnapshot document : value.getDocuments()) {
+                                posts.add(new Post(document.getData()));
+                            }
+                            /**
+                             * there could be a bug which is searched post will be replaced by update？
+                             * fixme
+                             */
+
+                            Collections.reverse(posts);
+                            timelinePostAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("Read posts", "Current data: null");
+                        }
+                    }
+                });
+
+                currentSize = nextLimit + 1;
+
+                timelinePostAdapter.notifyDataSetChanged();
+                isLoading = false;
+            }
+        }, 2000);
+
+
+    }
+
     @Override
     public void delete() {
 
@@ -222,5 +278,17 @@ public class UserPostDAO implements UserActivityDaoInterface {
 
     public TimelinePostAdapter getPostsAdapter() {
         return timelinePostAdapter;
+    }
+
+    public ArrayList<Post> getPosts(){
+        return posts;
+    }
+
+    public boolean isLoading(){
+        return isLoading;
+    }
+
+    public void setLoading(){
+        isLoading = true;
     }
 }
