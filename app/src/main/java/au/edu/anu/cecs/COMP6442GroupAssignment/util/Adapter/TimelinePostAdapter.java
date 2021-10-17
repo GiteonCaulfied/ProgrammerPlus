@@ -31,6 +31,8 @@ import java.util.List;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Parser;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 
@@ -72,18 +74,19 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
 
     @Override
     public void onBindViewHolder(@NonNull TimelinePostAdapter.TimelinePostViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        int max = 100;
-        int min = 0;
-        int id = (int) (Math.random()*(max-min+1));
+
         holder.getText_username().setText(posts.get(position).getAuthor());
-        holder.getText_title().setText(posts.get(position).getTitle());
+
+        Parser parser1 = new Parser(new Tokenizer(posts.get(position).getTitle()));
+        holder.getText_title().setText(parser1.parse());
 
         //Display the Tags (if Any)
         if (posts.get(position).getTags().size() == 0){
             holder.getText_tags().setText("No Tags");
         } else {
             String tagString = posts.get(position).getTags().toString().replace("[", "").replace("]", "");
-            holder.getText_tags().setText(tagString);
+            Parser parser3 = new Parser(new Tokenizer(tagString));
+            holder.getText_tags().setText(parser3.parse());
         }
 
         if (posts.get(position).getImageAddress().length() != 0){
