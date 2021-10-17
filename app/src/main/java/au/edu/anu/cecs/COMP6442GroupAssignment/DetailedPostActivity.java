@@ -116,29 +116,36 @@ public class DetailedPostActivity extends AppCompatActivity {
                             }
                         });
 
-                        //Display Image of the Post
-                        RequestOptions optionsPost = new RequestOptions()
-                                .override(800, 600)
-                                .centerCrop()
-                                .placeholder(R.mipmap.ic_launcher_round)
-                                .error(R.mipmap.ic_launcher_round)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false);
-                        sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                        //Display Image of the Post (if Any)
+                        if (p.getImageAddress().length() != 0){
+                            RequestOptions optionsPost = new RequestOptions()
+                                    .override(800, 600)
+                                    .centerCrop()
+                                    .placeholder(R.mipmap.ic_launcher_round)
+                                    .error(R.mipmap.ic_launcher_round)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(false);
+                            sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                                Glide.with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .apply(optionsPost)
-                                        .into(image);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                            }
-                        });
+                                    Glide.with(getApplicationContext())
+                                            .load(uri.toString())
+                                            .apply(optionsPost)
+                                            .into(image);
+                                    image.setVisibility(View.VISIBLE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                    image.setVisibility(View.GONE);
+                                }
+                            });
+                        } else {
+                            image.setVisibility(View.GONE);
+                        }
+
 
                         textView4.setOnClickListener(new View.OnClickListener() {
                             @Override
