@@ -35,12 +35,11 @@ public class JsonUtils {
 
     private DatabaseReference myRef;
 
-    private Integer LocalPostCount;
 
     private JsonUtils(){
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
         myRef = firebaseRef.getDatabaseRef();
-        LocalPostCount = 0;
+
     }
 
     /**
@@ -165,15 +164,15 @@ public class JsonUtils {
         return profiles ;
     }
 
-    public void readLocalPosts(Context context){
+    public void readLocalPosts(Context context, String fileName){
         try {
-            JSONObject object = new JSONObject(readJSON(context));
+            JSONObject object = new JSONObject(readJSON(context,fileName));
             JSONArray array = object.getJSONArray("data");
 
             UserManager userManager = UserManager.getInstance();
 
-            if (LocalPostCount < array.length()){
-                for (int i = LocalPostCount; i < LocalPostCount + 2; i++) {
+
+                for (int i = 0; i < 5000; i++) {
 
                     JSONObject jsonObject = array.getJSONObject(i);
                     String user_id = userManager.getRandomID();
@@ -197,20 +196,17 @@ public class JsonUtils {
                     UserPostDAO userPostDAO = UserPostDAO.getInstance();
                     userPostDAO.create(key, postValues);
                 }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
         }
-
-        LocalPostCount = LocalPostCount + 2;
 
     }
 
-    public String readJSON(Context context) {
+    public String readJSON(Context context,String fileName) {
         String json = null;
         try {
             // Opening data.json file
-            InputStream inputStream = context.getResources().getAssets().open("sydney.json");
+            InputStream inputStream = context.getResources().getAssets().open(fileName);
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             // read values in the byte array

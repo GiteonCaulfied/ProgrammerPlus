@@ -126,7 +126,8 @@ public class ProfileFragment extends Fragment {
         localPostsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonUtils.getInstance().readLocalPosts(getContext());
+                JsonUtils.getInstance().readLocalPosts(getContext(),"java.json");
+                JsonUtils.getInstance().readLocalPosts(getContext(),"python.json");
             }
         });
         return view;
