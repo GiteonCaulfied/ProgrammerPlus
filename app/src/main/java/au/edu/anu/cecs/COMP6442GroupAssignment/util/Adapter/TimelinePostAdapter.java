@@ -3,6 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -43,6 +45,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final String uid;
     private final UserPostDAO instance1;
     private final MessageDAO messageDAO;
+    private FirebaseAnalytics firebaseAnalytics;
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
@@ -151,7 +154,10 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                 posts.get(position).getAuthorID(), "{"+posts.get(position).getTitle()+"} Get a like！"
                                 , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",posts.get(position).getPid());
 
-                        
+                        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, posts.get(position).getPid());
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     }
                 }
             });
