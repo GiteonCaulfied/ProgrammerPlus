@@ -35,13 +35,17 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation.CreatorFactory;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation.TimelineCreator;
 
-public class UserPostDAO implements UserActivityDaoInterface {
+public class UserPostDAO {
     private static UserPostDAO instance;
     private final FirebaseFirestore db;
     private FirebaseUser currentUser;
     private final TimelinePostAdapter timelinePostAdapter;
     private final ArrayList<Post> posts;
+    private String mode;
+    private TimelineCreator creator;
 
     private Exp temp_exp;
 
@@ -53,6 +57,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
         db = firebaseRef.getFirestore();
         posts = new ArrayList<>();
+        mode = "Time";
         //Adapter
         timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),
                 posts,
@@ -67,6 +72,9 @@ public class UserPostDAO implements UserActivityDaoInterface {
         ,this);
     }
 
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
     public static UserPostDAO getInstance(AppCompatActivity act) {
         if (instance == null) {
@@ -142,42 +150,14 @@ public class UserPostDAO implements UserActivityDaoInterface {
                     "Illegal syntax", Toast.LENGTH_SHORT).show();
         }
 
-
-
     }
 
-    @Override
     public void getData() {
-        Query query = db.collection("user-posts").orderBy("date").limitToLast(10);
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.w("Read posts", "Listen failed.", error);
-                    return;
-                }
-
-                if (value != null) {
-                    Log.d("Read posts", "Current data: " + value);
-                    posts.clear();
-                    for (DocumentSnapshot document : value.getDocuments()) {
-                        posts.add(new Post(document.getData()));
-                    }
-                    /**
-                     * there could be a bug which is searched post will be replaced by update？
-                     * fixme
-                     */
-
-                    Collections.reverse(posts);
-                    timelinePostAdapter.notifyDataSetChanged();
-                } else {
-                    Log.d("Read posts", "Current data: null");
-                }
-            }
-        });
+        CreatorFactory factory = new CreatorFactory();
+        creator = factory.creatorFac(mode, posts, timelinePostAdapter);
+        creator.getData();
     }
 
-    @Override
     public void update(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .update(newValues)
@@ -195,7 +175,6 @@ public class UserPostDAO implements UserActivityDaoInterface {
                 });
     }
 
-    @Override
     public void create(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .set(newValues)
@@ -214,66 +193,8 @@ public class UserPostDAO implements UserActivityDaoInterface {
     }
 
     public void loadMore() {
-        posts.add(null);
-        timelinePostAdapter.notifyItemInserted(posts.size() - 1);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                posts.remove(posts.size() - 1);
-                int scrollPosition = posts.size();
-                timelinePostAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 10;
-
-                Query query = db.collection("user-posts").orderBy("date").limitToLast(nextLimit);
-                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.w("Read posts", "Listen failed.", error);
-                            return;
-                        }
-
-                        if (value != null) {
-                            Log.d("Read posts", "Current data: " + value);
-                            posts.clear();
-                            for (DocumentSnapshot document : value.getDocuments()) {
-                                posts.add(new Post(document.getData()));
-                            }
-                            /**
-                             * there could be a bug which is searched post will be replaced by update？
-                             * fixme
-                             */
-
-                            Collections.reverse(posts);
-                            timelinePostAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d("Read posts", "Current data: null");
-                        }
-                    }
-                });
-
-                currentSize = nextLimit + 1;
-
-                timelinePostAdapter.notifyDataSetChanged();
-                isLoading = false;
-            }
-        }, 2000);
-
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void clear() {
-
+        creator.loadMore();
+        isLoading = false;
     }
 
     public TimelinePostAdapter getPostsAdapter() {

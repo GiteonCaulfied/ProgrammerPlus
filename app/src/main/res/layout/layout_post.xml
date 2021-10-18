@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_post_mode"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -85,5 +85,49 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+    <RadioGroup
+        android:id="@+id/radio_post_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ModeText"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/TimeMode"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:checked="true"
+            android:text="Time"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/LikeMode"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Like"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/UncomfortableMode"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Uncomfortable"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/ModeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
+        android:text="Mode"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

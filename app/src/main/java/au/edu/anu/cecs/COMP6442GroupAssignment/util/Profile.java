@@ -12,7 +12,6 @@ public class Profile {
     private String name;
     private String email;
     private long creation_time;
-    private ArrayList<String> posts;
     private ArrayList<String> friends;
     private ArrayList<String> blocked;
     private String intro;
@@ -28,7 +27,6 @@ public class Profile {
         this.email = email;
         this.name = name;
         this.creation_time = System.currentTimeMillis();
-        this.posts = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
         this.intro = intro;
@@ -41,7 +39,6 @@ public class Profile {
         this.email = (String) m.get("email");
         this.name = (String) m.get("name");
         this.creation_time = (long) m.get("date");
-        this.posts = (ArrayList<String>) m.get("posts");
         this.friends = (ArrayList<String>) m.get("friends");
         this.blocked = (ArrayList<String>) m.get("blocked");
         this.intro = (String) m.get("intro");
@@ -55,7 +52,6 @@ public class Profile {
         result.put("email", email);
         result.put("name", name);
         result.put("date", creation_time);
-        result.put("posts", posts);
         result.put("friends", friends);
         result.put("blocked", blocked);
         result.put("intro", intro);

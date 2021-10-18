@@ -139,7 +139,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         usersWhoLike.remove(uid);
                         posts.get(position).setUsersWhoLike(usersWhoLike);
                         instance1.update(posts.get(position).getPid(),posts.get(position).toMap());
-                    }else {
+                    } else {
                         ArrayList<String> usersWhoLike = posts.get(position).getUsersWhoLike();
                         usersWhoLike.add(uid);
                         posts.get(position).setUsersWhoLike(usersWhoLike);
