@@ -187,7 +187,7 @@ The following is a report template to help your team successfully provide all th
 
 *Here is an example:*
 
-- *[Team Meeting 1](./MeetingTemplate.md)*
+- *[Team Meeting 1](Meeting1.md)*
 - ...
 
 *Either write your meeting minutes here or link to documents that contain them. There must be at least 3 team meetings.*

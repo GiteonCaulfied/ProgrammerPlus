@@ -150,6 +150,8 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         messageDAO.sendAdminMessage("Upc8rDC8f0NlePlQCW2D2m7Bqin2",
                                 posts.get(position).getAuthorID(), "{"+posts.get(position).getTitle()+"} Get a like！"
                                 , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",posts.get(position).getPid());
+
+                        
                     }
                 }
             });
