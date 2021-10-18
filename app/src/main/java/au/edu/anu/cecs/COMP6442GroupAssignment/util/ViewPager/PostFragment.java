@@ -38,6 +38,7 @@ import java.util.Map;
 import au.edu.anu.cecs.COMP6442GroupAssignment.PostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserActivityDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 
@@ -94,7 +95,6 @@ public class PostFragment extends Fragment {
                         userPostDAO.getData();
                         break;
                     case R.id.LikeMode:
-
                         Toast.makeText(getContext(), "Like Mode", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.UncomfortableMode:
@@ -112,7 +112,7 @@ public class PostFragment extends Fragment {
         ListView history = view.findViewById(R.id.search_hist);
         TextView search_grammar = view.findViewById(R.id.search_grammar);
         final ArrayList<String> hist_arr = new ArrayList();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_list_item_1,
                 hist_arr);
@@ -124,21 +124,8 @@ public class PostFragment extends Fragment {
         });
         history.setAdapter(arrayAdapter);
 
-        FirebaseRef firebaseRef = FirebaseRef.getInstance();
-        FirebaseFirestore db = firebaseRef.getFirestore();
-        FirebaseUser currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
-        db.collection("user-data")
-                .document(currentUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                Object his = value.get("searchHistory");
-                if (his != null) {
-                    hist_arr.clear();
-                    hist_arr.addAll((ArrayList<String>) his);
-                    arrayAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+        UserActivityDAO userActivityDAO = UserActivityDAO.getInstance();
+        userActivityDAO.getSearchHistory(hist_arr, arrayAdapter);
 
         round_search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +151,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String text = search_bar.getText().toString();
+                search_bar.setText("");
                 if (text.length() != 0) {
                     hist_arr.add(text);
                     if (hist_arr.size() > 5) {
@@ -171,22 +159,7 @@ public class PostFragment extends Fragment {
                     }
                     Map<String, Object> docData = new HashMap<>();
                     docData.put("searchHistory", hist_arr);
-                    db.collection("user-data").document(
-                            currentUser.getUid()
-                    )
-                            .set(docData)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("Search History", "DocumentSnapshot successfully written!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("Search History", "Error writing document", e);
-                                }
-                            });
+                    userActivityDAO.addSearchHistory(docData);
                     userPostDAO.searchPost(text);
 
                     do_search.setVisibility(View.INVISIBLE);

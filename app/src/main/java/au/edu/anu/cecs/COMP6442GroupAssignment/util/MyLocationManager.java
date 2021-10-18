@@ -2,22 +2,28 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserActivityDAO;
 
 public class MyLocationManager {
     public static final int LOCATION_CODE = 301;
@@ -42,23 +48,31 @@ public class MyLocationManager {
 
         List<String> providers = locationManager.getProviders(true);
 
-        if (providers.contains(LocationManager.GPS_PROVIDER)) {
-            locationProvider = LocationManager.GPS_PROVIDER;
-            Log.v("Location", "GPS");
-        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+        if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
             locationProvider = LocationManager.NETWORK_PROVIDER;
             Log.v("Location", "Network");
+        }
+        else if (providers.contains(LocationManager.GPS_PROVIDER)) {
+            locationProvider = LocationManager.GPS_PROVIDER;
+            Log.v("Location", "GPS");
         } else {
             Toast.makeText(context, "Cannot find a location provider!", Toast.LENGTH_LONG).show();
             return null;
         }
 
         HashMap<String, Object> res = new HashMap<>();
+
+        locationManager.requestLocationUpdates(locationProvider, 5000, 10, locationListener);
+
         Location location = locationManager.getLastKnownLocation(locationProvider);
         if (location != null) {
             Log.v("TAG", "The latest GPS information: " + location.getLongitude() + "   " + location.getLatitude());
             res.put("Longitude", Math.round(location.getLongitude()));
             res.put("Latitude", Math.round(location.getLatitude()));
+
+            UserActivityDAO userActivityDAO = UserActivityDAO.getInstance();
+            userActivityDAO.updateLocation(res);
+
             List<Address> addresses = getAddress(location);
             if (addresses != null && addresses.size() > 0) {
                 Address address = addresses.get(0);
@@ -88,5 +102,29 @@ public class MyLocationManager {
         }
         return result;
     }
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle arg2) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            HashMap<String, Object> res = new HashMap<>();
+            res.put("Longitude", Math.round(location.getLongitude()));
+            res.put("Latitude", Math.round(location.getLatitude()));
+
+            UserActivityDAO userActivityDAO = UserActivityDAO.getInstance();
+            userActivityDAO.updateLocation(res);
+        }
+    };
 }
 
