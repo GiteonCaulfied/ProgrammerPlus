@@ -14,6 +14,9 @@ public class CreatorFactory {
             case "Time":
                 creator = new TimeModeCreator(posts, timelinePostAdapter);
                 break;
+            case "Like":
+                creator = new LikeModeCreator(posts, timelinePostAdapter);
+                break;
             default:
                 creator = new TimeModeCreator(posts, timelinePostAdapter);
         }

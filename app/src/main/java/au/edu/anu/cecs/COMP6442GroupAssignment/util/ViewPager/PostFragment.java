@@ -92,12 +92,17 @@ public class PostFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i){
                     case R.id.TimeMode:
+                        userPostDAO.setMode("Time");
                         userPostDAO.getData();
                         break;
                     case R.id.LikeMode:
+                        userPostDAO.setMode("Like");
+                        userPostDAO.getData();
                         Toast.makeText(getContext(), "Like Mode", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.UncomfortableMode:
+                        userPostDAO.setMode("Uncomfortable");
+                        userPostDAO.getData();
                         Toast.makeText(getContext(), "Uncomfortable Mode", Toast.LENGTH_SHORT).show();
                         break;
                 }
