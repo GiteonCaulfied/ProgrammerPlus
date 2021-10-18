@@ -88,7 +88,6 @@ public class MyLocationManager {
         return res;
     }
 
-    // 获取地址信息
     private List<Address> getAddress(Location location) {
         List<Address> result = null;
         try {

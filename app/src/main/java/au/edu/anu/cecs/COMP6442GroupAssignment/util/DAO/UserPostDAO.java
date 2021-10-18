@@ -13,17 +13,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +59,7 @@ public class UserPostDAO {
     public UserPostDAO(AppCompatActivity act) {
 
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
+        currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
         db = firebaseRef.getFirestore();
         posts = new ArrayList<>();
         mode = "Time";
@@ -173,6 +178,15 @@ public class UserPostDAO {
                         Log.w("Post", "Star err", e);
                     }
                 });
+        if (!((String) newValues.get("authorID")).equals(currentUser.getUid())) {
+            ArrayList<String> usersWhoLike = (ArrayList<String>) newValues.get("usersWhoLike");
+            if (usersWhoLike != null && usersWhoLike.contains(currentUser.getUid()))
+                db.collection("user-data").document(currentUser.getUid())
+                        .update("posts", FieldValue.arrayUnion(key));
+            else
+                db.collection("user-data").document(currentUser.getUid())
+                        .update("posts", FieldValue.arrayRemove(key));
+        }
     }
 
     public void create(String key, Map<String, Object> newValues) {
@@ -190,6 +204,8 @@ public class UserPostDAO {
                         Log.w("Post", "Error writing document", e);
                     }
                 });
+        db.collection("user-data").document(currentUser.getUid())
+                .update("posts", FieldValue.arrayUnion(key));
     }
 
     public void loadMore() {
