@@ -58,7 +58,6 @@ public class LikeModeCreator extends TimelineCreator {
                     for (UserLog userLog: userLogs) {
                         userLog.setDistanceToMe(me.calDistance(userLog));
                     }
-                    userLogs.add(me);
                     Collections.sort(userLogs);
 
                     Query query = db.collection("user-posts").orderBy("date").limitToLast(postNum * 10L);

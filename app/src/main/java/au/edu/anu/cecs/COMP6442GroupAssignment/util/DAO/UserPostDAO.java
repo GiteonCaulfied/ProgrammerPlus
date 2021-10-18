@@ -226,7 +226,6 @@ public class UserPostDAO {
 
     public void loadMore() {
         creator.loadMore();
-        isLoading = false;
     }
 
     public TimelinePostAdapter getPostsAdapter() {
@@ -241,7 +240,7 @@ public class UserPostDAO {
         return isLoading;
     }
 
-    public void setLoading(){
-        isLoading = true;
+    public void setLoading(boolean loading) {
+        isLoading = loading;
     }
 }

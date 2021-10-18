@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
@@ -91,6 +92,9 @@ public class TimeModeCreator extends TimelineCreator{
                              */
 
                             Collections.reverse(posts);
+
+                            UserPostDAO userPostDAO = UserPostDAO.getInstance();
+                            userPostDAO.setLoading(false);
                             timelinePostAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("Read posts", "Current data: null");

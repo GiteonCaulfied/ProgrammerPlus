@@ -74,7 +74,7 @@ public class PostFragment extends Fragment {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == userPostDAO.getPosts().size() - 1) {
                         //bottom of list!
                         userPostDAO.loadMore();
-                        userPostDAO.setLoading();
+                        userPostDAO.setLoading(true);
                     }
                 }
             }
