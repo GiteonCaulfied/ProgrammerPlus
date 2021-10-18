@@ -22,11 +22,11 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
-public class LikeModeCreator extends TimelineCreator {
+public class UncomModeCreator extends TimelineCreator {
     private FirebaseUser currentUser;
     private Random random;
 
-    public LikeModeCreator(ArrayList<Post> posts, TimelinePostAdapter timelinePostAdapter) {
+    public UncomModeCreator(ArrayList<Post> posts, TimelinePostAdapter timelinePostAdapter) {
         super(posts, timelinePostAdapter);
         currentUser = FirebaseRef.getInstance().getFirebaseAuth().getCurrentUser();
         random = new Random();
@@ -60,8 +60,9 @@ public class LikeModeCreator extends TimelineCreator {
                     }
                     userLogs.add(me);
                     Collections.sort(userLogs);
+                    Collections.reverse(userLogs);
 
-                    Query query = db.collection("user-posts").orderBy("date").limitToLast(postNum * 10L);
+                    Query query = db.collection("user-posts").orderBy("date").limitToLast(postNum * 10);
                     query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -73,9 +74,9 @@ public class LikeModeCreator extends TimelineCreator {
                             if (value != null) {
                                 Log.d("Read posts", "Current data: " + value);
                                 posts.clear();
-                                for (DocumentSnapshot document : value.getDocuments()) {
-                                    Post post = new Post(document.getData());
-                                    for (int i = 0; i < userLogs.size(); i++) {
+                                for (int i = 0; i < userLogs.size(); i++) {
+                                    for (DocumentSnapshot document : value.getDocuments()) {
+                                        Post post = new Post(document.getData());
                                         if (userLogs.get(i).getPosts().contains(post.getPid())) {
                                             double r = random.nextDouble();
                                             if (r <= (userLogs.size() - 1.0 - i) / (userLogs.size() - 1.0)) {
@@ -84,11 +85,10 @@ public class LikeModeCreator extends TimelineCreator {
                                             }
                                         }
                                     }
-                                    if (posts.size() == postNum)
+                                    if (posts.size() >= postNum)
                                         break;
                                 }
 
-                                Collections.reverse(posts);
                                 timelinePostAdapter.notifyDataSetChanged();
                             } else {
                                 Log.d("Read posts", "Current data: null");

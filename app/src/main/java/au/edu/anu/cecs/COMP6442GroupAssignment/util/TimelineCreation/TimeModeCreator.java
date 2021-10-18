@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
@@ -65,11 +67,11 @@ public class TimeModeCreator extends TimelineCreator{
                 posts.remove(posts.size() - 1);
                 int scrollPosition = posts.size();
                 timelinePostAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 10;
+                int nextLimit = scrollPosition + 10;
 
                 Query query = db.collection("user-posts").orderBy("date").limitToLast(nextLimit);
                 query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
@@ -81,7 +83,7 @@ public class TimeModeCreator extends TimelineCreator{
                             Log.d("Read posts", "Current data: " + value);
                             posts.clear();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                posts.add(new Post(document.getData()));
+                                posts.add(new Post(Objects.requireNonNull(document.getData())));
                             }
                             /**
                              * there could be a bug which is searched post will be replaced by update？
@@ -95,10 +97,6 @@ public class TimeModeCreator extends TimelineCreator{
                         }
                     }
                 });
-
-                currentSize = nextLimit + 1;
-
-                timelinePostAdapter.notifyDataSetChanged();
             }
         }, 2000);
     }

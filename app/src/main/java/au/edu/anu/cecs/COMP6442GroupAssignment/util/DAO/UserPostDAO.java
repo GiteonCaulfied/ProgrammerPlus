@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,10 +47,11 @@ public class UserPostDAO {
     private static UserPostDAO instance;
     private final FirebaseFirestore db;
     private FirebaseUser currentUser;
-    private final TimelinePostAdapter timelinePostAdapter;
-    private final ArrayList<Post> posts;
+    private TimelinePostAdapter timelinePostAdapter;
+    private ArrayList<Post> posts;
     private String mode;
     private TimelineCreator creator;
+    private AppCompatActivity act;
 
     private Exp temp_exp;
 
@@ -59,6 +61,7 @@ public class UserPostDAO {
     public UserPostDAO(AppCompatActivity act) {
 
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
+        this.act = act;
         currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
         db = firebaseRef.getFirestore();
         posts = new ArrayList<>();
@@ -157,8 +160,21 @@ public class UserPostDAO {
 
     }
 
-    public void getData() {
+    public void getData(RecyclerView timelinePostView) {
         CreatorFactory factory = new CreatorFactory();
+        posts = new ArrayList<>();
+        timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),
+                posts,
+                new TimelinePostAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Post item) {
+                        Intent intent = new Intent(act.getApplicationContext(), DetailedPostActivity.class);
+                        intent.putExtra("pid",item.getPid());
+                        act.startActivity(intent);
+                    }
+                }
+                ,this);
+        timelinePostView.setAdapter(timelinePostAdapter);
         creator = factory.creatorFac(mode, posts, timelinePostAdapter);
         creator.getData();
     }

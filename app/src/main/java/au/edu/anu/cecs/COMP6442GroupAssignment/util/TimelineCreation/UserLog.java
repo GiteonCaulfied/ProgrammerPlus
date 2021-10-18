@@ -58,19 +58,19 @@ public class UserLog implements Comparable<UserLog> {
     }
 
     public double calDistance(UserLog that) {
-        double locDist = 0.0;
+        double locDist = 1000.0;
         if (this.latitude != 181 && that.latitude != 181) {
             locDist = locationDistance(this.longitude, this.latitude,
                     that.getLongitude(), that.getLatitude()) / 1e10;
         }
 
-        double postDist = 0.0;
+        double postDist = 1000.0;
         if (!this.posts.isEmpty() && !that.posts.isEmpty()) {
             double i = 0;
             for (String s: this.posts) {
                 if (that.posts.contains(s)) i++;
             }
-            postDist = i / (this.posts.size() + that.posts.size());
+            postDist =  - i / (this.posts.size() + that.posts.size());
         }
 
         return locDist + postDist;

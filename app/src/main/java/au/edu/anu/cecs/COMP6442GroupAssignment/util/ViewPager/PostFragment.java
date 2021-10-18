@@ -56,9 +56,7 @@ public class PostFragment extends Fragment {
 
         //Data
         UserPostDAO userPostDAO = UserPostDAO.getInstance((AppCompatActivity) getActivity());
-        userPostDAO.getData();
-
-        timelinePostView.setAdapter(userPostDAO.getPostsAdapter());
+        userPostDAO.getData(timelinePostView);
 
         timelinePostView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -93,16 +91,17 @@ public class PostFragment extends Fragment {
                 switch (i){
                     case R.id.TimeMode:
                         userPostDAO.setMode("Time");
-                        userPostDAO.getData();
+                        userPostDAO.getData(timelinePostView);
+                        Toast.makeText(getContext(), "Time Mode", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.LikeMode:
                         userPostDAO.setMode("Like");
-                        userPostDAO.getData();
+                        userPostDAO.getData(timelinePostView);
                         Toast.makeText(getContext(), "Like Mode", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.UncomfortableMode:
                         userPostDAO.setMode("Uncomfortable");
-                        userPostDAO.getData();
+                        userPostDAO.getData(timelinePostView);
                         Toast.makeText(getContext(), "Uncomfortable Mode", Toast.LENGTH_SHORT).show();
                         break;
                 }
