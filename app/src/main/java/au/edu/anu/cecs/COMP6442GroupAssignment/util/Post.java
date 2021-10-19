@@ -53,6 +53,8 @@ public class Post {
     public Post(Map<String, Object> value) {
         this.pid = (String) value.get("pid");
         this.author = (String) value.get("author");
+        if (this.author == null)
+            this.author = "Qinyu Zhao";
         this.authorID = (String) value.get("authorID");
         this.title = (String) value.get("title");
         this.tags = (ArrayList<String>) value.get("tags");;
@@ -104,6 +106,7 @@ public class Post {
     public ArrayList<String> getUsersWhoLike(){
         return usersWhoLike;
     }
+
     public void setUsersWhoLike(ArrayList<String> usersWhoLike){
         this.usersWhoLike = usersWhoLike;
     }

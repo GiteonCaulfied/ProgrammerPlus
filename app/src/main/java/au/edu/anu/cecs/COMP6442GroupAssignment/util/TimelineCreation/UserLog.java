@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class UserLog implements Comparable<UserLog> {
@@ -10,6 +11,7 @@ public class UserLog implements Comparable<UserLog> {
     private long longitude;
     private Double distanceToMe;
     private final ArrayList<String> posts;
+    private double[] postCode;
 
     public UserLog(String id) {
         userID = id;
@@ -41,6 +43,10 @@ public class UserLog implements Comparable<UserLog> {
         }
 
         distanceToMe = (double) 0;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     private static double rad(double d) {
@@ -99,5 +105,36 @@ public class UserLog implements Comparable<UserLog> {
     @Override
     public int compareTo(UserLog userLog) {
         return this.distanceToMe.compareTo(userLog.getDistanceToMe());
+    }
+
+    public void generateHotPosts(List<String> hotPosts) {
+        postCode = new double[1000];
+        for (String pid: this.posts) {
+            if (hotPosts.contains(pid))
+                postCode[hotPosts.indexOf(pid)] = 1.0;
+        }
+    }
+
+    public int findCluster(List<double[]> centers) {
+        double best = -1;
+        int best_c = -1;
+        for (int i = 0; i < centers.size(); i++) {
+            double[] center = centers.get(i);
+            double n = calDistanceCluster(center);
+            if (n > best) {
+                best = n;
+                best_c = i;
+            }
+        }
+
+        return best_c;
+    }
+
+    public double calDistanceCluster(double[] center) {
+        double res = 0;
+        for (int i = 0; i < 1000; i++) {
+            res += (center[i] - postCode[i]) * (center[i] - postCode[i]);
+        }
+        return res;
     }
 }

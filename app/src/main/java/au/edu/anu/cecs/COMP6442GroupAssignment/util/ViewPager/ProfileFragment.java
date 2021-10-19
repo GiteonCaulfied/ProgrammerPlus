@@ -127,7 +127,8 @@ public class ProfileFragment extends Fragment {
         localPostsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                DataGenerator dataGenerator = new DataGenerator(getContext());
+                dataGenerator.generateEverything();
             }
         });
         return view;

@@ -36,12 +36,18 @@ public class DataGenerator {
     }
 
     public void generateActivity() {
+          ActGenerator actGenerator = new ActGenerator(context);
+          actGenerator.warmUp();
         // make friends
+//        actGenerator.generateFriends();
 
+        // like some posts
+//        actGenerator.generateLikes();
     }
 
     public void generateEverything() {
 //        generateUser();
-        generatePost();
+//        generatePost();
+        generateActivity();
     }
 }

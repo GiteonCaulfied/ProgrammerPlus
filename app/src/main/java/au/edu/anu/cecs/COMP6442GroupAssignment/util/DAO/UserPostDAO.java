@@ -176,7 +176,7 @@ public class UserPostDAO {
                 ,this);
         timelinePostView.setAdapter(timelinePostAdapter);
         creator = factory.creatorFac(mode, posts, timelinePostAdapter);
-        //creator.getData();
+//        creator.getData();
     }
 
     public void update(String key, Map<String, Object> newValues) {
@@ -220,8 +220,6 @@ public class UserPostDAO {
                         Log.w("Post", "Error writing document", e);
                     }
                 });
-        db.collection("user-data").document(currentUser.getUid())
-                .update("posts", FieldValue.arrayUnion(key));
     }
 
     public void loadMore() {
