@@ -75,9 +75,9 @@ public class FriRecom {
                     }
 
                     UserManager userManager = UserManager.getInstance();
-                    rec1.setText(userManager.getEmailFromID(res.get(1)));
-                    rec2.setText(userManager.getEmailFromID(res.get(2)));
-                    rec3.setText(userManager.getEmailFromID(res.get(3)));
+                    rec1.setText(userManager.getEmailFromID(res.get(0)));
+                    rec2.setText(userManager.getEmailFromID(res.get(1)));
+                    rec3.setText(userManager.getEmailFromID(res.get(2)));
                 } else {
                     Log.d("Recommend users", "Current data: null");
                 }

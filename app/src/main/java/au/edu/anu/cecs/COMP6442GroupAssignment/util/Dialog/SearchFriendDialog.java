@@ -52,7 +52,7 @@ public class SearchFriendDialog extends Dialog {
 
         Window win = getWindow();
         WindowManager.LayoutParams lp = win.getAttributes();
-        lp.width = 950;
+        lp.width = 1000;
         win.setAttributes(lp);
 
         FriRecom friRecom = new FriRecom(getContext());
