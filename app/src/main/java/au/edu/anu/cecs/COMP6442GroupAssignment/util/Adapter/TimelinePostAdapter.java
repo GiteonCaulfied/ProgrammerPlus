@@ -135,11 +135,11 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         posts.get(position).setUsersWhoLike(usersWhoLike);
                         instance1.update(posts.get(position).getPid(), posts.get(position).toMap());
                         messageDAO.sendAdminMessage(posts.get(position).getAuthorID(),
-                                "Upc8rDC8f0NlePlQCW2D2m7Bqin2", "{" + posts.get(position).getTitle() + "} Get a like！"
-                                , "Upc8rDC8f0NlePlQCW2D2m7Bqin2", posts.get(position).getPid());
-                        messageDAO.sendAdminMessage("Upc8rDC8f0NlePlQCW2D2m7Bqin2",
-                                posts.get(position).getAuthorID(), "{" + posts.get(position).getTitle() + "} Get a like！"
-                                , "Upc8rDC8f0NlePlQCW2D2m7Bqin2", posts.get(position).getPid());
+                                "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+posts.get(position).getTitle()+"} Get a like！"
+                                , "by0wvrHLp8gNlD103LAM6Il2xzX2",posts.get(position).getPid());
+                        messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
+                                posts.get(position).getAuthorID(), "{"+posts.get(position).getTitle()+"} Get a like！"
+                                , "by0wvrHLp8gNlD103LAM6Il2xzX2",posts.get(position).getPid());
                     }
                 }
             });

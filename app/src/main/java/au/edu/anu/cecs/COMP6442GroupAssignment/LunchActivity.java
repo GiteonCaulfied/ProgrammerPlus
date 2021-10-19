@@ -17,6 +17,8 @@ public class LunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
+        // an opening Picture for the app
         new Thread( new Runnable( ) {
             @Override
             public void run() {

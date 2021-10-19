@@ -60,6 +60,7 @@ public class ChatFragment extends Fragment {
         ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), uids, friends, latestMess);
         recyclerView.setAdapter(chatsAdapter);
 
+        // Load the Latest message of a friend
         myRef.child("user-chat").child(currentUser.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override

@@ -68,6 +68,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sto_ref = storage.getReference();
 
+        // Add the Detailed Post Data to the Page
         myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -147,6 +148,7 @@ public class DetailedPostActivity extends AppCompatActivity {
                         }
 
 
+                        // Star of the Post
                         textView4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -163,11 +165,11 @@ public class DetailedPostActivity extends AppCompatActivity {
                                     instance.update( p.getPid(), p.toMap());
 
                                     messageDAO.sendAdminMessage(p.getAuthorID(),
-                                            "Upc8rDC8f0NlePlQCW2D2m7Bqin2", "{"+p.getTitle()+"} Get a like！"
-                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
-                                    messageDAO.sendAdminMessage("Upc8rDC8f0NlePlQCW2D2m7Bqin2",
+                                            "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+p.getTitle()+"} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+                                    messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
                                             p.getAuthorID(), "{"+p.getTitle()+"} Get a like！"
-                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
 
                                 }
                                 textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
@@ -195,6 +197,7 @@ public class DetailedPostActivity extends AppCompatActivity {
             }
         });
 
+        // Message the Author of the Post
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

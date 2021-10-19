@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseRef = FirebaseRef.getInstance();
         currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
 //        firebaseRef.getFirebaseAuth().signOut();
+
+        // if the user has Logged in before, go to the Home page directly
         if (currentUser == null)
             currentState = new NoSessionState(this);
         else
@@ -36,11 +38,21 @@ public class MainActivity extends AppCompatActivity {
         currentState.onCreate();
     }
 
+    /**
+     * Go to the Sign In page.
+     *
+     * @param v View
+     */
     public void signIn(View v) {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Go to the Register page.
+     *
+     * @param v View
+     */
     public void register(View v) {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);

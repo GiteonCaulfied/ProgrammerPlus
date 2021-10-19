@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
         NowImage = view.findViewById(R.id.profile_image_now);
 
 
-        // get the Firebase  storage reference
+        // get the Firebase storage reference
         FirebaseRef fb = FirebaseRef.getInstance();
         storage = fb.getStorage();
         storageReference = fb.getStorageReference();
@@ -103,6 +103,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Log out
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +117,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        // Go to another Page to Edit Profile
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +126,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Add the Local Posts
         localPostsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

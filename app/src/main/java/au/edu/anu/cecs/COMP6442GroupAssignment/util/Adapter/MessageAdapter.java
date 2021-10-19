@@ -91,7 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (message.isWhoSent().equals("Upc8rDC8f0NlePlQCW2D2m7Bqin2")){
+                if (message.isWhoSent().equals("by0wvrHLp8gNlD103LAM6Il2xzX2")){
                     Intent intent = new Intent(context, DetailedPostActivity.class);
                     intent.putExtra("pid",message.getPid());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
