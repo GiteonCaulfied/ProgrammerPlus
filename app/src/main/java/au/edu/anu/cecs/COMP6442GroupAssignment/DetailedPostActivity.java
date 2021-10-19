@@ -163,11 +163,11 @@ public class DetailedPostActivity extends AppCompatActivity {
                                     instance.update( p.getPid(), p.toMap());
 
                                     messageDAO.sendAdminMessage(p.getAuthorID(),
-                                            "Upc8rDC8f0NlePlQCW2D2m7Bqin2", "{"+p.getTitle()+"} Get a like！"
-                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
-                                    messageDAO.sendAdminMessage("Upc8rDC8f0NlePlQCW2D2m7Bqin2",
+                                            "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+p.getTitle()+"} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+                                    messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
                                             p.getAuthorID(), "{"+p.getTitle()+"} Get a like！"
-                                            , "Upc8rDC8f0NlePlQCW2D2m7Bqin2",pid);
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
 
                                 }
                                 textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
