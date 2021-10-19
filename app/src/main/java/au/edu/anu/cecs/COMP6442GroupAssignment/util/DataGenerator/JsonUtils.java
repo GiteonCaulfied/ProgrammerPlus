@@ -1,21 +1,16 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Config;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class JsonUtils {
 
@@ -126,7 +126,7 @@ public class JsonUtils {
         }
     }
 
-    public HashMap<String,Profile> getProfiles (Context context){
+    public HashMap<String, Profile> getProfiles (Context context){
         HashMap<String,  Profile> profiles = null;
         InputStream is = null;
         try {

@@ -1,9 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
-import java.util.Map;
-
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.JsonUtils;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
 
 public class SwearWordsDAO {

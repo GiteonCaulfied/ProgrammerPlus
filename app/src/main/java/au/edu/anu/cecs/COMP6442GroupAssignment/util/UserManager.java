@@ -1,5 +1,16 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 
+import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
 public class UserManager {
@@ -22,7 +33,10 @@ public class UserManager {
 
     public void addUser(Profile p) {
         id_email_map.put(p.getUid(), p.getEmail());
-        id_name_map.put(p.getUid(), p.getName());
+        if (p.getName() == null)
+            id_name_map.put(p.getUid(), "userAA");
+        else
+            id_name_map.put(p.getUid(), p.getName());
         email_id_map.put(p.getEmail(), p.getUid());
     }
 

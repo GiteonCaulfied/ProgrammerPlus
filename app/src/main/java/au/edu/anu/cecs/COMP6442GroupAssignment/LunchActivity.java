@@ -23,7 +23,7 @@ public class LunchActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        SystemClock.sleep(2000);
+                        SystemClock.sleep(1200);
                         intent = new Intent(LunchActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

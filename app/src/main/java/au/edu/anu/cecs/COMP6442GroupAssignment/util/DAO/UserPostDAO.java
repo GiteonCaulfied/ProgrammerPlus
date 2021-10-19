@@ -176,7 +176,7 @@ public class UserPostDAO {
                 ,this);
         timelinePostView.setAdapter(timelinePostAdapter);
         creator = factory.creatorFac(mode, posts, timelinePostAdapter);
-        creator.getData();
+        //creator.getData();
     }
 
     public void update(String key, Map<String, Object> newValues) {

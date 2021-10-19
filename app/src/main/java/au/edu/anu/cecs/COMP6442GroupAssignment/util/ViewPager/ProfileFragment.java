@@ -32,8 +32,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.EditProfile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.DataGenerator;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.JsonUtils;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
 
 public class ProfileFragment extends Fragment {
 
@@ -126,8 +127,7 @@ public class ProfileFragment extends Fragment {
         localPostsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonUtils.getInstance().readLocalPosts(getContext(),"java.json");
-                JsonUtils.getInstance().readLocalPosts(getContext(),"python.json");
+
             }
         });
         return view;

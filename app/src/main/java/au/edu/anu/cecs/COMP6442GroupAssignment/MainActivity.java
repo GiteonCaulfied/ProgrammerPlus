@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.DataGenerator;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.NoSessionState;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.SessionState;

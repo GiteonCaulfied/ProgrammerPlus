@@ -9,36 +9,22 @@
     tools:layout_editor_absoluteY="65dp"
     tools:visibility="visible">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <Button
+        android:id="@+id/add_local_posts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="Developer: generate data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/personalpage" />
-
-    </androidx.viewpager.widget.ViewPager>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/profile_image_now"
         android:layout_width="101dp"
         android:layout_height="90dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/face_id_1" />
@@ -48,19 +34,22 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
-        android:background="#CAB3B3"
+        android:background="@color/white"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/name" />
 
     <TextView
         android:id="@+id/Intro"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_width="149dp"
+        android:layout_height="31dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="INTRODUCTION"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_only_fri" />
 
@@ -80,20 +69,23 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:background="#CAB3B3"
+        android:background="@color/white"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/name_Text" />
+        app:layout_constraintTop_toTopOf="@+id/email" />
 
     <TextView
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
         android:text="EMAIL"
-        app:layout_constraintStart_toEndOf="@+id/profile_image_now"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
@@ -104,6 +96,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,12 +106,14 @@
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="79dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
         android:text="NAME"
-        app:layout_constraintBottom_toTopOf="@+id/profile_image_now"
-        app:layout_constraintStart_toEndOf="@+id/profile_image_now"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_now" />
 
     <Button
         android:id="@+id/edit"
@@ -129,17 +124,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/LogOut"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/add_local_posts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Add Local Posts"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/pager"
-        app:layout_constraintStart_toStartOf="@+id/pager"
-        app:layout_constraintTop_toBottomOf="@+id/intro_Text" />
-
     <Switch
         android:id="@+id/profile_only_fri"
         android:layout_width="wrap_content"
@@ -147,8 +131,9 @@
         android:layout_marginTop="20dp"
         android:enabled="false"
         android:text="Only friends can send me messges"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_now" />
+        app:layout_constraintTop_toBottomOf="@+id/email_Text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
