@@ -73,7 +73,9 @@
         android:layout_marginTop="40dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_grammar" />
+        app:layout_constraintTop_toBottomOf="@+id/search_grammar" >
+
+    </ListView>
 
     <ImageView
         android:id="@+id/searchPostBut"
@@ -85,6 +87,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="23dp"
+        android:background="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/timelinePostView"
+        app:layout_constraintStart_toStartOf="@+id/timelinePostView"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <RadioGroup
         android:id="@+id/radio_post_mode"
