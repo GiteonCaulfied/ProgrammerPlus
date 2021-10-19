@@ -71,6 +71,7 @@ public class FriendFragment extends Fragment {
         recyclerRequest.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerRequest.setAdapter(requestsAdapter);
 
+        // Show the Friends information
         final CollectionReference colRef = db.collection("user-profiles");
         colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -105,6 +106,8 @@ public class FriendFragment extends Fragment {
 
                 friendsAdapter.notifyDataSetChanged();
 
+
+                // Show the friends request
                 final DocumentReference friRef = db.collection("friend-request")
                         .document(currentUser.getEmail());
                 friRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -126,6 +129,7 @@ public class FriendFragment extends Fragment {
             }
         });
 
+        // Search the Dialog
         ImageView search = view.findViewById(R.id.searchFriend);
         search.setOnClickListener(new View.OnClickListener() {
             @Override

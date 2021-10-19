@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
-//amd01@gg.com
+
     private FirebaseAuth mAuth;
     private EditText email, password;
 
@@ -40,6 +40,11 @@ public class LoginActivity extends AppCompatActivity {
         // updateUI(currentUser);
     }
 
+    /**
+     * Sign in with the Email and Password and go to the Home page.
+     *
+     * @param v View
+     */
     public void signIn(View v) {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

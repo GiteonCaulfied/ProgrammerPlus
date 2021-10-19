@@ -68,6 +68,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sto_ref = storage.getReference();
 
+        // Add the Detailed Post Data to the Page
         myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -147,6 +148,7 @@ public class DetailedPostActivity extends AppCompatActivity {
                         }
 
 
+                        // Star of the Post
                         textView4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -195,6 +197,7 @@ public class DetailedPostActivity extends AppCompatActivity {
             }
         });
 
+        // Message the Author of the Post
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

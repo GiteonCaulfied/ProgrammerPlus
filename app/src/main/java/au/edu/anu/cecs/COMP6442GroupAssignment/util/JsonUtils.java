@@ -90,6 +90,12 @@ public class JsonUtils {
 
     }
 
+    /**
+     * Read the Local file and get the AVLTree of Swear Words
+     *
+     * @param context Context
+     * @return an AVLTree from the local file
+     */
     public AVLTree<String> getSwearWordsTree (Context context){
 
             Gson gson = new Gson();
@@ -164,6 +170,12 @@ public class JsonUtils {
         return profiles ;
     }
 
+    /**
+     * Read the Local files and upload data instances to the Firebase.
+     *
+     * @param context Context
+     * @param fileName the name of the file to be read and upload
+     */
     public void readLocalPosts(Context context, String fileName){
         try {
             JSONObject object = new JSONObject(readJSON(context,fileName));
@@ -202,6 +214,13 @@ public class JsonUtils {
 
     }
 
+    /**
+     * Read the Local file and get a String of JSON.
+     *
+     * @param context Context
+     * @param fileName the name of the file to be read and upload
+     * @return a String of Json
+     */
     public String readJSON(Context context,String fileName) {
         String json = null;
         try {
@@ -221,6 +240,13 @@ public class JsonUtils {
         return json;
     }
 
+
+    /**
+     * Generate the title of the Post based on the Content.
+     *
+     * @param content the content of the post
+     * @return the title of the post
+     */
     public String titleGenerator(String content){
         String out = "";
 
@@ -387,6 +413,11 @@ public class JsonUtils {
         return out;
     }
 
+    /**
+     * Generate the tag of the Post by randomly selecting from the existing tags.
+     *
+     * @return the title of the post
+     */
     public String tagStringGenerator(){
         // Random Number to randomly select tags
         int min = 0;

@@ -54,10 +54,20 @@ public class PostFragment extends Fragment {
 
         RecyclerView timelinePostView = view.findViewById(R.id.timelinePostView);
 
-        //Data
+        // Back to the TimeLine before Searching by restart the activity
+        ImageView back_button = view.findViewById(R.id.back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().recreate();
+            }
+        });
+
+        // Data
         UserPostDAO userPostDAO = UserPostDAO.getInstance((AppCompatActivity) getActivity());
         userPostDAO.getData(timelinePostView);
 
+        // When the Page is Scrolled, Show more Posts
         timelinePostView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -70,7 +80,7 @@ public class PostFragment extends Fragment {
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-                if (!userPostDAO.isLoading()) {
+                if (!userPostDAO.isLoading() && back_button.getVisibility() == View.INVISIBLE) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == userPostDAO.getPosts().size() - 1) {
                         //bottom of list!
                         userPostDAO.loadMore();
@@ -83,6 +93,8 @@ public class PostFragment extends Fragment {
 //            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         timelinePostView.setLayoutManager(layoutManager);
 
+
+        // Different Modes
         RadioGroup radioGroup = view.findViewById(R.id.radio_post_mode);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("NonConstantResourceId")
@@ -113,6 +125,8 @@ public class PostFragment extends Fragment {
 
         ImageView round_search_button = view.findViewById(R.id.searchPostBut);
 
+
+        // Load the Search History
         ListView history = view.findViewById(R.id.search_hist);
         TextView search_grammar = view.findViewById(R.id.search_grammar);
         final ArrayList<String> hist_arr = new ArrayList();
@@ -131,15 +145,9 @@ public class PostFragment extends Fragment {
         UserActivityDAO userActivityDAO = UserActivityDAO.getInstance();
         userActivityDAO.getSearchHistory(hist_arr, arrayAdapter);
 
-        // Back to the TimeLine before Searching by restart the activity
-        ImageView back_button = view.findViewById(R.id.back_button);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().recreate();
-            }
-        });
 
+
+        // Show the Search Page when the Round Search Button is Clicked
         round_search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,6 +168,8 @@ public class PostFragment extends Fragment {
             }
         });
 
+
+        // Search the Posts and add to the search history
         do_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,6 +197,7 @@ public class PostFragment extends Fragment {
         });
 
 
+        // Go to another page to Publish a new post
         Button newPost = view.findViewById(R.id.new_post_button);
         newPost.setOnClickListener(new View.OnClickListener() {
             @Override

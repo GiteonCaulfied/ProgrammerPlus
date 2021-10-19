@@ -140,7 +140,9 @@ public class EditProfile extends AppCompatActivity {
         });
     }
 
-    // Select Image method
+    /**
+     * Select Image from user's Phone.
+     */
     private void SelectImage() {
 
         // Defining Implicit Intent to mobile gallery
@@ -154,7 +156,13 @@ public class EditProfile extends AppCompatActivity {
                 PICK_IMAGE_REQUEST);
     }
 
-    // Override onActivityResult method
+    /**
+     * When the image is selected, show the image in a image view to the user.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode,
                                  int resultCode,
@@ -191,6 +199,12 @@ public class EditProfile extends AppCompatActivity {
         }
     }
 
+    /**
+     * Save the Edited information, upload the data to the Firebase and
+     * go to the main page.
+     *
+     * @param v View
+     */
     public void save(View v) {
         String uid = mAuth.getCurrentUser().getUid();
         String email_str = email.getText().toString();
@@ -212,6 +226,7 @@ public class EditProfile extends AppCompatActivity {
         Map<String, Object> postValues = user.toMap();
         userProfileDAO.create(uid, postValues);
 
+        // Upload the Edited information to the Firebase
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name_str)
                 .build();
@@ -238,6 +253,7 @@ public class EditProfile extends AppCompatActivity {
                         }
                     });
 
+        // Upload the Portrait (if any)
         if (filePath != null) {
             // Defining the child of storageReference
             StorageReference ref
@@ -283,6 +299,7 @@ public class EditProfile extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),
                 "Edit profile successfully.", Toast.LENGTH_SHORT).show();
 
+        // Go to the Home page
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
