@@ -131,6 +131,15 @@ public class PostFragment extends Fragment {
         UserActivityDAO userActivityDAO = UserActivityDAO.getInstance();
         userActivityDAO.getSearchHistory(hist_arr, arrayAdapter);
 
+        // Back to the TimeLine before Searching by restart the activity
+        ImageView back_button = view.findViewById(R.id.back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().recreate();
+            }
+        });
+
         round_search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +180,8 @@ public class PostFragment extends Fragment {
                     history.setVisibility(View.INVISIBLE);
                     search_grammar.setVisibility(View.INVISIBLE);
                     timelinePostView.setVisibility(View.VISIBLE);
+                    back_button.setVisibility(View.VISIBLE);
+                    round_search_button.setVisibility(View.INVISIBLE);
                 }
             }
         });
