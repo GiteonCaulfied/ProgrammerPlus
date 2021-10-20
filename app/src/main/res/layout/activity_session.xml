@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/session">
 
 
     <androidx.viewpager.widget.ViewPager
@@ -32,22 +33,23 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post" />
+            android:text="@string/post" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Friends" />
+            android:text="@string/friends" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chat" />
+            android:text="@string/chat" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_item_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Me" />
+            android:text="@string/me" />
     </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
