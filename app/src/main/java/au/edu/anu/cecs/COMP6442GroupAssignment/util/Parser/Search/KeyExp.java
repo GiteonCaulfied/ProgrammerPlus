@@ -14,18 +14,34 @@ public class KeyExp extends Exp{
     private String keyword;
     private String field;
 
-    private ArrayList<Post> postList;
+    private ArrayList postList;
     Parser parent;
 
     public KeyExp( String field,String key ,Parser parent ){
         keyword = key;
         this.field=field;
-        UserPostDAO postDAO = UserPostDAO.getInstance();
+
         this.parent =parent;
-        postList=postDAO.getPostList(field,keyword,parent);
+        if (parent!=null){
+            UserPostDAO postDAO = UserPostDAO.getInstance();
+            postList=postDAO.getPostList(field,keyword,parent);
+        }
+
 
     }
 
+    /**
+     * for test
+     * @param postList
+     */
+    public void setPostList(ArrayList<Post> postList) {
+        this.postList = postList;
+    }
+
+    /**
+     * base case return the post lists
+     * @return
+     */
     @Override
     public ArrayList<Post> evaluate() {
         if (postList==null){

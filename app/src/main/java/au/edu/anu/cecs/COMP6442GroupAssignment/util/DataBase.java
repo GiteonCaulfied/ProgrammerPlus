@@ -5,13 +5,13 @@ import android.content.Context;
 import java.util.HashMap;
 
 public class DataBase {
-    private static HashMap<String ,Profile> profiles ;
-    public static HashMap<String,Profile> getProfiles(Context context){
-
-        if (profiles == null){
-
-            profiles = JsonUtils.getInstance().getProfiles(context);
-        }
-        return profiles;
-    }
+//    private static HashMap<String ,Profile> profiles ;
+//    public static HashMap<String,Profile> getProfiles(Context context){
+//
+//        if (profiles == null){
+//
+//            profiles = JsonUtils.getInstance().getProfiles(context);
+//        }
+//        return profiles;
+//    }
 }

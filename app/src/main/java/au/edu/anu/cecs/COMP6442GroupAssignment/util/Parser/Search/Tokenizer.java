@@ -32,11 +32,7 @@ public class Tokenizer {
         }
         Character[] chars = {'&','|','(',')'};
         ArrayList<Character> operators = new ArrayList<Character>(Arrays.asList(chars));
-//        char t1 = buffer.charAt(0);
-//        if (t1 != '+' && t1!='-' && t1!= '*'&& t1!='/'&& t1!=' '
-//                && t1!='(' && t1!= ')' && !Character.isDigit(t1)){
-//            throw new Token.IllegalTokenException("");
-//        }
+
 
         char firstChar = buffer.charAt(0);
         if (firstChar == '&')

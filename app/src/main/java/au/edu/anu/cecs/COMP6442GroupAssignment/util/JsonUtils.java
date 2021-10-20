@@ -91,32 +91,38 @@ public class JsonUtils {
 
     }
 
+    /**
+     * read the swearwords json file, get the swearwords avl tree
+     * @param context
+     * @return swearwords avl tree
+     */
     public AVLTree<String> getSwearWordsTree (Context context){
 
             Gson gson = new Gson();
-//            JsonReader jsonReader = null;
             AVLTree<String> output = null;
             String json = null;
-//        final Type CUS_LIST_TYPE = new TypeToken<AVLTree<String>>() {}.getType();
-            //or TypeToken.getParameterized(ArrayList.class, PersonJSON.class).getType();
+
 
             try{
                 json = read(context.getResources().getAssets().open("swear_words.json"));
                 output = gson.fromJson(json, AVLTree.class);
-//                jsonReader = new JsonReader(new FileReader());
+
             }catch (Exception e) {
                 e.printStackTrace();
             }
-//        Config c = gson.fromJson(jsonReader, AVLTree.class);
-//        AVLTree<String> w = gson.fromJson(jsonReader, new TypeToken<AVLTree<String>>(){}.getType());
-//        AVLTree<String> w = (AVLTree<String>) c.getWords();
+
 
             return output;
 
     }
 
+    /**
+     * save the Swearwords tree in local json file
+     * @param context
+     * @param words
+     */
     public void saveSwearWordsTree(Context context,AVLTree<String> words) {
-        //Gson gson = new Gson();
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try(FileWriter fw = new FileWriter(read(context.getResources().getAssets().open("swaer_words.json")))){
@@ -127,43 +133,33 @@ public class JsonUtils {
         }
     }
 
-    public HashMap<String,Profile> getProfiles (Context context){
-        HashMap<String,  Profile> profiles = null;
-        InputStream is = null;
-        try {
-            is = context.getResources().getAssets().open("profile.json");
-            String json = read(is); // invoke the read method to transfer the json file to String
-
-            Gson gson = new Gson();
+//    public HashMap<String,Profile> getProfiles (Context context){
+//        HashMap<String,  Profile> profiles = null;
+//        InputStream is = null;
+//        try {
+//            is = context.getResources().getAssets().open("profile.json");
+//            String json = read(is); // invoke the read method to transfer the json file to String
 //
-//            Type MapType = new TypeToken<HashMap<String,Profile>>(){}.getType();
+//            Gson gson = new Gson();
+//
+//            Config c = gson.fromJson(json, Config.class);
+//
+//            profiles = c.getProfiles();
 //
 //
-//            profiles=gson.fromJson(json,MapType);
-            Config c = gson.fromJson(json, Config.class);
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }finally {
+//            try {
+//                if (is != null) is.close();
+//            }catch (Exception ex){
+//                ex.printStackTrace();
+//            }
+//        }
+//        return profiles ;
+//    }
 
-            profiles = c.getProfiles();
 
-//            Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
-//                    .create();
-//
-//            profiles = gson.fromJson(
-//                    json,
-//                    new TypeToken<HashMap<String, Profile>>() {
-//                    }.getType());
-
-
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            try {
-                if (is != null) is.close();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-        return profiles ;
-    }
 
     public void readLocalPosts(Context context){
         try {

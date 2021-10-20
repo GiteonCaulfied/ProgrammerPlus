@@ -41,7 +41,7 @@ public class Parser {
 
     /**
      * Adheres to the grammar rule:
-     * <exp>    ::= <term> | <term> + <exp> | <term> - <exp>
+     * <exp>    ::= <term> | <term> & <exp> | <term> | <exp>
      *
      * @return type: Exp.
      */
@@ -86,8 +86,7 @@ public class Parser {
         }
         throw new IllegalProductionException("");
 
-        // Change this return (if you want). It is simply a placeholder to prevent an error.
-        // ########## YOUR CODE ENDS HERE ##########
+
     }
     public Exp parseTerm() {
 
@@ -132,9 +131,7 @@ public class Parser {
         }else {
             throw new IllegalProductionException("");
         }
-//        if (tokenizer.current().getType()!= Token.Type.Instrut){
-//            throw new IllegalProductionException("");
-//        }
+
         return keyExp;
 
 
