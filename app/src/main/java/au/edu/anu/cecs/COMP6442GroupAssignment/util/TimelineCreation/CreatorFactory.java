@@ -6,6 +6,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class CreatorFactory {
+    /**
+     * Factory Pattern
+     */
     public TimelineCreator creatorFac(String mode,
                                       ArrayList<Post> posts,
                                       TimelinePostAdapter timelinePostAdapter) {

@@ -22,6 +22,9 @@ public class Profile {
         // Default constructor required for calls to DataSnapshot.getValue(Profile.class)
     }
 
+    /**
+     * Default Constructor when creating a new profile.
+     */
     public Profile(String uid, String email, String name, String intro, Boolean onlyFriMess) {
         this.uid = uid;
         this.email = email;
@@ -34,6 +37,9 @@ public class Profile {
         this.onlyFriMess = onlyFriMess;
     }
 
+    /**
+     * Constructor using map (used when retrieve profiles from Firebase).
+     */
     public Profile(Map<String, Object> m) {
         this.uid = (String) m.get("uid");
         this.email = (String) m.get("email");
@@ -46,6 +52,9 @@ public class Profile {
         this.onlyFriMess = (boolean) m.get("onlyFriMess");
     }
 
+    /**
+     * Transform the Profile to a Map to upload to the Firebase.
+     */
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);

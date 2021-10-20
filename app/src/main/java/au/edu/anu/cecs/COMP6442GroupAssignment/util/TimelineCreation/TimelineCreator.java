@@ -20,7 +20,13 @@ public abstract class TimelineCreator {
         this.timelinePostAdapter = timelinePostAdapter;
     }
 
+    /**
+     * Load the Posts.
+     */
     public abstract void getData();
 
+    /**
+     * Scroll to see more Posts.
+     */
     public abstract void loadMore();
 }

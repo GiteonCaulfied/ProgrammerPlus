@@ -84,6 +84,9 @@ public class UserPostDAO {
         this.mode = mode;
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static UserPostDAO getInstance(AppCompatActivity act) {
         if (instance == null) {
             instance = new UserPostDAO(act);
@@ -97,6 +100,9 @@ public class UserPostDAO {
         return instance;
     }
 
+    /**
+     * Get posts from the Firebase and store them in a ArrayList (Without the heat speech, using Parser)
+     */
     public  ArrayList<Post> getPostList (String field , String key,Parser parser){
         ArrayList<Post> postArrayList = new ArrayList<>();
 
@@ -131,6 +137,9 @@ public class UserPostDAO {
         return postArrayList;
     }
 
+    /**
+     * Search the Posts using Parser
+     */
     public void searchPost(String text){// Author=123
         /**
          * really redundant need fix fixme
@@ -160,6 +169,9 @@ public class UserPostDAO {
 
     }
 
+    /**
+     * Load the Posts data from Firebase and show them in Post page.
+     */
     public void getData(RecyclerView timelinePostView) {
         CreatorFactory factory = new CreatorFactory();
         posts = new ArrayList<>();
@@ -179,6 +191,9 @@ public class UserPostDAO {
         creator.getData();
     }
 
+    /**
+     * Update Post information (When the post is liked) in the Firebase.
+     */
     public void update(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .update(newValues)
@@ -205,6 +220,9 @@ public class UserPostDAO {
         }
     }
 
+    /**
+     * Write new Post and upload to the Firebase.
+     */
     public void create(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .set(newValues)

@@ -13,6 +13,9 @@ public class SwearWordsDAO {
         this.swearWords = JsonUtils.getInstance().getSwearWordsTree(MyApplication.context);
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static SwearWordsDAO getInstance() {
         if (instance == null) {
             instance = new SwearWordsDAO();

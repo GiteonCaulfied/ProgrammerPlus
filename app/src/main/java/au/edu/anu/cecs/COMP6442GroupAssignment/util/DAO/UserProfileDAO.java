@@ -45,6 +45,9 @@ public class UserProfileDAO {
         currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static UserProfileDAO getInstance() {
         if (instance == null) {
             instance = new UserProfileDAO();
@@ -59,6 +62,9 @@ public class UserProfileDAO {
         this.profile_only_fri = profile_only_fri;
     }
 
+    /**
+     * Load the Profile data from Firebase and show them in Profile page.
+     */
     public void getDataInProfileFrag() {
         final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -84,6 +90,9 @@ public class UserProfileDAO {
         });
     }
 
+    /**
+     * Read the Profile data from Firebase.
+     */
     public void getData() {
         final DocumentReference docRef = db.collection("user-profiles").document(currentUser.getUid());
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -113,6 +122,9 @@ public class UserProfileDAO {
         writeNewProfile(uid, postValues);
     }
 
+    /**
+     * Update the Portrait Uploaded Status to true and update in the Firebase.
+     */
     public void updatePortraitUploadedStatus() {
         userprofile.setPortraitUploadedStatus();
         String uid = currentUser.getUid();
@@ -120,7 +132,9 @@ public class UserProfileDAO {
         writeNewProfile(uid, postValues);
     }
 
-
+    /**
+     * Update user Profile information in the Firebase.
+     */
     public void create(String key, Map<String, Object> newValues) {
         writeNewProfile(key, newValues);
 
@@ -139,6 +153,9 @@ public class UserProfileDAO {
                 });
     }
 
+    /**
+     * Write new Profile and upload to the Firebase.
+     */
     private void writeNewProfile(String key, Map<String, Object> newValues) {
         db.collection("user-profiles").document(key)
                 .set(newValues)
@@ -156,6 +173,9 @@ public class UserProfileDAO {
                 });
     }
 
+    /**
+     * Add friend in the Profile and update in the Firebase.
+     */
     public void addNewFriend(String uid) {
         userprofile.addNewFriend(uid);
         db.collection("user-profiles")
@@ -166,6 +186,9 @@ public class UserProfileDAO {
                 .update("friends", FieldValue.arrayUnion(currentUser.getUid()));
     }
 
+    /**
+     * Add blocked user in the Profile and update in the Firebase.
+     */
     public void addNewBlocked(String uid) {
         userprofile.addNewBlock(uid);
         db.collection("user-profiles")
@@ -173,6 +196,9 @@ public class UserProfileDAO {
                 .update("blocked", FieldValue.arrayUnion(uid));
     }
 
+    /**
+     * Cancel blocked user in the Profile and update in the Firebase.
+     */
     public void cancelBlocked(String uid) {
         userprofile.cancelBlock(uid);
         db.collection("user-profiles")

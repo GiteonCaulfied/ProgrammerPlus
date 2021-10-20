@@ -44,7 +44,8 @@ public class JsonUtils {
 
     /**
      * singleton method
-     * @return
+     *
+     * @return JsonUtils instance
      */
     public static JsonUtils getInstance(){
 

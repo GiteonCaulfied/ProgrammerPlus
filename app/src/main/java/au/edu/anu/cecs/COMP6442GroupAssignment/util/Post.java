@@ -26,6 +26,9 @@ public class Post {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
+    /**
+     * Default Constructor when creating a post.
+     */
     public Post(String pid, String author, String authorID,
                 String title, String body, String imageAddress,
                 HashMap<String, Object> locationMap) {
@@ -50,6 +53,9 @@ public class Post {
         }
     }
 
+    /**
+     * Constructor using map (used when retrieve posts from Firebase).
+     */
     public Post(Map<String, Object> value) {
         this.pid = (String) value.get("pid");
         this.author = (String) value.get("author");
@@ -68,6 +74,9 @@ public class Post {
         this.address = (String) value.get("Address");
     }
 
+    /**
+     * Transform the Post to a Map to upload to the Firebase.
+     */
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("pid", pid);
@@ -135,6 +144,11 @@ public class Post {
         return Objects.hash(pid, author, authorID, title, imageAddress, tags, body, date, usersWhoLike, usersNotLike, longitude, latitude, address);
     }
 
+    /**
+     * Set the tag of the Post using the raw tag String.
+     *
+     * @param raw raw String separating tags with semicolon (e.g. "ANU;BotTalk")
+     */
     public void setTags(String raw){
         String[] raw_arr = raw.split(";");
         tags = new ArrayList<>(Arrays.asList(raw_arr));
