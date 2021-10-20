@@ -109,7 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    // Select Image method
+    /**
+     * Select Image from user's Phone.
+     */
     private void SelectImage() {
 
         // Defining Implicit Intent to mobile gallery
@@ -123,7 +125,9 @@ public class RegisterActivity extends AppCompatActivity {
                 PICK_IMAGE_REQUEST);
     }
 
-    // Override onActivityResult method
+    /**
+     * When the image is selected, show the image in a image view to the user.
+     */
     @Override
     public void onActivityResult(int requestCode,
                                  int resultCode,
@@ -160,6 +164,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Register with the Email and Password, upload the data to the Firebase and
+     * go to the main page.
+     *
+     * @param v View
+     */
     public void signUp(View v) {
         String email_str = email.getText().toString();
         String pass_str = password.getText().toString();
@@ -167,12 +177,14 @@ public class RegisterActivity extends AppCompatActivity {
         String name_str = name.getText().toString();
         String intro_str = intro.getText().toString();
 
+        // if the password is not consistent
         if (!pass_str.equals(conf_str)) {
             Toast.makeText(getApplicationContext(),
                     "Passwords inconsistent!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Create a User Profile and upload to the Firebase
         mAuth.createUserWithEmailAndPassword(
                 email_str, pass_str)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -243,6 +255,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Register successfully.", Toast.LENGTH_SHORT).show();
 
+                    // Go to the Home page
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

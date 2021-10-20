@@ -140,6 +140,7 @@ public class MessageActivity extends AppCompatActivity {
         sendBut = findViewById(R.id.sendMess);
         messageDAO = MessageDAO.getInstance();
 
+        // Send the Message If possible
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,6 +223,11 @@ public class MessageActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_chat, menu);
     }
 
+    /**
+     * Block or Unblock a user.
+     *
+     * @param item MenuItem
+     */
     public void block(MenuItem item) {
         if (me.blockContain(userId)) {
             userProfileDAO.cancelBlocked(userId);
@@ -237,11 +243,21 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Delete the chat with a user.
+     *
+     * @param item MenuItem
+     */
     public void deleteChat(MenuItem item) {
         messageDAO.deleteChat(currentUser.getUid(), userId);
         finish();
     }
 
+    /**
+     * Show the template message dialog.
+     *
+     * @param item MenuItem
+     */
     public void templateMess(MenuItem item) {
         long lastTime = messages.isEmpty() ? System.currentTimeMillis() : messages.get(messages.size() - 1).getTime();
         TemplateMessDialog dialog = new TemplateMessDialog(

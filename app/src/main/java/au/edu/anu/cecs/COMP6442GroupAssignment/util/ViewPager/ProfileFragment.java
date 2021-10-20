@@ -32,8 +32,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.EditProfile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.DataGenerator;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.JsonUtils;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
 
 public class ProfileFragment extends Fragment {
 
@@ -69,7 +70,7 @@ public class ProfileFragment extends Fragment {
         NowImage = view.findViewById(R.id.profile_image_now);
 
 
-        // get the Firebase  storage reference
+        // get the Firebase storage reference
         FirebaseRef fb = FirebaseRef.getInstance();
         storage = fb.getStorage();
         storageReference = fb.getStorageReference();
@@ -102,6 +103,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Log out
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +117,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        // Go to another Page to Edit Profile
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,10 +126,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Add the Local Posts
         localPostsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonUtils.getInstance().readLocalPosts(getContext());
+                DataGenerator dataGenerator = new DataGenerator(getContext());
+                dataGenerator.generateEverything();
             }
         });
         return view;

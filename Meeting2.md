@@ -1,10 +1,13 @@
 # Only Hard
 This following is a team meeting template. You may change this template as you like.
 
-## Team Meeting 04 - Week 10 - Oct. 11 (7:00PM -- 8:00PM)
+## Team Meeting 02 - Week 10 - Oct. 11 (7:00PM -- 8:00PM)
 **Absent:**
 <br> Checklist:
-
+✅ Yikai: Tokenizer and parser
+✅ Xiangyu: Swear-word tree (AVL-tree)
+✅ Xuzeng: Add tags to posts (add posts, view posts)
+✅ Qinyu: logging user activity
 
 ## Agreed Procedure
 Stand up Procedure:

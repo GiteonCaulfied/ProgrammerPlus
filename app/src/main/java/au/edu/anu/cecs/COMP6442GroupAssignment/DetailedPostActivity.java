@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
@@ -41,6 +42,7 @@ public class DetailedPostActivity extends AppCompatActivity {
     private Post p;
     private UserPostDAO instance;
     private Button message;
+    private MessageDAO messageDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,14 @@ public class DetailedPostActivity extends AppCompatActivity {
         instance = UserPostDAO.getInstance(this);
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
-
+        messageDAO = MessageDAO.getInstance();
         FirebaseRef fb = FirebaseRef.getInstance();
         DocumentReference myRef = fb.getFirestore().collection("user-posts").document(pid);
         uid = FirebaseAuth.getInstance().getUid();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sto_ref = storage.getReference();
 
+        // Add the Detailed Post Data to the Page
         myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -114,30 +117,38 @@ public class DetailedPostActivity extends AppCompatActivity {
                             }
                         });
 
-                        //Display Image of the Post
-                        RequestOptions optionsPost = new RequestOptions()
-                                .override(800, 600)
-                                .centerCrop()
-                                .placeholder(R.mipmap.ic_launcher_round)
-                                .error(R.mipmap.ic_launcher_round)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false);
-                        sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                        //Display Image of the Post (if Any)
+                        if (p.getImageAddress().length() != 0){
+                            RequestOptions optionsPost = new RequestOptions()
+                                    .override(800, 600)
+                                    .centerCrop()
+                                    .placeholder(R.mipmap.ic_launcher_round)
+                                    .error(R.mipmap.ic_launcher_round)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(false);
+                            sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                                Glide.with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .apply(optionsPost)
-                                        .into(image);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                            }
-                        });
+                                    Glide.with(getApplicationContext())
+                                            .load(uri.toString())
+                                            .apply(optionsPost)
+                                            .into(image);
+                                    image.setVisibility(View.VISIBLE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                    image.setVisibility(View.GONE);
+                                }
+                            });
+                        } else {
+                            image.setVisibility(View.GONE);
+                        }
 
+
+                        // Star of the Post
                         textView4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -152,6 +163,14 @@ public class DetailedPostActivity extends AppCompatActivity {
                                     usersWhoLike.add(uid);
                                     p.setUsersWhoLike(usersWhoLike);
                                     instance.update( p.getPid(), p.toMap());
+
+                                    messageDAO.sendAdminMessage(p.getAuthorID(),
+                                            "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+p.getTitle()+"} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+                                    messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
+                                            p.getAuthorID(), "{"+p.getTitle()+"} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+
                                 }
                                 textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
                                         getApplicationContext().getResources().getColor(R.color.gray));
@@ -178,6 +197,7 @@ public class DetailedPostActivity extends AppCompatActivity {
             }
         });
 
+        // Message the Author of the Post
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

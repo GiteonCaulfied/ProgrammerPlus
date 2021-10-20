@@ -54,9 +54,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:28.4.0')
-
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore'
@@ -67,4 +64,13 @@ dependencies {
     // Declare the dependency for the Cloud Storage library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-storage'
+
+    // Firebase Analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.2'
+    // Declare the dependency for the Firebase ML model downloader library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-ml-modeldownloader'
+
+    // Also declare the dependency for the TensorFlow Lite library and specify its version
+    implementation 'org.tensorflow:tensorflow-lite:2.3.0'
 }

@@ -28,7 +28,7 @@ The following markdown document is a checklist of items you **should** complete 
 - [ ] All bugs and errors (that are known) are listed.
 - [ ] Details of tests provided such as the type, number and coverage.
 - [ ] Summary of all implemented features (categorised by overall feature and classified by their difficulty levels).
-- [ ] Team Meeting Minutes (either linked from or inside the report itself). There must be at least 3 meetings among the team. See [meeting template](./MeetingTemplate.md) for guidance on how to structure these if you have never done this before.
+- [ ] Team Meeting Minutes (either linked from or inside the report itself). There must be at least 3 meetings among the team. See [meeting template](Meeting1.md) for guidance on how to structure these if you have never done this before.
 
 ## Individual Reflections
 Please note that Individual reflections must be submitted to Wattle in Week 11, at the same time as the rest of the work for this submission.

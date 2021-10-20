@@ -12,7 +12,6 @@ public class Profile {
     private String name;
     private String email;
     private long creation_time;
-    private ArrayList<String> posts;
     private ArrayList<String> friends;
     private ArrayList<String> blocked;
     private String intro;
@@ -23,12 +22,14 @@ public class Profile {
         // Default constructor required for calls to DataSnapshot.getValue(Profile.class)
     }
 
+    /**
+     * Default Constructor when creating a new profile.
+     */
     public Profile(String uid, String email, String name, String intro, Boolean onlyFriMess) {
         this.uid = uid;
         this.email = email;
         this.name = name;
         this.creation_time = System.currentTimeMillis();
-        this.posts = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
         this.intro = intro;
@@ -36,12 +37,14 @@ public class Profile {
         this.onlyFriMess = onlyFriMess;
     }
 
+    /**
+     * Constructor using map (used when retrieve profiles from Firebase).
+     */
     public Profile(Map<String, Object> m) {
         this.uid = (String) m.get("uid");
         this.email = (String) m.get("email");
         this.name = (String) m.get("name");
         this.creation_time = (long) m.get("date");
-        this.posts = (ArrayList<String>) m.get("posts");
         this.friends = (ArrayList<String>) m.get("friends");
         this.blocked = (ArrayList<String>) m.get("blocked");
         this.intro = (String) m.get("intro");
@@ -49,13 +52,15 @@ public class Profile {
         this.onlyFriMess = (boolean) m.get("onlyFriMess");
     }
 
+    /**
+     * Transform the Profile to a Map to upload to the Firebase.
+     */
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
         result.put("email", email);
         result.put("name", name);
         result.put("date", creation_time);
-        result.put("posts", posts);
         result.put("friends", friends);
         result.put("blocked", blocked);
         result.put("intro", intro);

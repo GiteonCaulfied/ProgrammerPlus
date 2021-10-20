@@ -107,7 +107,9 @@ public class PostActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    // Select Image method
+    /**
+     * Select Image from user's Phone.
+     */
     private void SelectImage() {
 
         // Defining Implicit Intent to mobile gallery
@@ -121,7 +123,13 @@ public class PostActivity extends AppCompatActivity {
                 PICK_IMAGE_REQUEST);
     }
 
-    // Override onActivityResult method
+    /**
+     * When the image is selected, show the image in a image view to the user.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode,
@@ -159,7 +167,11 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Create a new post and upload the information to the Firebase
+     *
+     * @param v View
+     */
     public void newPost(View v) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously

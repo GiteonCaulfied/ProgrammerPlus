@@ -1,6 +1,7 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Message;
 
@@ -83,6 +85,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             public void onFailure(@NonNull Exception exception) {
                 // Load Local Portrait if there are no Portrait in the Database
                 holder.userImage.setImageResource(R.drawable.face_id_1);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (message.isWhoSent().equals("by0wvrHLp8gNlD103LAM6Il2xzX2")){
+                    Intent intent = new Intent(context, DetailedPostActivity.class);
+                    intent.putExtra("pid",message.getPid());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                    context.startActivity(intent);
+                }
             }
         });
 

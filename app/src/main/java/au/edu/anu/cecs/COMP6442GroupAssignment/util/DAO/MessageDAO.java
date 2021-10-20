@@ -23,6 +23,9 @@ public class MessageDAO {
         myRef = firebaseRef.getDatabaseRef();
     }
 
+    /**
+     * Send a new Message and upload to the Firebase.
+     */
     public void sendMessage(String user1, String user2,
                             String message, String whoSent) {
         Message mes = new Message(message, whoSent);
@@ -32,6 +35,21 @@ public class MessageDAO {
                 .push().setValue(mes.toMap());
     }
 
+    /**
+     * Send a new admin Message and upload to the Firebase.
+     */
+    public void sendAdminMessage(String user1, String user2,
+                                 String message, String whoSent,String pid) {
+        Message mes = new Message(message, whoSent,"adminMessage",pid);
+        myRef.child("user-chat")
+                .child(user1)
+                .child(user2)
+                .push().setValue(mes.toMap2());
+    }
+
+    /**
+     * Delete a Message and update the Firebase.
+     */
     public void deleteChat(String user1, String user2) {
         Map<String, Object> postValues = new HashMap<>();
         postValues.put(user2, null);
@@ -41,6 +59,9 @@ public class MessageDAO {
         myRef.updateChildren(childUpdates);
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static MessageDAO getInstance() {
         if (instance == null)
             instance = new MessageDAO();

@@ -13,6 +13,9 @@ public class FriendRequest {
         this.name = name;
     }
 
+    /**
+     * Transform the FriendRequest to a Map to upload to the Firebase.
+     */
     public HashMap<String, Object> toMap() {
         HashMap<String, Object> results = new HashMap<>();
         results.put(uid, name);

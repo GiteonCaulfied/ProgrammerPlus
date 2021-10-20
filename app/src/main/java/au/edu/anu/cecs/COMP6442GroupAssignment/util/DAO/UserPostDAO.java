@@ -8,22 +8,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,13 +40,18 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation.CreatorFactory;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation.TimelineCreator;
 
-public class UserPostDAO implements UserActivityDaoInterface {
+public class UserPostDAO {
     private static UserPostDAO instance;
     private final FirebaseFirestore db;
     private FirebaseUser currentUser;
-    private final TimelinePostAdapter timelinePostAdapter;
-    private final ArrayList<Post> posts;
+    private TimelinePostAdapter timelinePostAdapter;
+    private ArrayList<Post> posts;
+    private String mode;
+    private TimelineCreator creator;
+    private AppCompatActivity act;
 
     private Exp temp_exp;
 
@@ -51,8 +61,11 @@ public class UserPostDAO implements UserActivityDaoInterface {
     public UserPostDAO(AppCompatActivity act) {
 
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
+        this.act = act;
+        currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
         db = firebaseRef.getFirestore();
         posts = new ArrayList<>();
+        mode = "Time";
         //Adapter
         timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),
                 posts,
@@ -67,7 +80,13 @@ public class UserPostDAO implements UserActivityDaoInterface {
         ,this);
     }
 
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
+    /**
+     * Singleton Pattern
+     */
     public static UserPostDAO getInstance(AppCompatActivity act) {
         if (instance == null) {
             instance = new UserPostDAO(act);
@@ -81,6 +100,9 @@ public class UserPostDAO implements UserActivityDaoInterface {
         return instance;
     }
 
+    /**
+     * Get posts from the Firebase and store them in a ArrayList (Without the heat speech, using Parser)
+     */
     public  ArrayList<Post> getPostList (String field , String key,Parser parser){
         ArrayList<Post> postArrayList = new ArrayList<>();
 
@@ -115,6 +137,9 @@ public class UserPostDAO implements UserActivityDaoInterface {
         return postArrayList;
     }
 
+    /**
+     * Search the Posts using Parser
+     */
     public void searchPost(String text){// Author=123
         /**
          * really redundant need fix fixme
@@ -142,42 +167,33 @@ public class UserPostDAO implements UserActivityDaoInterface {
                     "Illegal syntax", Toast.LENGTH_SHORT).show();
         }
 
-
-
     }
 
-    @Override
-    public void getData() {
-        Query query = db.collection("user-posts").orderBy("date").limitToLast(10);
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.w("Read posts", "Listen failed.", error);
-                    return;
-                }
-
-                if (value != null) {
-                    Log.d("Read posts", "Current data: " + value);
-                    posts.clear();
-                    for (DocumentSnapshot document : value.getDocuments()) {
-                        posts.add(new Post(document.getData()));
+    /**
+     * Load the Posts data from Firebase and show them in Post page.
+     */
+    public void getData(RecyclerView timelinePostView) {
+        CreatorFactory factory = new CreatorFactory();
+        posts = new ArrayList<>();
+        timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),
+                posts,
+                new TimelinePostAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Post item) {
+                        Intent intent = new Intent(act.getApplicationContext(), DetailedPostActivity.class);
+                        intent.putExtra("pid",item.getPid());
+                        act.startActivity(intent);
                     }
-                    /**
-                     * there could be a bug which is searched post will be replaced by update？
-                     * fixme
-                     */
-
-                    Collections.reverse(posts);
-                    timelinePostAdapter.notifyDataSetChanged();
-                } else {
-                    Log.d("Read posts", "Current data: null");
                 }
-            }
-        });
+                ,this);
+        timelinePostView.setAdapter(timelinePostAdapter);
+        creator = factory.creatorFac(mode, posts, timelinePostAdapter);
+        creator.getData();
     }
 
-    @Override
+    /**
+     * Update Post information (When the post is liked) in the Firebase.
+     */
     public void update(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .update(newValues)
@@ -193,9 +209,20 @@ public class UserPostDAO implements UserActivityDaoInterface {
                         Log.w("Post", "Star err", e);
                     }
                 });
+        if (!((String) newValues.get("authorID")).equals(currentUser.getUid())) {
+            ArrayList<String> usersWhoLike = (ArrayList<String>) newValues.get("usersWhoLike");
+            if (usersWhoLike != null && usersWhoLike.contains(currentUser.getUid()))
+                db.collection("user-data").document(currentUser.getUid())
+                        .update("posts", FieldValue.arrayUnion(key));
+            else
+                db.collection("user-data").document(currentUser.getUid())
+                        .update("posts", FieldValue.arrayRemove(key));
+        }
     }
 
-    @Override
+    /**
+     * Write new Post and upload to the Firebase.
+     */
     public void create(String key, Map<String, Object> newValues) {
         db.collection("user-posts").document(key)
                 .set(newValues)
@@ -214,66 +241,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
     }
 
     public void loadMore() {
-        posts.add(null);
-        timelinePostAdapter.notifyItemInserted(posts.size() - 1);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                posts.remove(posts.size() - 1);
-                int scrollPosition = posts.size();
-                timelinePostAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 10;
-
-                Query query = db.collection("user-posts").orderBy("date").limitToLast(nextLimit);
-                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.w("Read posts", "Listen failed.", error);
-                            return;
-                        }
-
-                        if (value != null) {
-                            Log.d("Read posts", "Current data: " + value);
-                            posts.clear();
-                            for (DocumentSnapshot document : value.getDocuments()) {
-                                posts.add(new Post(document.getData()));
-                            }
-                            /**
-                             * there could be a bug which is searched post will be replaced by update？
-                             * fixme
-                             */
-
-                            Collections.reverse(posts);
-                            timelinePostAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d("Read posts", "Current data: null");
-                        }
-                    }
-                });
-
-                currentSize = nextLimit + 1;
-
-                timelinePostAdapter.notifyDataSetChanged();
-                isLoading = false;
-            }
-        }, 2000);
-
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void clear() {
-
+        creator.loadMore();
     }
 
     public TimelinePostAdapter getPostsAdapter() {
@@ -288,7 +256,7 @@ public class UserPostDAO implements UserActivityDaoInterface {
         return isLoading;
     }
 
-    public void setLoading(){
-        isLoading = true;
+    public void setLoading(boolean loading) {
+        isLoading = loading;
     }
 }

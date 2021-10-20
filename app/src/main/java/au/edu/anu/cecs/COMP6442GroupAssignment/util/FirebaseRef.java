@@ -21,6 +21,14 @@ public class FirebaseRef {
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
+    /**
+     * Some Firebase quick reference, including:
+     *
+     * 1.Realtime Database (user-chat)
+     * 2.Firestore Database (user-data, user-posts and user-profiles)
+     * 3.Firebase Authentication (Sign up and Register)
+     * 4.Firebase Storage (post image and user portrait)
+     */
     public FirebaseRef() {
         realtimeDatabase = FirebaseDatabase.getInstance();
         myRef = realtimeDatabase.getReference();
@@ -30,6 +38,9 @@ public class FirebaseRef {
         storageReference = storage.getReference();
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static FirebaseRef getInstance() {
         if (instance == null) {
             instance = new FirebaseRef();

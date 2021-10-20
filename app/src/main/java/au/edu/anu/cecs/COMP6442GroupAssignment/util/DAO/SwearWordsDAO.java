@@ -1,12 +1,10 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
-import java.util.Map;
-
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.JsonUtils;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
 
-public class SwearWordsDAO implements UserActivityDaoInterface {
+public class SwearWordsDAO {
 
     private AVLTree<String> swearWords;
     private static SwearWordsDAO instance;
@@ -15,8 +13,10 @@ public class SwearWordsDAO implements UserActivityDaoInterface {
         this.swearWords = JsonUtils.getInstance().getSwearWordsTree(MyApplication.context);
     }
 
-    //    @Override
-    public static UserActivityDaoInterface getInstance() {
+    /**
+     * Singleton Pattern
+     */
+    public static SwearWordsDAO getInstance() {
         if (instance == null) {
             instance = new SwearWordsDAO();
         }
@@ -28,31 +28,6 @@ public class SwearWordsDAO implements UserActivityDaoInterface {
             return true;
         }
         return false;
-
-    }
-
-    @Override
-    public void getData() {
-
-    }
-
-    @Override
-    public void update(String key, Map<String, Object> newValues) {
-
-    }
-
-    @Override
-    public void create(String key, Map<String, Object> newValues) {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void clear() {
 
     }
 }
