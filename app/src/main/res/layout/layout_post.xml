@@ -57,24 +57,24 @@
 
     <TextView
         android:id="@+id/search_grammar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="94dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/search_grammar"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/timelinePostView"
-        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+        app:layout_constraintTop_toBottomOf="@+id/searchText"
+        tools:text="@string/search_grammar" />
 
     <ListView
         android:id="@+id/search_hist"
         android:layout_width="341dp"
         android:layout_height="298dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_grammar" >
+        app:layout_constraintTop_toBottomOf="@+id/search_grammar">
 
     </ListView>
 

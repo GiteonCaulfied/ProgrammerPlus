@@ -40,6 +40,10 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
+    /**
+     * The activity where a new user can register
+     */
+
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
 
@@ -62,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Find elements that we need
         email = findViewById(R.id.email_signup);
         name = findViewById(R.id.name_signup);
         password = findViewById(R.id.password_signup);
