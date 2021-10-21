@@ -20,6 +20,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.PostFragment;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager.ProfileFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
+    /**
+     * The page adapter to show 4 different fragments on the main interface
+     * (1) post fragment
+     * (2) friend fragment
+     * (3) chat fragment
+     * (4) my profile fragment
+     * The classes of fragments are under util.ViewPager
+     */
 
     private int num;
     private HashMap<Integer, Fragment> mFragmentHashMap = new HashMap<>();

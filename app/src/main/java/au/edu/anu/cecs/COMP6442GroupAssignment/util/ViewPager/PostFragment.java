@@ -32,7 +32,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserActivityDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 
 public class PostFragment extends Fragment {
-
+    /**
+     * The post fragement, showing the posts based on three modes.
+     */
 
     @Nullable
     @Override

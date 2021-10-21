@@ -21,7 +21,7 @@ public class CreatorFactory {
                 creator = new LikeModeCreator(posts, timelinePostAdapter);
                 break;
             case "Uncomfortable":
-                creator = new UncomModeCreator(posts, timelinePostAdapter);
+                creator = new ExploreModeCreator(posts, timelinePostAdapter);
                 break;
             default:
                 creator = new TimeModeCreator(posts, timelinePostAdapter);

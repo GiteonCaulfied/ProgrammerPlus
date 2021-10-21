@@ -24,6 +24,10 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class UserGenerator {
+    /**
+     * This class is used to generate 500 users
+     */
+
     private FirebaseAuth mAuth;
     private Context context;
 

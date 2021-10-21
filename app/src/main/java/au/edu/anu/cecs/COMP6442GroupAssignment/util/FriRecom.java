@@ -29,13 +29,27 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.TimelineCreation.UserLog;
 
 public class FriRecom {
+    /**
+     * This class implements an algorithm to recommend friends
+     * using the K-Means Machine Learning method.
+     * The K-Means model was developed online in Python on Colab.
+     * We store the clusters in assets. This class will
+     * calculate the distance to each centroid of clusters for
+     * each user, and recommend friends in the same cluster
+     * for the current user.
+     */
+
     Context context;
 
     public FriRecom(Context context) {
         this.context = context;
     }
 
+    /**
+     * Recommend three friends for the current user
+     */
     public void recommendation(EditText rec1, EditText rec2, EditText rec3) {
+        // Read user information from Firebase
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseRef.getInstance().getFirebaseAuth().getCurrentUser();
         List<String> posts = readHotPosts();
@@ -57,6 +71,8 @@ public class FriRecom {
                     }
 
                     me.generateHotPosts(posts);
+
+                    // Determine which cluster each user belongs to
                     int best_me_clu = me.findCluster(clusters);
                     UserProfileDAO profileDAO = UserProfileDAO.getInstance();
                     Profile user = profileDAO.getUserprofile();
@@ -69,6 +85,7 @@ public class FriRecom {
                         int c = userLog.findCluster(clusters);
                         if (c == best_me_clu) {
                             res.add(userLog.getUserID());
+                            // We only recommend three possible friends
                             if (res.size() == 3)
                                 break;
                         }
@@ -85,6 +102,12 @@ public class FriRecom {
         });
     }
 
+    /**
+     * Read hot posts as user features
+     * We don't care about posts with several likes
+     * in case that the matrix is too sparse
+     * @return
+     */
     public List<String> readHotPosts() {
         List<String> posts = new ArrayList<>();
         try {
@@ -104,6 +127,9 @@ public class FriRecom {
         return posts;
     }
 
+    /**
+     * Read the centroids of clusters
+     */
     public List<double[]> readClusters() {
         List<double[]> posts = new ArrayList<>();
         try {

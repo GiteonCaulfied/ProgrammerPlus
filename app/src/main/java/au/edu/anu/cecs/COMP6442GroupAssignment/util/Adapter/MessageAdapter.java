@@ -27,6 +27,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Message;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+    /**
+     * An adapter to show messages with one friend on RecyclerView
+     * A message item contains:
+     * (1) friend name
+     * (2) friend portrait
+     * (3) my portrait
+     * (4) messages
+     */
 
     private final Context context;
     private final ArrayList<Message> messages;
@@ -43,15 +51,22 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         reference = instance.getReference();
     }
 
+    /**
+     * Messages have two kinds - the messages I sent, and the messages I received.
+     * So we added an viewType to indicate that
+     * @return
+     */
     @NonNull
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == 1)
+            // This is a message that I sent
             view = LayoutInflater.from(context).inflate(R.layout.message_sent,
                     parent,
                     false);
         else
+            // This is a message that I received
             view = LayoutInflater.from(context).inflate(R.layout.message_received,
                     parent,
                     false);
@@ -115,8 +130,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView text;
-        public ImageView userImage;
+        public TextView text; // Friend name
+        public ImageView userImage; // Friend portrait
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

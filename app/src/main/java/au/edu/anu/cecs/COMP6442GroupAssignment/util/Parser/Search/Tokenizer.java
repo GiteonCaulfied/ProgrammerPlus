@@ -9,7 +9,6 @@ public class Tokenizer {
     private Token currentToken;     // The current token. The next token is extracted when next() is called.
 
 
-
     /**
      * Tokenizer class constructor
      * The constructor extracts the first token and save it to currentToken
@@ -30,7 +29,7 @@ public class Tokenizer {
             currentToken = null;    // if there's no string left, set currentToken null and return
             return;
         }
-        Character[] chars = {'&','|','(',')'};
+        Character[] chars = {'&', '|', '(', ')'};
         ArrayList<Character> operators = new ArrayList<Character>(Arrays.asList(chars));
 
 
@@ -48,22 +47,22 @@ public class Tokenizer {
         int pos = 0;
         StringBuffer instructions = new StringBuffer();
         buffer = buffer.trim();
-        while ( pos < buffer.length() && !operators.contains(buffer.charAt(pos))){
+        while (pos < buffer.length() && !operators.contains(buffer.charAt(pos))) {
 
             instructions.append(buffer.charAt(pos));
             pos++;
         }
         String instruction = instructions.toString();
-        if (instructions.length()!=0){
-            if (instruction.startsWith("Author=")){
+        if (instructions.length() != 0) {
+            if (instruction.startsWith("Author=")) {
                 currentToken = new Token(instruction, Token.Type.Author);
-            }else if (instruction.startsWith("Title=")){
+            } else if (instruction.startsWith("Title=")) {
                 currentToken = new Token(instruction, Token.Type.Title);
-            }else if (instruction.startsWith("Tag=")){
+            } else if (instruction.startsWith("Tag=")) {
                 currentToken = new Token(instruction, Token.Type.Tag);
-            }else if (instruction.startsWith("Id=")){
+            } else if (instruction.startsWith("Id=")) {
                 currentToken = new Token(instruction, Token.Type.Id);
-             }else {
+            } else {
 //                throw new Token.IllegalTokenException("");
                 currentToken = new Token(instruction, Token.Type.Illegal);
             }

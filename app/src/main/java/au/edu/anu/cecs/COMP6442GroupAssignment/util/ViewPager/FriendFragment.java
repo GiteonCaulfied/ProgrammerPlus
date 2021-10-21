@@ -35,6 +35,10 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Dialog.SearchFriendDialog;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class FriendFragment extends Fragment {
+    /**
+     * The friend fragment, shoing the current user's friends.
+     */
+
     private ArrayList<Profile> friends;
     private FriendsAdapter friendsAdapter;
     private Profile me;

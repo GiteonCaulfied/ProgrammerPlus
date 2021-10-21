@@ -26,6 +26,15 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.MessageActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
+    /**
+     * An adapter to show chats on RecyclerView
+     * A chat item contains:
+     * (1) friend name
+     * (2) friend id
+     * (3) the latest message
+     * (4) friend portrait
+     */
+
     private final StorageReference reference;
 
     private final Context context;
@@ -101,9 +110,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public ImageView imageView;
-        public TextView text;
+        public TextView name; // Friend name
+        public ImageView imageView; // Friend portrait
+        public TextView text; // The latest message
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

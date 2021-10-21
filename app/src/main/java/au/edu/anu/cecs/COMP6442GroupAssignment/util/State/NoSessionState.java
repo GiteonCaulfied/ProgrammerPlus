@@ -4,6 +4,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.MainActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 
 public class NoSessionState implements UserState {
+    /**
+     * When there is no session, display register and sign-in buttons
+     */
 
     private final MainActivity main;
 
