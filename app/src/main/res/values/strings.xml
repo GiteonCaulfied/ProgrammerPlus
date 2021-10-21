@@ -3,8 +3,24 @@
     <string name="sign_in">Sign In</string>
     <string name="forget_pass">Forget password</string>
     <string name="Sign_up">Sign Up</string>
-    <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="register">Register</string>
     <string name="new_post_button">+</string>
+    <string name="friendSend">Only friends can send me messges</string>
+    <string name="hintPassword">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="my_introduction">My Introduction</string>
+    <string name="select_image">Select Image</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="programmer">Programmer+</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="log_out">Log out</string>
+    <string name="chat">Chat</string>
+    <string name="me">Me</string>
+    <string name="friends">Friends</string>
+    <string name="post">Post</string>
+    <string name="author_someone">Author=Someone</string>
+    <string name="confirm">Confirm</string>
+    <string name="search_grammar">Search Grammar:</string>
 </resources>

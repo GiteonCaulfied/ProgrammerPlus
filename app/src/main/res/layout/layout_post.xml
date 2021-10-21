@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/layout_post">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timelinePostView"
@@ -22,7 +23,7 @@
         android:layout_height="49dp"
         android:layout_marginTop="120dp"
         android:ems="10"
-        android:hint="Author=Someone"
+        android:hint="@string/author_someone"
         android:inputType="textPersonName"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@+id/timelinePostView"
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:onClick="searchPosts"
-        android:text="Confirm"
+        android:text="@string/confirm"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
-        android:text="Search Grammar: "
+        android:text="@string/search_grammar"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/timelinePostView"
         app:layout_constraintTop_toBottomOf="@+id/searchText" />
@@ -104,7 +105,7 @@
         android:id="@+id/radio_post_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/ModeText"
@@ -126,10 +127,10 @@
             android:textSize="14sp" />
 
         <RadioButton
-            android:id="@+id/UncomfortableMode"
+            android:id="@+id/ExploreMode"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
-            android:text="Uncomfortable"
+            android:text="Explore"
             android:textSize="14sp" />
     </RadioGroup>
 

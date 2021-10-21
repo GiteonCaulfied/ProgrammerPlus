@@ -7,7 +7,8 @@
     android:visibility="visible"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="65dp"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    android:id="@+id/layout_profile">
 
     <Button
         android:id="@+id/add_local_posts"
@@ -61,7 +62,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:onClick="logOut"
-        android:text="Log out"
+        android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -3,7 +3,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,24 +22,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.PostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserActivityDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 
 public class PostFragment extends Fragment {
 
@@ -111,7 +100,7 @@ public class PostFragment extends Fragment {
                         userPostDAO.getData(timelinePostView);
                         Toast.makeText(getContext(), "Like Mode", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.UncomfortableMode:
+                    case R.id.ExploreMode:
                         userPostDAO.setMode("Uncomfortable");
                         userPostDAO.getData(timelinePostView);
                         Toast.makeText(getContext(), "Uncomfortable Mode", Toast.LENGTH_SHORT).show();

@@ -6,10 +6,7 @@ import android.os.SystemClock;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-public class LunchActivity extends AppCompatActivity {
+public class LaunchActivity extends AppCompatActivity {
 
 
     private Intent intent;
@@ -26,10 +23,10 @@ public class LunchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         SystemClock.sleep(1200);
-                        intent = new Intent(LunchActivity.this, MainActivity.class);
+                        intent = new Intent(LaunchActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        LunchActivity.this.finish();
+                        LaunchActivity.this.finish();
                     }
                 });
             }

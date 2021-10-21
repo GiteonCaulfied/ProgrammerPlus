@@ -26,6 +26,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
@@ -48,6 +49,8 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final OnItemClickListener listener;
     AppCompatActivity appCompatActivity;
     private FirebaseAnalytics firebaseAnalytics;
+    private final Random random;
+
     public TimelinePostAdapter(Context context, List<Post> posts, OnItemClickListener listener, UserPostDAO instance1) {
         this.context = context;
         this.posts = posts;
@@ -58,6 +61,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         uid = FirebaseAuth.getInstance().getUid();
         this.instance1 = instance1;
         messageDAO = MessageDAO.getInstance();
+        random = new Random();
     }
 
     @NonNull
@@ -90,34 +94,38 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((TimelinePostViewHolder) holder).getText_tags().setText(parser3.parse());
             }
 
-            if (posts.get(position).getImageAddress().length() != 0) {
-                //Display Image of the Post (If any)
-                RequestOptions options = new RequestOptions()
-                        .centerCrop()
-                        .placeholder(R.mipmap.ic_launcher_round)
-                        .error(R.mipmap.ic_launcher_round)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(false);
-                reference.child("images/" + posts.get(position).getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-
-                        Glide.with(context)
-                                .load(uri.toString())
-                                .apply(options)
-                                .into(((TimelinePostViewHolder) holder).getImage());
-                        ((TimelinePostViewHolder) holder).getImage().setVisibility(View.VISIBLE);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-
-                    }
-                });
+            String image_url;
+            if (posts.get(position).getImageAddress().length() == 0) {
+                image_url = "images/default" + (random.nextInt(8) + 1) + ".jpg";
             } else {
-                ((TimelinePostViewHolder) holder).getImage().setVisibility(View.GONE);
+                image_url = "images/" + posts.get(position).getPid();
             }
+
+            //Display Image of the Post (If any)
+//            RequestOptions options = new RequestOptions()
+//                    .centerCrop()
+//                    .placeholder(R.mipmap.ic_launcher_round)
+//                    .error(R.mipmap.ic_launcher_round)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .skipMemoryCache(false);
+//            reference.child(image_url).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//
+//                    Glide.with(context)
+//                            .load(uri.toString())
+//                            .apply(options)
+//                            .into(((TimelinePostViewHolder) holder).getImage());
+//                    ((TimelinePostViewHolder) holder).getImage().setVisibility(View.VISIBLE);
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception exception) {
+//                    // Handle any errors
+//
+//                }
+//            });
+            ((TimelinePostViewHolder) holder).getImage().setVisibility(View.GONE);
 
 
             ((TimelinePostViewHolder) holder).getText_star().setOnClickListener(new View.OnClickListener() {
@@ -135,11 +143,11 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         posts.get(position).setUsersWhoLike(usersWhoLike);
                         instance1.update(posts.get(position).getPid(), posts.get(position).toMap());
                         messageDAO.sendAdminMessage(posts.get(position).getAuthorID(),
-                                "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+posts.get(position).getTitle()+"} Get a like！"
-                                , "by0wvrHLp8gNlD103LAM6Il2xzX2",posts.get(position).getPid());
+                                "by0wvrHLp8gNlD103LAM6Il2xzX2", "{" + posts.get(position).getTitle() + "} Get a like！"
+                                , "by0wvrHLp8gNlD103LAM6Il2xzX2", posts.get(position).getPid());
                         messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
-                                posts.get(position).getAuthorID(), "{"+posts.get(position).getTitle()+"} Get a like！"
-                                , "by0wvrHLp8gNlD103LAM6Il2xzX2",posts.get(position).getPid());
+                                posts.get(position).getAuthorID(), "{" + posts.get(position).getTitle() + "} Get a like！"
+                                , "by0wvrHLp8gNlD103LAM6Il2xzX2", posts.get(position).getPid());
                     }
                 }
             });
