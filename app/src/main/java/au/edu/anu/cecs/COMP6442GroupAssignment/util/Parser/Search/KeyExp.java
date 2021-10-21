@@ -24,7 +24,12 @@ public class KeyExp extends Exp{
         this.parent =parent;
         if (parent!=null){
             UserPostDAO postDAO = UserPostDAO.getInstance();
-            postList=postDAO.getPostList(field,keyword,parent);
+            if (field.equals("tags")){
+                postList=postDAO.getPostListContains(field,keyword,parent);
+            }else {
+                postList=postDAO.getPostListEqual(field,keyword,parent);
+            }
+
         }
 
 

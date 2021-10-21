@@ -95,15 +95,14 @@ public class UserPostDAO {
     }
 
     public static UserPostDAO getInstance(){
-        // need fix the Dao getInstance method should not contain so many parameters
-        // pretty hard to invoke in other places fixme
+
         return instance;
     }
 
     /**
-     * Get posts from the Firebase and store them in a ArrayList (Without the heat speech, using Parser)
+     * Get posts from the Firebase using whereEqualTo and store them in a ArrayList (Without the heat speech, using Parser)
      */
-    public  ArrayList<Post> getPostList (String field , String key,Parser parser){
+    public  ArrayList<Post> getPostListEqual (String field,String key,Parser parser){
         ArrayList<Post> postArrayList = new ArrayList<>();
 
         db.collection("user-posts")
@@ -138,23 +137,49 @@ public class UserPostDAO {
     }
 
     /**
+     * Get posts from the Firebase using whereArrayContains and store them in a ArrayList (Without the heat speech, using Parser)
+     */
+
+    public  ArrayList<Post> getPostListContains (String field,String key,Parser parser){
+        ArrayList<Post> postArrayList = new ArrayList<>();
+
+        db.collection("user-posts")
+                .whereArrayContains(field,key)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            String a = field;
+                            String b = key;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                postArrayList.add(new Post(document.getData()));
+                            }
+                            parser.inc();
+                            if (parser.whetherFinished()){
+                                List<Post> result =temp_exp.evaluate();
+                                if (result==null){
+                                    posts.addAll(new ArrayList<Post>());
+                                }else {
+                                    posts.addAll(result);
+                                }
+
+                                timelinePostAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Log.d("Read posts", "Current data: null");
+                        }
+                    }
+                });
+        return postArrayList;
+    }
+
+    /**
      * Search the Posts using Parser
      */
     public void searchPost(String text){// Author=123
-        /**
-         * really redundant need fix fixme
-         */
-//        timelinePostAdapter = new TimelinePostAdapter(act.getApplicationContext(),
-//                posts,
-//                new TimelinePostAdapter.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(Post item) {
-//                        Intent intent = new Intent(act.getApplicationContext(), DetailedPostActivity.class);
-//                        intent.putExtra("pid",item.getPid());
-//                        act.startActivity(intent);
-//                    }
-//                }
-//                ,this);
+
+
         try {
             posts.clear();
             Tokenizer tokenizer = new Tokenizer(text);
