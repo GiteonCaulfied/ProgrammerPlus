@@ -32,6 +32,9 @@ public class UserGenerator {
         this.context = context;
     }
 
+    /**
+     * Generate a user and upload the profile to the Firebase.
+     */
     public void generateOne(String email_str, String pass_str,
                             String name_str, String intro_str) {
         mAuth.createUserWithEmailAndPassword(
@@ -58,6 +61,11 @@ public class UserGenerator {
                 });
     }
 
+    /**
+     * Read the usernames from the local file and put them to a Set.
+     *
+     * @return a Set of usernames
+     */
     public Set<String> readUserNames() {
         Set<String> usernames = new HashSet<>();
         try {

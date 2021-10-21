@@ -35,6 +35,11 @@ public class MyLocationManager {
         this.context = context;
     }
 
+    /**
+     * Get the Location of the current user and store as a map.
+     *
+     * @return a map contains location data
+     */
     public HashMap<String, Object> getLocation() {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)

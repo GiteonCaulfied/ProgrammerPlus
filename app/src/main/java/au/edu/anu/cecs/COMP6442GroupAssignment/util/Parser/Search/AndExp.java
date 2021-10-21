@@ -19,6 +19,10 @@ public class AndExp extends Exp{
         this.exp = exp;
     }
 
+    /**
+     * take the intersection of the term's list and exp's list
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public ArrayList<Post> evaluate() {

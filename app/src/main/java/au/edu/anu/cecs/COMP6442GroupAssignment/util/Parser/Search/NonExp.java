@@ -8,6 +8,10 @@ public class NonExp extends Exp {
     public NonExp() {
     }
 
+    /**
+     * this Exp represent an illegal expression when evaluate it return a null
+     * @return
+     */
     @Override
     public ArrayList<Post> evaluate() {
         return null;

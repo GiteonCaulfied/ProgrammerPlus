@@ -20,6 +20,10 @@ public class OrExp extends Exp{
         this.exp = exp;
     }
 
+    /**
+     * take the union of the term's list and exp's list
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public ArrayList<Post> evaluate() {
@@ -32,6 +36,7 @@ public class OrExp extends Exp{
         }
         ArrayList<Post> listAll = (ArrayList<Post>) list1.parallelStream().collect(toList());
         ArrayList<Post> listAll2 = (ArrayList<Post>) list2.parallelStream().collect(toList());
+        listAll.removeAll(listAll2);
         listAll.addAll(listAll2);
         return listAll;
 

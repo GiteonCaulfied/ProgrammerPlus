@@ -12,12 +12,18 @@ public class Message implements Comparable {
     public Message() {
     }
 
+    /**
+     * Constructor when creating a Message.
+     */
     public Message(String text, String whoSent) {
         this.time = System.currentTimeMillis();
         this.text = text;
         this.whoSent = whoSent;
     }
 
+    /**
+     * Constructor when creating a Message.(With messageType and pid)
+     */
     public Message(String text, String whoSent, String messageType, String pid) {
         this.time = System.currentTimeMillis();
         this.text = text;
@@ -26,6 +32,9 @@ public class Message implements Comparable {
         this.pid = pid;
     }
 
+    /**
+     * Transform the Message to a Map to upload to the Firebase.
+     */
     public HashMap<String, Object> toMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("time", time);
@@ -34,6 +43,9 @@ public class Message implements Comparable {
         return map;
     }
 
+    /**
+     * Transform the Message to a Map to upload to the Firebase.(With messageType and pid)
+     */
     public HashMap<String, Object> toMap2() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("time", time);

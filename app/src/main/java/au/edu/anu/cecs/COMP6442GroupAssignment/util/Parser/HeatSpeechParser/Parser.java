@@ -16,6 +16,10 @@ public class Parser {
         this.tokenizer = tokenizer;
     }
 
+    /**
+     * to parse the given String if the given token is illegal replace it with "***"
+     * @return the fixed String
+     */
     public String parse(){
         StringBuilder output = new StringBuilder();
         while (tokenizer.hasNext()) {

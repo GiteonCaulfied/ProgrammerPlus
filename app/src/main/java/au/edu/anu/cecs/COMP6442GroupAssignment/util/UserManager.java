@@ -18,12 +18,20 @@ public class UserManager {
         email_id_map = new HashMap<>();
     }
 
+    /**
+     * Singleton Pattern
+     */
     public static UserManager getInstance() {
         if (instance == null)
             instance = new UserManager();
         return instance;
     }
 
+    /**
+     * Add the user to the UserManager using Profile.
+     *
+     * @param p Profile of the user
+     */
     public void addUser(Profile p) {
         id_email_map.put(p.getUid(), p.getEmail());
         if (p.getName() == null)
@@ -49,6 +57,9 @@ public class UserManager {
         return email_id_map.containsKey(email);
     }
 
+    /**
+     * Randomly get an ID from the UserManager.
+     */
     public String getRandomID() {
         // Random Number to randomly select ID
         int min = 0;
@@ -58,6 +69,9 @@ public class UserManager {
         return (String) id_name_map.keySet().toArray()[random_int];
     }
 
+    /**
+     * Get a list of ID from the UserManager.
+     */
     public Set<String> getIDList() {
         Set<String> res = id_name_map.keySet();
         return res;

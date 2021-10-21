@@ -31,6 +31,12 @@ public class ActGenerator {
         this.context = context;
     }
 
+    /**
+     * Let two users be friends with each other and upload the data to the Firebase.
+     *
+     * @param uid1
+     * @param uid2
+     */
     public void makeFriends(String uid1, String uid2) {
 
         db.collection("user-profiles")
@@ -41,6 +47,12 @@ public class ActGenerator {
                 .update("friends", FieldValue.arrayUnion(uid1));
     }
 
+    /**
+     * User liked a Post, upload the data to the Firebase.
+     *
+     * @param uid ID of the user who gives a like
+     * @param pid Post liked by the user
+     */
     public void likePosts(String uid, String pid) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("user-data").document(uid)
@@ -84,6 +96,11 @@ public class ActGenerator {
         }
     }
 
+    /**
+     * Read the ProfileID from the local file and put them to a List.
+     *
+     * @return a List of usernames
+     */
     public List<String> readPIDs() {
         List<String> pids = new ArrayList<>();
         try {
@@ -105,6 +122,9 @@ public class ActGenerator {
         return pids;
     }
 
+    /**
+     * Update the data in the UserManager with ID and upload to the Firebase.
+     */
     public void warmUp() {
         UserManager userManager = UserManager.getInstance();
 

@@ -25,12 +25,18 @@ public class UserActivityDAO {
     private final FirebaseFirestore db = firebaseRef.getFirestore();
     private final FirebaseUser currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();
 
+    /**
+     * Singleton Pattern
+     */
     public static UserActivityDAO getInstance() {
         if (instance == null)
             instance = new UserActivityDAO();
         return instance;
     }
 
+    /**
+     * Load the search History from the Firebase and show them.
+     */
     public void getSearchHistory(ArrayList<String> hist_arr, ArrayAdapter<String> arrayAdapter) {
 
         db.collection("user-data")
@@ -47,6 +53,9 @@ public class UserActivityDAO {
         });
     }
 
+    /**
+     * Add the search History and update the Firebase.
+     */
     public void addSearchHistory(Map<String, Object> docData) {
         db.collection("user-data").document(
                 currentUser.getUid()
@@ -66,6 +75,9 @@ public class UserActivityDAO {
                 });
     }
 
+    /**
+     * Update the user location in the Firebase
+     */
     public void updateLocation(Map<String, Object> docData) {
         db.collection("user-data").document(currentUser.getUid())
                 .update(docData)
