@@ -38,6 +38,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyLocationManager;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class PostActivity extends AppCompatActivity {
+    /**
+     * This is the activity where a user can make a new post
+     * He need to write some content and can upload a picture
+     *
+     * When writing the code w.r.t Firebase, we refer to the
+     * Firebase document
+     * https://firebase.google.com/docs/firestore?authuser=0
+     */
 
     // request code
     private final int PICK_IMAGE_REQUEST = 22;

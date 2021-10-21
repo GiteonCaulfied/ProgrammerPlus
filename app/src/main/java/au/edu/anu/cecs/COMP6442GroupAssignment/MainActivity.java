@@ -16,6 +16,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.SessionState;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.State.UserState;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * This is the main activity.
+     * We develop a state Design pattern here. If the user login
+     * then the activity will display posts and friends.
+     * If there is no user, then register and sign-in buttons will
+     * be provided.
+     */
+
 //    private ScheduledExecutorService mScheduledExecutorService = Executors.newScheduledThreadPool(4);
     private UserState currentState;
     private FirebaseUser currentUser;

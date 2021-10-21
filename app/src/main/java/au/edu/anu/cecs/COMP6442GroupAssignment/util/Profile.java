@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class Profile {
+    /**
+     * A user's profile, including his id, name, email, friends, intro and settings
+     */
+
     private String uid;
     private String name;
     private String email;
@@ -70,6 +72,7 @@ public class Profile {
         return result;
     }
 
+    // Getters
     public String getName() {
         return name;
     }
@@ -90,6 +93,7 @@ public class Profile {
         return onlyFriMess;
     }
 
+    // Set some fields
     public void setEmail(String email) {
         this.email = email;
     }
@@ -122,16 +126,19 @@ public class Profile {
         return portraitUploaded;
     }
 
+    // Determine whether a name is my friend
     public Boolean friendContain(String name) {
         if (friends == null) return false;
         return friends.contains(name);
     }
 
+    // Determine whether someone is blocked by me
     public Boolean blockContain(String name) {
         if (blocked == null) return false;
         return blocked.contains(name);
     }
 
+    // Determine whether I uploaded my portrait
     public void setPortraitUploadedStatus(){
         this.portraitUploaded = true;
     }

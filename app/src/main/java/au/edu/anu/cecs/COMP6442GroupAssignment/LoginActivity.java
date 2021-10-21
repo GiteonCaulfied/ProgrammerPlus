@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
+    /**
+     * Login Activity. We use Firebase to manage users
+     * https://firebase.google.com/docs/auth/android/firebaseui?authuser=0
+     */
 
     private FirebaseAuth mAuth;
     private EditText email, password;

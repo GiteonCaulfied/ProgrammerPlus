@@ -3,6 +3,9 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 import java.util.HashMap;
 
 public class FriendRequest {
+    /**
+     * This friend request class. We wrote it for using Firebase
+     */
     private String uid;
     private String name;
 

@@ -2,7 +2,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,8 +25,8 @@ import java.util.Random;
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Parser;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Tokenizer;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Parser;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 

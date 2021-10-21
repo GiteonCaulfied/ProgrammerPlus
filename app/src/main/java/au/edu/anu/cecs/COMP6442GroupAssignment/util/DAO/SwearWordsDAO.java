@@ -2,7 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.MyApplication;
 
 public class SwearWordsDAO {
 

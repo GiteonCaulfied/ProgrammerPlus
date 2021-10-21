@@ -1,7 +1,5 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.SwearWordsDAO;

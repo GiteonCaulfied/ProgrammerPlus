@@ -1,5 +1,6 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,11 +33,15 @@ import java.util.Random;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Parser;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Tokenizer;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Parser;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class DetailedPostActivity extends AppCompatActivity {
+    /**
+     * Detailed information of a post will be displayed in this activity.
+     */
+
 
     private ImageView image, portrait;
     private TextView author, title, body, textView4, tags, loc;
@@ -51,6 +56,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_post);
 
+        // Find all elements we need
         author = findViewById(R.id.post_page_author);
         textView4 = findViewById(R.id.TakeStars);
         title = findViewById(R.id.post_page_title);
@@ -61,6 +67,8 @@ public class DetailedPostActivity extends AppCompatActivity {
         loc = findViewById(R.id.post_page_loc);
         message = findViewById(R.id.post_page_mess);
         instance = UserPostDAO.getInstance(this);
+
+        // Get the user
         Intent from_intent = getIntent();
         String pid = from_intent.getStringExtra("pid");
         messageDAO = MessageDAO.getInstance();
@@ -72,6 +80,7 @@ public class DetailedPostActivity extends AppCompatActivity {
 
         // Add the Detailed Post Data to the Page
         myRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

@@ -50,6 +50,20 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Dialog.SearchFriendDialog;
 
 public class MessageActivity extends AppCompatActivity {
+    /**
+     * This is the activity where the user chat with others
+     * We develop peer-to-peer message function based on
+     * the Cloud Firestore.
+     *
+     * We refer to Firebase Documentation
+     * https://firebase.google.com/docs/database/android/start?authuser=0
+     *
+     * One group mate Qinyu Zhao refer to an online course
+     * https://www.bilibili.com/s/video/BV12q4y177FW
+     */
+
+
+    // Elements in the view
     private TextView username;
     private ImageView imageView;
     private FirebaseUser currentUser;
@@ -62,6 +76,7 @@ public class MessageActivity extends AppCompatActivity {
     private UserProfileDAO userProfileDAO;
     private MenuItem item;
 
+    // Message recycler
     private RecyclerView histMessages;
     private EditText message;
     private ImageView sendBut;
