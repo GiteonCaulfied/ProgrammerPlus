@@ -21,7 +21,7 @@
         android:id="@+id/searchText"
         android:layout_width="407dp"
         android:layout_height="49dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="@string/author_someone"
         android:inputType="textPersonName"
@@ -55,23 +55,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/search_grammar"
-        android:layout_width="370dp"
-        android:layout_height="94dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/black"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/timelinePostView"
-        app:layout_constraintTop_toBottomOf="@+id/searchText"
-        tools:text="@string/search_grammar" />
-
     <ListView
         android:id="@+id/search_hist"
         android:layout_width="341dp"
         android:layout_height="298dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_grammar">
@@ -144,5 +133,17 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/search_grammar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/search_grammar"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
