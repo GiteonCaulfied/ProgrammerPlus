@@ -81,9 +81,12 @@ public class RegisterActivity extends AppCompatActivity {
         intro = findViewById(R.id.intro_signup);
         signUp = findViewById(R.id.signUp);
         maskedWord = findViewById(R.id.MaskedWords);
+        maskedWord.setVisibility(View.GONE);
 
         addWord = findViewById(R.id.add_word);
+        addWord.setVisibility(View.GONE);
         deleteWord=findViewById(R.id.delete_word);
+        deleteWord.setVisibility(View.GONE);
 
         profile = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
