@@ -124,7 +124,7 @@ public class JsonUtils {
         //Gson gson = new Gson();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try(FileWriter fw = new FileWriter(read(context.getResources().getAssets().open("swaer_words.json")))){
+        try(FileWriter fw = new FileWriter(read(context.getResources().getAssets().open("swear_words.json")))){
             gson.toJson(words, fw);
         }catch(Exception e)
         {

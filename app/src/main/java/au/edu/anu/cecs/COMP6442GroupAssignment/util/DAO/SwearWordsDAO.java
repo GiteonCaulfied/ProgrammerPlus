@@ -23,11 +23,35 @@ public class SwearWordsDAO {
         return instance;
     }
 
+    /**
+     * check whether the given word is in the swearword tree
+     * @param s word
+     * @return
+     */
     public boolean contains(String s) {
         if (swearWords.search(s) != null) {
             return true;
         }
         return false;
+
+    }
+    public boolean delete (String s){
+        if (swearWords.delete(s)){
+            JsonUtils.getInstance().saveSwearWordsTree(MyApplication.context,swearWords);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean add (String s){
+        if (contains(s)){
+            return false;
+        }else {
+            swearWords.insert(s);
+            JsonUtils.getInstance().saveSwearWordsTree(MyApplication.context,swearWords);
+            return true;
+        }
 
     }
 }

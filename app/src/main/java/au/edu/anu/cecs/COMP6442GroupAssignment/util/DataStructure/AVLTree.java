@@ -112,27 +112,7 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
 
-    /**
-     * find the min value
-     * @param tree
-     * @return
-     */
-    private AVLTreeNode<T> minimum(AVLTreeNode<T> tree) {
-        if (tree == null)
-            return null;
 
-        while (tree.leftNode != null)
-            tree = tree.leftNode;
-        return tree;
-    }
-
-    public T minimum() {
-        AVLTreeNode<T> p = minimum(root);
-        if (p != null)
-            return p.key;
-
-        return null;
-    }
 
     /**
      * find the max value
@@ -208,9 +188,9 @@ public class AVLTree<T extends Comparable<T>> {
                 return null;
             }
         } else {
-            int cmp = key.compareTo(node.key);
 
-            if (cmp < 0) {
+
+            if (key.compareTo(node.key) < 0) {
                 node.leftNode = insert(node.leftNode, key);
 
                 if (getHeight(node.leftNode) - getHeight(node.rightNode) == 2) {
@@ -219,7 +199,7 @@ public class AVLTree<T extends Comparable<T>> {
                     else
                         node = leftRightRotation(node);
                 }
-            } else if (cmp > 0) {
+            } else if (key.compareTo(node.key)> 0) {
                 node.rightNode = insert(node.rightNode, key);
 
                 if (getHeight(node.rightNode) - getHeight(node.leftNode) == 2) {
@@ -256,14 +236,14 @@ public class AVLTree<T extends Comparable<T>> {
      * @param target
      * @return
      */
-    private AVLTreeNode<T> remove(AVLTreeNode<T> tree, AVLTreeNode<T> target) {
+    private AVLTreeNode<T> delete(AVLTreeNode<T> tree, AVLTreeNode<T> target) {
 
         if (tree == null || target == null)
             return null;
 
-        int cmp = target.key.compareTo(tree.key);
-        if (cmp < 0) {
-            tree.leftNode = remove(tree.leftNode, target);
+
+        if (target.key.compareTo(tree.key) < 0) {
+            tree.leftNode = delete(tree.leftNode, target);
 
             if (getHeight(tree.rightNode) - getHeight(tree.leftNode) == 2) {
                 AVLTreeNode<T> r = tree.rightNode;
@@ -272,8 +252,8 @@ public class AVLTree<T extends Comparable<T>> {
                 else
                     tree = rightRightRotation(tree);
             }
-        } else if (cmp > 0) {
-            tree.rightNode = remove(tree.rightNode, target);
+        } else if (target.key.compareTo(tree.key) > 0) {
+            tree.rightNode = delete(tree.rightNode, target);
 
             if (getHeight(tree.leftNode) - getHeight(tree.rightNode) == 2) {
                 AVLTreeNode<T> l = tree.leftNode;
@@ -289,12 +269,12 @@ public class AVLTree<T extends Comparable<T>> {
 
                     AVLTreeNode<T> max = maximum(tree.leftNode);
                     tree.key = max.key;
-                    tree.leftNode = remove(tree.leftNode, max);
+                    tree.leftNode = delete(tree.leftNode, max);
                 } else {
 
                     AVLTreeNode<T> min = maximum(tree.rightNode);
                     tree.key = min.key;
-                    tree.rightNode = remove(tree.rightNode, min);
+                    tree.rightNode = delete(tree.rightNode, min);
                 }
             } else {
                 AVLTreeNode<T> tmp = tree;
@@ -306,11 +286,15 @@ public class AVLTree<T extends Comparable<T>> {
         return tree;
     }
 
-    public void remove(T key) {
+    public boolean delete(T key) {
         AVLTreeNode<T> target;
 
-        if ((target = search(root, key)) != null)
-            root = remove(root, target);
+        if ((target = search(root, key)) != null) {
+            root = delete(root, target);
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

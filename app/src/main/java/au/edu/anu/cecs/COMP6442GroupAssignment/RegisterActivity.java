@@ -35,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.SwearWordsDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
@@ -51,19 +52,21 @@ public class RegisterActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
 
-    private EditText email, name, password, confirm, intro;
+    private EditText email, name, password, confirm, intro,maskedWord;
     private ImageView profile;
     private FirebaseAuth mAuth;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private Button selectPortraitBtn, signUp;
+    private Button selectPortraitBtn, signUp, addWord, deleteWord;
     private Switch onlyFriends;
     private boolean onlyFriMess;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
+    private SwearWordsDAO swearWords = (SwearWordsDAO) SwearWordsDAO.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
         confirm = findViewById(R.id.confirm_signup);
         intro = findViewById(R.id.intro_signup);
         signUp = findViewById(R.id.signUp);
+        maskedWord = findViewById(R.id.MaskedWords);
+
+        addWord = findViewById(R.id.add_word);
+        deleteWord=findViewById(R.id.delete_word);
 
         profile = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
@@ -89,6 +96,21 @@ public class RegisterActivity extends AppCompatActivity {
                 onlyFriMess = b;
             }
         });
+
+//        deleteWord.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+
+//        addWord.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -276,4 +298,40 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void addWord(View view) {
+//        int i =111;
+//        String word = maskedWord.getText().toString();
+//        if (!swearWords.add(word)){
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "already exist",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }else {
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "added",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//    }
+//
+//    public void deleteWord(View view) {
+//        String word = maskedWord.getText().toString();
+//        if (!swearWords.delete(word)){
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "no such word",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }else {
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "deleted",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//
+//    }
 }

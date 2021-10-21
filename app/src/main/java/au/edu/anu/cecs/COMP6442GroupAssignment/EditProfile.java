@@ -37,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.Map;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.SwearWordsDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
@@ -52,8 +53,9 @@ public class EditProfile extends AppCompatActivity {
 
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
+    private SwearWordsDAO swearWords = (SwearWordsDAO) SwearWordsDAO.getInstance();
 
-    private EditText email, name, password, confirm, intro;
+    private EditText email, name, password, confirm, intro, maskedWord;
     private Switch profile_only_fri;
     private ImageView portrait;
     private FirebaseAuth mAuth;
@@ -64,7 +66,7 @@ public class EditProfile extends AppCompatActivity {
     private UserProfileDAO userProfileDAO;
     private boolean onlyFriMess;
 
-    private Button selectPortraitBtn, signUp;
+    private Button selectPortraitBtn, signUp, addWord, deleteWord;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -85,6 +87,10 @@ public class EditProfile extends AppCompatActivity {
 
         portrait = findViewById(R.id.portrait_signup);
         selectPortraitBtn = findViewById(R.id.selectImage_signup);
+
+        maskedWord = findViewById(R.id.MaskedWords);
+        addWord = findViewById(R.id.add_word);
+        deleteWord = findViewById(R.id.delete_word);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -121,6 +127,48 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 onlyFriMess = b;
+            }
+        });
+
+
+        deleteWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String word = maskedWord.getText().toString();
+                if (!swearWords.delete(word)) {
+                    Toast
+                            .makeText(getApplicationContext(),
+                                    "no such word",
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Toast
+                            .makeText(getApplicationContext(),
+                                    "deleted",
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
+
+
+        addWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String word = maskedWord.getText().toString();
+                if (!swearWords.add(word)) {
+                    Toast
+                            .makeText(getApplicationContext(),
+                                    "already exist",
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Toast
+                            .makeText(getApplicationContext(),
+                                    "added",
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 
@@ -313,4 +361,40 @@ public class EditProfile extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+//    public void addWord(View view) {
+//
+//        String word = maskedWord.getText().toString();
+//        if (!swearWords.add(word)){
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "already exist",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }else {
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "added",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//    }
+//
+//    public void deleteWord(View view) {
+//        String word = maskedWord.getText().toString();
+//        if (!swearWords.delete(word)){
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "no such word",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }else {
+//            Toast
+//                    .makeText(getApplicationContext(),
+//                            "deleted",
+//                            Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//
+//    }
 }
