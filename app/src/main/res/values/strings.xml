@@ -20,4 +20,7 @@
     <string name="me">Me</string>
     <string name="friends">Friends</string>
     <string name="post">Post</string>
+    <string name="author_someone">Author=Someone</string>
+    <string name="confirm">Confirm</string>
+    <string name="search_grammar">Search Grammar:</string>
 </resources>
