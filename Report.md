@@ -30,10 +30,10 @@ The following is a report template to help your team successfully provide all th
 
 | UID | Name | Role |
 | :--- | :----: | ---: |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
-| [uid] | [name] | [role] |
+| u7212335 | Qinyu Zhao | Member |
+| [uid] | Xiangyu Hui | Member |
+| [uid] | Xuzeng He | Member |
+| [uid] | Yikai Ge | Member |
 
 ## Conflict Resolution Protocol
 

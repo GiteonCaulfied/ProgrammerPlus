@@ -1,4 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 import android.app.Application;
 import android.content.Context;

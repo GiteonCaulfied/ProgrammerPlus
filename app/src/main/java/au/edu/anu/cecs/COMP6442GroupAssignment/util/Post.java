@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Post {
+    /**
+     * The class of posts, including post ID, author, authorID
+     * title, image, tags, content, publish location, and who like it.
+     */
 
     private String pid;
     private String author;
@@ -96,6 +100,7 @@ public class Post {
         return result;
     }
 
+    // Getters
     public String getAuthor() {
         return author;
     }
@@ -116,6 +121,23 @@ public class Post {
         return usersWhoLike;
     }
 
+    public ArrayList<String> getTags(){
+        return tags;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    // Set some fields
     public void setUsersWhoLike(ArrayList<String> usersWhoLike){
         this.usersWhoLike = usersWhoLike;
     }
@@ -154,19 +176,4 @@ public class Post {
         tags = new ArrayList<>(Arrays.asList(raw_arr));
     }
 
-    public ArrayList<String> getTags(){
-        return tags;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public String getAddress() {
-        return address;
-    }
 }

@@ -1,4 +1,4 @@
-package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser;
+package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser;
 
 public class Token {
 

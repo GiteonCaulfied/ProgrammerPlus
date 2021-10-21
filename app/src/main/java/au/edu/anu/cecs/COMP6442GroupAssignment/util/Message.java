@@ -3,6 +3,10 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util;
 import java.util.HashMap;
 
 public class Message implements Comparable {
+    /**
+     * The message class, including the time, text, who sent it.
+     */
+
     private long time;
     private String text;
     private String whoSent;
@@ -10,6 +14,7 @@ public class Message implements Comparable {
     private String pid;
 
     public Message() {
+        // Default constructor required for calls to DataSnapshot.getValue(Message.class)
     }
 
     /**

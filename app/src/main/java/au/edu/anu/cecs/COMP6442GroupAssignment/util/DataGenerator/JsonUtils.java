@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Config;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;

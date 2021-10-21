@@ -41,6 +41,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class RegisterActivity extends AppCompatActivity {
+    /**
+     * The activity where a new user can register
+     *
+     * When writing the code w.r.t Firebase, we refer to the
+     * Firebase document
+     * https://firebase.google.com/docs/auth/android/firebaseui?authuser=0
+     */
+
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
 
@@ -65,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Find elements that we need
         email = findViewById(R.id.email_signup);
         name = findViewById(R.id.name_signup);
         password = findViewById(R.id.password_signup);

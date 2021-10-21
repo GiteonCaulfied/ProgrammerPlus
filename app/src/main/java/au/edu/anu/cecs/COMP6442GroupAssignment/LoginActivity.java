@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
+    /**
+     * Login Activity. We use Firebase to manage users
+     * https://firebase.google.com/docs/auth/android/firebaseui?authuser=0
+     */
 
     private FirebaseAuth mAuth;
     private EditText email, password;
@@ -62,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else {
+                            // Fail to sign in, show the exception
                             Toast.makeText(getApplicationContext(),
                                     task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

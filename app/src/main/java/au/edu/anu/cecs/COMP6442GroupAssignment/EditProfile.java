@@ -43,6 +43,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class EditProfile extends AppCompatActivity {
+    /**
+     * This is the activity where a user can edit his or her
+     * profile. The trick is that we re-use the register
+     * layout, with some EditText elements not enabled.
+     * That means the user cannot change his email address
+     * and his name.
+     */
+
     private final int PICK_IMAGE_REQUEST = 21;
     private Uri filePath;
     private SwearWordsDAO swearWords = (SwearWordsDAO) SwearWordsDAO.getInstance();

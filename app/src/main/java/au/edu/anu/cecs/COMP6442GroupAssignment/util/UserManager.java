@@ -7,6 +7,17 @@ import java.util.Random;
 import java.util.Set;
 
 public class UserManager {
+    /**
+     * This is a class to manage users.
+     * We will store three hashmaps here:
+     *  (1) from id to email;
+     *  (2) from email to id;
+     *  (3) from id to name;
+     *
+     * This class is not mandatory, but it will make our
+     * app bandwidth-friendly.
+     */
+
     private static UserManager instance;
     private final HashMap<String, String> id_email_map;
     private final HashMap<String, String> email_id_map;
@@ -71,12 +82,21 @@ public class UserManager {
 
     /**
      * Get a list of ID from the UserManager.
+     *
+     * @return a set of id
      */
     public Set<String> getIDList() {
         Set<String> res = id_name_map.keySet();
         return res;
     }
 
+    /**
+     * Get a random ID list, we wrote this for generating
+     * data for our app. Now that we have already done that,
+     * the function is not called.
+     *
+     * @return a list of id
+     */
     public ArrayList<String> getRandomIDList() {
         Random random = new Random();
         int num = random.nextInt(100);

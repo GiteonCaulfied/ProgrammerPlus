@@ -13,6 +13,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class FirebaseRef {
+    /**
+     * We used several Firebase APIs in our project
+     * So we added this class to manage all this APIs
+     *
+     */
     private static FirebaseRef instance;
     private DatabaseReference myRef;
     private FirebaseDatabase realtimeDatabase;

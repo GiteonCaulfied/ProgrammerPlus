@@ -22,5 +22,5 @@
     <string name="post">Post</string>
     <string name="author_someone">Author=Someone</string>
     <string name="confirm">Confirm</string>
-    <string name="search_grammar">Search Grammar:</string>
+    <string name="search_grammar">Search Grammar:\n \tAuthor=Qinyu\n \tTag=ANU\n \t| means ""or"", while &amp; means ""and"" \n\t() changes priority</string>
 </resources>

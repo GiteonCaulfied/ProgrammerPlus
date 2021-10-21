@@ -7,7 +7,10 @@ import android.os.SystemClock;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LaunchActivity extends AppCompatActivity {
-
+    /**
+     * This is the launch activity. We will display a small
+     * animation and welcome the user to use our app.
+     */
 
     private Intent intent;
 
