@@ -27,17 +27,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.MessageDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Parser;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HeatSpeechParser.*;
 
 public class DetailedPostActivity extends AppCompatActivity {
 
     private ImageView image, portrait;
-    private TextView author, title, body,textView4, tags, loc;
+    private TextView author, title, body, textView4, tags, loc;
     private String uid;
     private Post p;
     private UserPostDAO instance;
@@ -53,7 +55,7 @@ public class DetailedPostActivity extends AppCompatActivity {
         textView4 = findViewById(R.id.TakeStars);
         title = findViewById(R.id.post_page_title);
         body = findViewById(R.id.post_page_body);
-        tags =  findViewById(R.id.post_page_tags);
+        tags = findViewById(R.id.post_page_tags);
         image = findViewById(R.id.post_page_image);
         portrait = findViewById(R.id.post_page_portrait);
         loc = findViewById(R.id.post_page_loc);
@@ -85,7 +87,7 @@ public class DetailedPostActivity extends AppCompatActivity {
 
 
                         // Show Tags (if any)
-                        if (p.getTags().size() == 0){
+                        if (p.getTags().size() == 0) {
                             tags.setText("No Tags");
                         } else {
                             String tagString = p.getTags().toString().replace("[", "").replace("]", "");
@@ -101,7 +103,7 @@ public class DetailedPostActivity extends AppCompatActivity {
                                 .error(R.drawable.face_id_1)
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .skipMemoryCache(false);
-                        sto_ref.child("portrait/"+ p.getAuthorID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        sto_ref.child("portrait/" + p.getAuthorID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
 
@@ -118,34 +120,31 @@ public class DetailedPostActivity extends AppCompatActivity {
                         });
 
                         //Display Image of the Post (if Any)
-                        if (p.getImageAddress().length() != 0){
-                            RequestOptions optionsPost = new RequestOptions()
-                                    .override(800, 600)
-                                    .centerCrop()
-                                    .placeholder(R.mipmap.ic_launcher_round)
-                                    .error(R.mipmap.ic_launcher_round)
-                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .skipMemoryCache(false);
-                            sto_ref.child("images/"+ p.getPid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-
-                                    Glide.with(getApplicationContext())
-                                            .load(uri.toString())
-                                            .apply(optionsPost)
-                                            .into(image);
-                                    image.setVisibility(View.VISIBLE);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle any errors
-                                    image.setVisibility(View.GONE);
-                                }
-                            });
+                        Random random = new Random();
+                        String image_url;
+                        if (p.getImageAddress().length() == 0) {
+                            image_url = "images/default" + (random.nextInt(8) + 1) + ".jpg";
                         } else {
-                            image.setVisibility(View.GONE);
+                            image_url = "images/" + p.getPid();
                         }
+
+                        RequestOptions optionsPost = new RequestOptions()
+                                .override(800, 600)
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(false);
+                        sto_ref.child(image_url).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getApplicationContext())
+                                        .load(uri.toString())
+                                        .apply(optionsPost)
+                                        .into(image);
+                                image.setVisibility(View.VISIBLE);
+                            }
+                        });
 
 
                         // Star of the Post
@@ -153,36 +152,36 @@ public class DetailedPostActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
-                                if ( p.getUsersWhoLike().contains(uid)){
-                                    ArrayList<String> usersWhoLike =  p.getUsersWhoLike();
+                                if (p.getUsersWhoLike().contains(uid)) {
+                                    ArrayList<String> usersWhoLike = p.getUsersWhoLike();
                                     usersWhoLike.remove(uid);
                                     p.setUsersWhoLike(usersWhoLike);
-                                    instance.update( p.getPid(), p.toMap());
-                                }else {
-                                    ArrayList<String> usersWhoLike =  p.getUsersWhoLike();
+                                    instance.update(p.getPid(), p.toMap());
+                                } else {
+                                    ArrayList<String> usersWhoLike = p.getUsersWhoLike();
                                     usersWhoLike.add(uid);
                                     p.setUsersWhoLike(usersWhoLike);
-                                    instance.update( p.getPid(), p.toMap());
+                                    instance.update(p.getPid(), p.toMap());
 
                                     messageDAO.sendAdminMessage(p.getAuthorID(),
-                                            "by0wvrHLp8gNlD103LAM6Il2xzX2", "{"+p.getTitle()+"} Get a like！"
-                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+                                            "by0wvrHLp8gNlD103LAM6Il2xzX2", "{" + p.getTitle() + "} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2", pid);
                                     messageDAO.sendAdminMessage("by0wvrHLp8gNlD103LAM6Il2xzX2",
-                                            p.getAuthorID(), "{"+p.getTitle()+"} Get a like！"
-                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2",pid);
+                                            p.getAuthorID(), "{" + p.getTitle() + "} Get a like！"
+                                            , "by0wvrHLp8gNlD103LAM6Il2xzX2", pid);
 
                                 }
-                                textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
+                                textView4.setTextColor(p.getUsersWhoLike().contains(uid) ? getApplicationContext().getResources().getColor(R.color.red) :
                                         getApplicationContext().getResources().getColor(R.color.gray));
-                                textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
-                                        :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+                                textView4.setText(p.getUsersWhoLike().contains(uid) ? ("Take Back" + " (" + p.getUsersWhoLike().size() + "stars)")
+                                        : ("Give Star!" + " (" + p.getUsersWhoLike().size() + "stars)"));
                             }
                         });
 
-                        textView4.setTextColor( p.getUsersWhoLike().contains(uid)?getApplicationContext().getResources().getColor(R.color.red):
+                        textView4.setTextColor(p.getUsersWhoLike().contains(uid) ? getApplicationContext().getResources().getColor(R.color.red) :
                                 getApplicationContext().getResources().getColor(R.color.gray));
-                        textView4.setText( p.getUsersWhoLike().contains(uid)?("Take Back"+" ("+ p.getUsersWhoLike().size()+"stars)")
-                                :("Give Star!"+" ("+ p.getUsersWhoLike().size()+"stars)"));
+                        textView4.setText(p.getUsersWhoLike().contains(uid) ? ("Take Back" + " (" + p.getUsersWhoLike().size() + "stars)")
+                                : ("Give Star!" + " (" + p.getUsersWhoLike().size() + "stars)"));
 
                         loc.setText("GPS information - \nLongitude: " + p.getLongitude() +
                                 "; Latitude: " + p.getLatitude() +
