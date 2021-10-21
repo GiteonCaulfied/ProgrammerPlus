@@ -32,7 +32,7 @@ The following is a report template to help your team successfully provide all th
 | :--- | :----: | ---: |
 | u7212335 | Qinyu Zhao | Member |
 | [uid] | Xiangyu Hui | Member |
-| [uid] | Xuzeng He | Member |
+| u7189309 | Xuzeng He | Member |
 | [uid] | Yikai Ge | Member |
 
 ## Conflict Resolution Protocol
@@ -51,29 +51,23 @@ The following is a report template to help your team successfully provide all th
 
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
 
-*Here is a pet training application example*
+*Targets Users: No specific target users*
 
-*Molly wants to inquiry about her cat, McPurr's recent troublesome behaviour*
-1. *Molly notices that McPurr has been hostile since...*
-2. *She makes a post about... with the tag...*
-3. *Lachlan, a vet, writes a reply to Molly's post...*
-4. ...
-5. *Molly gives Lachlan's reply a 'tick' response*
+* Users can create an account with a portrait image and intro
+* Users can send a post with image, hashtag and GPS location
+* Users can view personalized timeline of posts with image, hashtag and GPS location and without heat speech
+* Users can search the posts by tags and author with partially valid queries
+* Users can "like"(Give star) to others' posts
+* Users can be notified when the post gets a like
+* Users can send friend requests and become friends with other users
+* Users can message other users
+* Users can block other user from messaging
+* Users can choose to only get message from a friend user
+* Users can set template message
 
-*Here is a map navigation application example*
 
-*Targets Users: Drivers*
 
-* *Users can use it to navigate in order to reach the destinations.*
-* *Users can learn the traffic conditions*
-* ...
 
-*Target Users: Those who want to find some good restaurants*
-
-* *Users can find nearby restaurants and the application can give recommendations*
-* ...
-
-*List all the use cases in text descriptions or create use case diagrams. Please refer to https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/ for use case diagram.*
 
 ## Application UML
 
