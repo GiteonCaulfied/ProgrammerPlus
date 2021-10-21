@@ -10,9 +10,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="36dp">
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".LoginActivity">
 
         <EditText
             android:id="@+id/password_signup"
@@ -122,10 +124,9 @@
             android:id="@+id/selectImage_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:text="@string/select_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/friend_switch" />
 
@@ -133,7 +134,7 @@
             android:id="@+id/friend_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="76dp"
             android:text="@string/friendSend"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -141,6 +142,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/intro_signup"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/add_word"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:onClick="addWord"
+            android:text="Add"
+            app:layout_constraintStart_toEndOf="@+id/MaskedWords"
+            app:layout_constraintTop_toBottomOf="@+id/intro_signup" />
+
+        <EditText
+            android:id="@+id/MaskedWords"
+            android:layout_width="146dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="28dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Masked Words"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/intro_signup" />
+
+        <Button
+            android:id="@+id/delete_word"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:onClick="deleteWord"
+            android:text="Delete"
+            app:layout_constraintEnd_toStartOf="@+id/MaskedWords"
+            app:layout_constraintTop_toBottomOf="@+id/intro_signup" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

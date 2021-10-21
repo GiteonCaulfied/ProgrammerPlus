@@ -4,6 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3578125" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_detailed_post.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_login.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_main.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_message.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_newpost.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_register.xml" value="0.32421875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_session.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_timeline_loading.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/activity_timeline_post.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/chat_item.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/dialog_friend.xml" value="0.264" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/dialog_temp_mess.xml" value="0.4" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/layout_friend.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/layout_profile.xml" value="0.4" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/message_received.xml" value="0.1296875" />
+        <entry key="..\:/Comp2100-6442/GroupAss/app/src/main/res/layout/message_sent.xml" value="0.1296875" />
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_detailed_post.xml" value="0.25364583333333335" />
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_homepage.xml" value="0.25364583333333335" />
         <entry key="..\:/Comp2100-6442/comp6442groupassignment/app/src/main/res/layout/activity_login.xml" value="0.12135416666666667" />
@@ -48,10 +64,7 @@
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/hi/app/src/main/res/layout/message_received.xml" value="0.5494791666666666" />
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/hi/app/src/main/res/layout/message_sent.xml" value="0.5494791666666666" />
         <entry key="..\:/Users/geyik/Desktop/COMP2100/Group Assignment/hi/app/src/main/res/layout/music_button.xml" value="0.32760416666666664" />
-        <entry key="app/src/main/res/drawable/button_circle_shape.xml" value="0.271875" />
-        <entry key="app/src/main/res/drawable/button_states.xml" value="0.271875" />
         <entry key="app/src/main/res/drawable/edit_bg.xml" value="0.35885416666666664" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.271875" />
         <entry key="app/src/main/res/layout/activity_detailed_post.xml" value="0.385208165610751" />
         <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.41204013772366455" />
@@ -67,10 +80,8 @@
         <entry key="app/src/main/res/layout/dialog_friend.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/dialog_temp_mess.xml" value="0.5" />
         <entry key="app/src/main/res/layout/friend_request.xml" value="0.30932971014492755" />
-        <entry key="app/src/main/res/layout/layout_friend.xml" value="0.31476449275362317" />
         <entry key="app/src/main/res/layout/layout_post.xml" value="0.36617647058823527" />
         <entry key="app/src/main/res/layout/layout_profile.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/message_received.xml" value="0.31476449275362317" />
         <entry key="app/src/main/res/menu/menu_chat.xml" value="0.2557291666666667" />
       </map>
     </option>

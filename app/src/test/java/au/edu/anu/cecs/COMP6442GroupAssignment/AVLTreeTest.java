@@ -47,9 +47,9 @@ public class AVLTreeTest {
         test.insert("5");
         test.insert("6");
         assertEquals(test.search("4").getKey(), "4");
-        test.remove("6");
+        test.delete("6");
         assertEquals(test.search("6"),null);
-        test.remove("5");
+        test.delete("5");
         assertEquals(test.search("5"),null);
         assertTrue(Math.abs(test.getroot().getRight().getHeight()-test.getroot().getLeft().getHeight())<2);
 
