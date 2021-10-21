@@ -24,6 +24,15 @@ public class MessageDAO {
     }
 
     /**
+     * Singleton Pattern
+     */
+    public static MessageDAO getInstance() {
+        if (instance == null)
+            instance = new MessageDAO();
+        return instance;
+    }
+
+    /**
      * Send a new Message and upload to the Firebase.
      */
     public void sendMessage(String user1, String user2,
@@ -57,14 +66,5 @@ public class MessageDAO {
         childUpdates.put("user-chat/" + user1, postValues);
 
         myRef.updateChildren(childUpdates);
-    }
-
-    /**
-     * Singleton Pattern
-     */
-    public static MessageDAO getInstance() {
-        if (instance == null)
-            instance = new MessageDAO();
-        return instance;
     }
 }
