@@ -242,11 +242,11 @@ Moreover,our search engine also support partially valid and invalid search queri
 
 The Grammar Rule
 
-- <query> :=  <query_unit>, { <operstors>,  <query_unit>} 
-- <query_unit> := (<feild>,'=',<key>) | ( '(',<query_unit>, <operator>, <query_unit>, ')' )
-- <field> := 'Author' |'Tag' | 'Title' | 'Id'
-- <operator> := '&' | '|' 
-- <key> := <string_value>
+- \<query> :=  <query_unit>, { \<operator>,  <query_unit>} 
+- <query_unit> := (\<field>,'=',\<key>) | ( '(',<query_unit>, \<operator>, <query_unit>, ')' )
+- \<field> := 'Author' |'Tag' | 'Title' | 'Id'
+- \<operator> := '&' | '|' 
+- \<key> := <string_value>
 
 Punctuators: 
 
