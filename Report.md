@@ -297,7 +297,7 @@ Our search engine also support partially valid and invalid search queries, when 
 
 *[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*
 
-**Surpise Item**
+**Surprise Item**
 
 *[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
@@ -329,11 +329,17 @@ Our group implement the (ii) and (iv) surprise items.
 
 1. *Bug 1:*
 
-- *A space bar (' ') in the sign in email will crash the application.*
-- ... 
+- Error when edit blank profile
+- If the user did not full fill the name or other information in the register page, when the user login and want to change their information in the edit profile page the software will bow out with error.
+  Normally, users would always fill all the blanks when they register their information. Also, we add some colorful logos on each blank input box to attract the user attention psychologically.
+
 
 2. *Bug 2:*
-3. ...
+- Can not give a star in search mode
+- After searching, the user cannot give star to specific posts in list mode, but they could click the post and open the post page to give a star.
+  We think normally user would be more likely to look for something important instead of just to give a star when they are using the search mode.
+  Also, in search mode it would cause false contact give star when they are sliding in search mode and it seems absurd to give stars in the case of read-only titles.
+
 
 *List all the known errors and bugs here. If we find bugs/errors that your team do not know of, it shows that your testing is not through.*
 
