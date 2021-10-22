@@ -106,6 +106,26 @@ The following is a report template to help your team successfully provide all th
 
 **Data Structures**
 
+Our team use the AVL-Tree in our project.
+
+- Objective: 
+
+  - It is used for storing the swearwords for  surprise feature(iii) removing/hiding hate speech in posts;
+
+  - We will search the stored swearwords to find out whether the target word is a swearword.
+
+- Locations: 
+
+  - Declared in *DataStructure\AVLTree.java* and used in *SwearWordsDAO.java* line *9*. 
+  - Used for removing hate speech in line *52* in *HateSpeechParser\Tokenizer.java*
+  - Persistent data in *app\src\main\assets\swear_words.json*
+
+- Reasons:
+
+  - Tree is easy to use *Gson* to read and store as persistent data(.json).
+  - Compared with binary search tree AVL-Tree is close to balance tree, for look up with a time complexity *O(log(n))*
+  - Compared with Red-Black Tree, the height of an AVL tree is bounded by roughly 1.44 * log2(n), while the height of  a red-black tree may be up to 2 * log2(n). Thus, lookup is slightly faster on the  average in AVL.
+
 *[What data structures did your team utilise? Where and why?]*
 
 **Design Patterns**
@@ -173,17 +193,107 @@ I used the following Design Patterns in my project:
 
 **Grammars**
 
-*Search Engine*
-<br> *Production Rules* <br>
-\<Non-Terminal> ::= \<some output>
-<br>
-\<Non-Terminal> ::= \<some output>
+- *The grammar rule*
+
+  - Operators: 
+
+    1. '&' represent take an intersection between two expressions
+
+    2. '|' represent take a union between two expressions
+    3. '=' used for conditional filtering 
+    4. '(' and ')' used for applying precedence
+
+  - Key
+
+    1. Author
+    2. Tag
+    3. Title
+    4. Id 
+
+  - notification
+
+    Our grammar is case sensitive, and spaces are not allowed in our grammar, as the authors' name and titles may contains space.  
+
+  - Example
+
+    A correct syntax will looks like ((Title=A|Tag=B)&Author=C)|Id=123
+
+- *Search Engine*
+
+Our search engine supports both intersection and union queries, and use () to apply precedence; At present most search engine only support intersection queries but not union quires like Firebase. 
+
+For example, in our search engine we can do the following query:
+
+```
+(Tag=BotTalk|Tag=ANU)&Author=Qinyu Zhao
+```
+
+ This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
+
+![App snapshot1](E:\Comp2100-6442\GroupAss\image-20211021211723190.png)
+
+Our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we search in this way "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
+
+![App snapshot2](E:\Comp2100-6442\GroupAss\image-20211021215235048.png)
+
+
 
 *[How do you design the grammar? What are the advantages of your designs?]*
 
 *If there are several grammars, list them all under this section and what they relate to.*
 
 **Tokenizer and Parsers**
+
+- Tokenizer and Parsers used in search engine
+
+  - Tokenizer
+
+    Token: 
+
+     Keywords : [Title, Author, Tag, Id]
+
+     Punctuators : [LBRA, RBRA]
+
+    [Illegal] represent the current token is an invalid syntax for search
+
+  - Parser 
+
+    1. Parser grammar
+
+    ```
+    <exp>    ::= <term> | <term>&<exp> | <term>|<exp>
+    <term>   ::=  <Post_List with key> | ( <exp> )
+    ```
+
+    2.  Node classes 
+
+       public abstract class **Exp** 
+
+       public class **KeyExp** extends **Exp** with a Post_List which satisfied the key. 
+
+       public class **AndExp** extends **Exp **with Exp attributes **term** and **exp**
+
+       public class **OrExp** extends **Exp**  with Exp attributes **term** and **exp**
+
+  - How does search parser work
+
+    1st. We need to pass the query string in our Tokenizer.
+
+    2nd. Pass the tokenizer into Parser, inside the parser, it will pop out the tokens and left recursively create expressions.
+
+    3rd. After building up our final expression, we can use evaluate() to recursively get the result, in the AndExp the evaluate function will return the intersection of the term's list and exp's list, OrExp will return the union of these two list, KeyExp is the base case will just return the local list. 
+
+  - Derivation for expression building 
+
+    - Title=A|Tag=B&Author=C|Id=123
+
+      ![derivation chart](E:\Comp2100-6442\GroupAss\image-20211022010726837.png)
+
+  - Derivation for expression executing 
+
+    - Title=A|Tag=B&Author=C|Id=123
+
+    ![logic flow chart](E:\Comp2100-6442\GroupAss\image-20211022011019037.png)
 
 *[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*
 
