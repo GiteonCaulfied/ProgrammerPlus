@@ -29,12 +29,15 @@ assets:
   - comment: "_Bliss_ by Charles O'Rear"
     url: https://en.wikipedia.org/wiki/Bliss_(image)
     licence: fair use
+  - comment: the little blue bird logo
+    url: https://www.58pic.com/zhuangshituan/28606268.html
+    licence: https://www.58pic.com/copyright.html
 
 # for each member, write your name and uid here
 # remove any empty "name+uid" entries
 members:
   - name:
-    uid:
+    uid: 
   - name:
     uid:
   - name:
