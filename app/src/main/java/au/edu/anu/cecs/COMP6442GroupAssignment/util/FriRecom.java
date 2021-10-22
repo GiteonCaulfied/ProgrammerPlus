@@ -69,7 +69,9 @@ public class FriRecom {
                         else
                             userLogs.add(new UserLog(document.getId(), document.getData()));
                     }
-
+                    if (me == null) {
+                        me = new UserLog(currentUser.getUid());
+                    }
                     me.generateHotPosts(posts);
 
                     // Determine which cluster each user belongs to
