@@ -69,7 +69,7 @@ Examples of how we solved conflicts
 *Programmer+ is a social communication application specifically targeting programmers. Programmer+ provides a social platform to realize the exclusive social communication between programmers,
 *which can form their own social circle and make the social circle more specialized. Programmer+ has the function of posting to realize the exchange of ideas and daily life between programmers. The private
 *message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
-*to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
+*to achieve better communication between users. The long-term goal is to build this application into an exclusive research social platform for the computer area.
 
 ![AppDiagram](./assets/Description.jpg)
 
@@ -250,7 +250,7 @@ Moreover,our search engine also support partially valid and invalid search queri
 The Grammar Rule
 
 - <query> :=  <query_unit>, { <operstors>,  <query_unit>} 
-- <query_unit> := (<feild>,'=',<key>) | ( '(',<query_unit>, <operator>, <query_unit>, ')' )
+- <query_unit> := ( <feild>,'=',<key> ) | ( '(', <query_unit>, <operator>, <query_unit>, ')' )
 - <field> := 'Author' |'Tag' | 'Title' | 'Id'
 - <operator> := '&' | '|' 
 - <key> := <string_value>

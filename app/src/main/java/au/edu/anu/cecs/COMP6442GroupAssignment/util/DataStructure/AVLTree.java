@@ -35,20 +35,20 @@ public class AVLTree<T extends Comparable<T>> {
             this.height = height;
         }
 
-        public AVLTreeNode<T> getLeft() {
+        public AVLTreeNode<T> getLeftNode() {
             return leftNode;
         }
 
-        public void setLeft(AVLTreeNode<T> left) {
-            this.leftNode = left;
+        public void setLeftNode(AVLTreeNode<T> leftNode) {
+            this.leftNode = leftNode;
         }
 
-        public AVLTreeNode<T> getRight() {
+        public AVLTreeNode<T> getRightNode() {
             return rightNode;
         }
 
-        public void setRight(AVLTreeNode<T> right) {
-            this.rightNode = right;
+        public void setRightNode(AVLTreeNode<T> rightNode) {
+            this.rightNode = rightNode;
         }
     }
 
@@ -69,7 +69,13 @@ public class AVLTree<T extends Comparable<T>> {
         return 0;
     }
 
-
+    /**
+     * return the height of the whole tree
+     * @return
+     */
+    public int height() {
+        return getHeight(root);
+    }
 
 
     private int max(int a, int b) {
@@ -282,13 +288,13 @@ public class AVLTree<T extends Comparable<T>> {
 
     public boolean delete(T key) {
         AVLTreeNode<T> target;
-
-        if ((target = search(root, key)) != null) {
+        if ((target = search(root, key)) != null){
             root = delete(root, target);
             return true;
         }else {
             return false;
         }
+
     }
 
 

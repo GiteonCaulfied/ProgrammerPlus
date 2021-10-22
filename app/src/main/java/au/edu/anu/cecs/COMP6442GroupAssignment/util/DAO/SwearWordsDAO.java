@@ -59,6 +59,7 @@ public class SwearWordsDAO {
         }else {
             return false;
         }
+//        return false;
     }
 
     /**

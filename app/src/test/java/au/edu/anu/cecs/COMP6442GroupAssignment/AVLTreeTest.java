@@ -20,8 +20,8 @@ public class AVLTreeTest {
 
 
         test.setroot(node2);
-        node2.setLeft(node1);
-        node2.setRight(node3);
+        node2.setLeftNode(node1);
+        node2.setRightNode(node3);
         assertEquals(test.search(4),null);
         assertEquals(test.search(3).getKey(), new Integer(3));
 
@@ -43,7 +43,7 @@ public class AVLTreeTest {
         assertEquals(test.search("2").getKey(), "2");
         assertEquals(test.search("4").getKey(), "4");
 
-        assertTrue(Math.abs(test.getroot().getRight().getHeight()-test.getroot().getLeft().getHeight())<2);
+        assertTrue(Math.abs(test.getroot().getRightNode().getHeight()-test.getroot().getLeftNode().getHeight())<2);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AVLTreeTest {
         assertFalse(test.delete("10"));
         test.delete("5");
         assertEquals(test.search("5"),null);
-        assertTrue(Math.abs(test.getroot().getRight().getHeight()-test.getroot().getLeft().getHeight())<2);
+        assertTrue(Math.abs(test.getroot().getRightNode().getHeight()-test.getroot().getLeftNode().getHeight())<2);
 
 
     }
