@@ -56,7 +56,7 @@ The following is a report template to help your team successfully provide all th
 * Users can create an account with a portrait image and intro
 * Users can send a post with image, hashtag and GPS location
 * Users can view personalized timeline of posts with image, hashtag and GPS location and without heat speech
-* Users can search the posts by tags and author with partially valid queries
+* Users can search the posts by tags, title, post id and author with partially valid queries
 * Users can "like"(Give star) to others' posts
 * Users can be notified when the post gets a like
 * Users can send friend requests and become friends with other users
@@ -81,17 +81,16 @@ The following is a report template to help your team successfully provide all th
 *I used the following data structures in my project:*
 
 1. *LinkedList*
-
-   * *Objective: It is used for storing xxxx for xxx feature.*
-
-   * *Locations: line xxx in XXX.java, ..., etc.*
-
-   * *Reasons:*
-
-     * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-
-     * *We don't need to access the item by index for this feature*
-
+* *Objective: It is used for storing xxxx for xxx feature.*
+   
+* *Locations: line xxx in XXX.java, ..., etc.*
+   
+* *Reasons:*
+   
+  * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
+   
+  * *We don't need to access the item by index for this feature*
+   
 2. ...
 
 3. ...
@@ -185,32 +184,7 @@ I used the following Design Patterns in my project:
 
 **Grammars**
 
-- *The grammar rule*
-
-  - Operators: 
-
-    1. '&' represent take an intersection between two expressions
-
-    2. '|' represent take a union between two expressions
-    3. '=' used for conditional filtering 
-    4. '(' and ')' used for applying precedence
-
-  - Key
-
-    1. Author
-    2. Tag
-    3. Title
-    4. Id 
-
-  - notification
-
-    Our grammar is case sensitive, and spaces are not allowed in our grammar, as the authors' name and titles may contains space.  
-
-  - Example
-
-    A correct syntax will looks like ((Title=A|Tag=B)&Author=C)|Id=123
-
-- *Search Engine*
+- Search Engine
 
 Our search engine supports both intersection and union queries, and use () to apply precedence; At present most search engine only support intersection queries but not union quires like Firebase. 
 
@@ -222,17 +196,39 @@ For example, in our search engine we can do the following query:
 
  This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
 
-![App snapshot1](E:\Comp2100-6442\GroupAss\image-20211021211723190.png)
+![App snapshot1](image-20211021211723190.png)
 
-Our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we search in this way "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
+Moreover,our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we our query is "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
 
-![App snapshot2](E:\Comp2100-6442\GroupAss\image-20211021215235048.png)
+![App snapshot2](image-20211021215235048.png)
 
+The Grammar Rule
 
+- <query> :=  <query_unit>, { <operstors>,  <query_unit>} 
+- <query_unit> := (<feild>,'=',<key>) | ( '(',<query_unit>, <operator>, <query_unit>, ')' )
+- <field> := 'Author' |'Tag' | 'Title' | 'Id'
+- <operator> := '&' | '|' 
+- <key> := <string_value>
 
-*[How do you design the grammar? What are the advantages of your designs?]*
+Punctuators: 
 
-*If there are several grammars, list them all under this section and what they relate to.*
+1. '&' represent take an intersection between two expressions
+
+2. '|' represent take a union between two expressions
+3. '=' used for conditional filtering 
+4. '(' and ')' used for applying precedence
+
+Notification
+
+Our grammar is case sensitive, and spaces are not allowed in our grammar, as the authors' name and titles may contains space. And you are not allowed to include the punctuators in your search key.
+
+Example
+
+A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
+
+~~*[How do you design the grammar? What are the advantages of your designs?]*~~
+
+~~*If there are several grammars, list them all under this section and what they relate to.*>~~
 
 **Tokenizer and Parsers**
 
@@ -242,7 +238,7 @@ Our search engine also support partially valid and invalid search queries, when 
 
     Token: 
 
-     Keywords : [Title, Author, Tag, Id]
+     Fields : [Title, Author, Tag, Id]
 
      Punctuators : [LBRA, RBRA]
 
@@ -257,15 +253,15 @@ Our search engine also support partially valid and invalid search queries, when 
     <term>   ::=  <Post_List with key> | ( <exp> )
     ```
 
-    2.  Node classes 
+    - Node classes 
 
-       public abstract class **Exp** 
+       public abstract class <font color=Purple>Exp</font>
 
-       public class **KeyExp** extends **Exp** with a Post_List which satisfied the key. 
+       public class <font color=Purple>KeyExp</font> extends <font color=Purple>Exp</font> with <font color=Orange>field</font>, <font color=Orange>key</font> and a <font color=Purple>List<Post</font>> <font color=Orange>postlist</font> which satisfied the key ( for example, if the field is "Tag", key is "ANU", the post list will be all the posts of which tags contain "ANU" )
 
-       public class **AndExp** extends **Exp **with Exp attributes **term** and **exp**
+       public class <font color=Purple>AndExp</font> extends <font color=Purple>Exp</font> with <font color=Purple>Exp</font> attributes *<font color=Orange>term</font>* and <font color=Orange>exp</font>
 
-       public class **OrExp** extends **Exp**  with Exp attributes **term** and **exp**
+       public class <font color=Purple>OrExp</font> extends <font color=Purple>Exp</font>  with  <font color=Purple>Exp</font> attributes *<font color=Orange>term</font>* and <font color=Orange>exp</font>
 
   - How does search parser work
 
@@ -277,19 +273,19 @@ Our search engine also support partially valid and invalid search queries, when 
 
   - Derivation for expression building 
 
-    - Title=A|Tag=B&Author=C|Id=123
+    - Title=A|Tag=B&Author=C&Id=123
 
-      ![derivation chart](E:\Comp2100-6442\GroupAss\image-20211022010726837.png)
+      ![derivation chart](image-20211022010726837.png)
 
   - Derivation for expression executing 
 
-    - Title=A|Tag=B&Author=C|Id=123
+    - Title=A|Tag=B&Author=C&Id=123
 
-    ![logic flow chart](E:\Comp2100-6442\GroupAss\image-20211022011019037.png)
+    ![logic flow chart](image-20211022011019037.png)
 
-*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*
+~~*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*~~
 
-**Surpise Item**
+**Surprise Item**
 
 *[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
