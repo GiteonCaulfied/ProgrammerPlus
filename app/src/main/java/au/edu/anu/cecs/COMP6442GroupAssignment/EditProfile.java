@@ -156,19 +156,28 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String word = maskedWord.getText().toString();
-                if (!swearWords.add(word)) {
-                    Toast
-                            .makeText(getApplicationContext(),
-                                    "already exist",
-                                    Toast.LENGTH_SHORT)
-                            .show();
+                if (word.length() != 0){
+                    if (!swearWords.add(word)) {
+                        Toast
+                                .makeText(getApplicationContext(),
+                                        "already exist",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        Toast
+                                .makeText(getApplicationContext(),
+                                        "added",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
                 } else {
                     Toast
                             .makeText(getApplicationContext(),
-                                    "added",
+                                    "Type a word",
                                     Toast.LENGTH_SHORT)
                             .show();
                 }
+
             }
         });
 
