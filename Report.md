@@ -63,54 +63,54 @@ message function allows programmers to have more in-depth communication, such as
 
 Main Interface:
 
-<img src="./assets/main_interface.png" alt="main_interface" style="zoom: 33%;" />
+<img src="./assets/main_interface.png" alt="main_interface" width="200" />
 
 Targets Users: Programmers
 
 * Guest:
   * create an account with a portrait image and intro
 
-    <img src="./assets/register.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/register.png" alt="register" width="200" />
   
   * login using a correct email and password
   
-    <img src="./assets/login.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/login.png" alt="register" width="200" />
 * Users
   * send a post with image, hashtag and GPS location
   
-    <img src="./assets/make_a_new_post.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/make_a_new_post.png" alt="register" width="200" />
   
   * view personalized timeline of posts with image, hashtag and GPS location and without heat speech
   
-    <img src="./assets/posts_view.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/posts_view.png" alt="register" width="200" />
   
   * search the posts by tags, title, post id and author with partially valid queries
   
-    <img src="./assets/post_search.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/post_search.png" alt="register" width="200" />
   
   * "like"(Give star) to others' posts
   
-    <img src="./assets/like_a_post.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/like_a_post.png" alt="register" width="200" />
   
   * be notified when the post gets a like
   
   * send friend requests and become friends with other users
   
-    <img src="./assets/friend_list.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/friend_list.png" alt="register" width="200" />
   
   * message other users
   
-    <img src="./assets/messages.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/messages.png" alt="register" width="200" />
   
   * block other user from messaging
   
   * choose to only get message from a friend user
   
-    <img src="./assets/edit_profile.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/edit_profile.png" alt="register" width="200" />
   
   * set template message
   
-    <img src="./assets/temp_mess.png" alt="register" style="zoom:33%;" />
+    <img src="./assets/temp_mess.png" alt="register" width="200" />
 
 
 ## Application UML
