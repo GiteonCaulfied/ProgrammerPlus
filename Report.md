@@ -31,7 +31,7 @@ The following is a report template to help your team successfully provide all th
 | UID | Name | Role |
 | :--- | :----: | ---: |
 | u7212335 | Qinyu Zhao | Member |
-| [uid] | Xiangyu Hui | Member |
+| u7238607 | Xiangyu Hui | Member |
 | u7189309 | Xuzeng He | Member |
 | u7166251 | Yikai Ge | Member |
 
@@ -241,11 +241,11 @@ For example, in our search engine we can do the following query:
 
  This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
 
-![App snapshot1](assets\image-20211021211723190.png)
+![App snapshot1](./assets\image-20211021211723190.png)
 
 Moreover,our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we our query is "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
 
-![App snapshot2](assets\image-20211021215235048.png)
+![App snapshot2](./assets\image-20211021215235048.png)
 
 The Grammar Rule
 
@@ -320,13 +320,13 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
     - Title=A|Tag=B&Author=C&Id=123
 
-      ![derivation chart](assets\image-20211022010726837.png)
+      ![derivation chart](./assets\image-20211022010726837.png)
 
   - Derivation for expression executing 
 
     - Title=A|Tag=B&Author=C&Id=123
 
-    ![logic flow chart](assets\image-20211022011019037.png)
+    ![logic flow chart](./assets\image-20211022011019037.png)
 
 ~~*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*~~
 
@@ -413,7 +413,7 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Our AVL-Tree Test covered 100% classes in Data Structure and 84% methods and 70% lines.
 
-  ![image-20211022132452422](assets\image-20211022132452422.png)
+  ![image-20211022132452422](./assets\image-20211022132452422.png)
 
 - Test 2. Heat Speech Remove Test
 
@@ -427,7 +427,7 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Our Heat Speech Remove Test covered 100% classes in HateSpeechParser and 90% methods and 90% lines.
 
-  ![image-20211022133435491](assets\image-20211022133435491.png)
+  ![image-20211022133435491](./assets\image-20211022133435491.png)
 
 - Test 3. Search Parser Test
 
@@ -443,7 +443,7 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   The Search Parser Test covered 100% Exp classes and 100% methods and 84% lines.
 
-  ![image-20211022135112540](assets\image-20211022135112540.png)
+  ![image-20211022135112540](./assets\image-20211022135112540.png)
 
 
 
