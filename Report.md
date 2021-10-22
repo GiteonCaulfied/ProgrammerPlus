@@ -55,6 +55,8 @@ The following is a report template to help your team successfully provide all th
 *message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
 *to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
 
+![AppDiagram](./assets/Description.jpg)
+
 **Application Use Cases and or Examples**
 
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
@@ -79,7 +81,7 @@ The following is a report template to help your team successfully provide all th
 
 ## Application UML
 
-![ClassDiagramExample](./images/ClassDiagramExample.png)
+![ClassDiagramExample](./assets/UMLdiagram.jpg)
 *[Replace the above with a class diagram. You can look at how we have linked an image here as an example of how you can do it too.]*
 
 ## Application Design and Decisions
