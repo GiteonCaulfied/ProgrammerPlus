@@ -4,6 +4,9 @@ This following is a team meeting template. You may change this template as you l
 ## Team Meeting 01 - Week 9 - Oct. 4 (7:00PM -- 8:00PM)
 **Absent:**
 <br> Checklist:
+Everyone is here
+
+## Previous Tasks
 1. ✅ Search functionality can handle partially valid and invalid search queries. (medium)
 2. ✅ User profile activity containing a media file (image, animation (e.g. gif), video). (easy)
 3. ✅ Provide users with the ability to message each other directly. (hard) 

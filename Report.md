@@ -377,6 +377,8 @@ Our group implement the (ii) and (iv) surprise items.
 
 2. Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)
 
+3. Search functionality can handle partially valid and invalid search queries. (medium)
+
 ### Hard features:
 
 1. Provide users with the ability to message each other directly. (hard)
