@@ -38,15 +38,34 @@ The following is a report template to help your team successfully provide all th
 ## Conflict Resolution Protocol
 
 *[Write a well defined protocol your team can use to handle conflicts. That is, if your group has problems, what is the procedure for reaching consensus or solving a problem? (If you choose to make this an external document, link to it here)]*
-1. *Background picture design*
-  Use white~
-  The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+
+We learned a 5-step protocol on American Management Association.
+*https://www.amanet.org/articles/the-five-steps-to-conflict-resolution/*
+* Step 1: Define the source of the conflict.
+
+* Step 2: Look beyond the incident.
+
+* Step 3: Request solutions.
+
+* Step 4: Identify solutions both disputants can support.
+
+* Step 5: Agreement.
+
+Examples of how we solved conflicts
+1. *Background picture design* 
+* Conflict: A colorful picture vs white picture
+* Result: Use white
+* Reason: The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+
 2. *Data Sotrage*
-  Use Firebase~
-  Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+* Conflict: Stroing data locally vs on Firebase
+* Result: Use Firebase
+* Reason: Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications. (We also sent email to B).
+
 3. *Sliding mode*
-  Use Vertical sliding~
-  The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
+* Conflict: Vertical vs Horizontal
+* Result: Use Vertical sliding
+* Reason: The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
 
 ## Application Description
 
@@ -63,20 +82,20 @@ The following is a report template to help your team successfully provide all th
 
 *Targets Users: Programmers
 
-* Users can create an account with a portrait image and intro
-* Users can send a post with image, hashtag and GPS location
-* Users can view personalized timeline of posts with image, hashtag and GPS location and without heat speech
-* Users can search the posts by tags, title, post id and author with partially valid queries
-* Users can "like"(Give star) to others' posts
-* Users can be notified when the post gets a like
-* Users can send friend requests and become friends with other users
-* Users can message other users
-* Users can block other user from messaging
-* Users can choose to only get message from a friend user
-* Users can set template message
-
-
-
+* Guest:
+  * create an account with a portrait image and intro
+  * login using a correct email and password
+* Users
+  * send a post with image, hashtag and GPS location
+  * view personalized timeline of posts with image, hashtag and GPS location and without heat speech
+  * search the posts by tags, title, post id and author with partially valid queries
+  * "like"(Give star) to others' posts
+  * be notified when the post gets a like
+  * send friend requests and become friends with other users
+  * message other users
+  * block other user from messaging
+  * choose to only get message from a friend user
+  * set template message
 
 
 ## Application UML
@@ -107,25 +126,44 @@ The following is a report template to help your team successfully provide all th
 
 **Data Structures**
 
-Our team use the AVL-Tree in our project.
+Our team use the following data structures in our project.
 
-- Objective: 
+1. AVL-Tree
+   * Objective: 
+     * It is used for storing the swearwords for  surprise feature(iii) removing/hiding hate speech in posts;
 
-  - It is used for storing the swearwords for  surprise feature(iii) removing/hiding hate speech in posts;
+     * We will search the stored swearwords to find out whether the target word is a swearword.
 
-  - We will search the stored swearwords to find out whether the target word is a swearword.
+   * Locations: 
 
-- Locations: 
+     * Declared in *DataStructure\AVLTree.java* and used in *SwearWordsDAO.java* line *9*. 
+     * Used for removing hate speech in line *52* in *HateSpeechParser\Tokenizer.java*
+     * Persistent data in *app\src\main\assets\swear_words.json*
 
-  - Declared in *DataStructure\AVLTree.java* and used in *SwearWordsDAO.java* line *9*. 
-  - Used for removing hate speech in line *52* in *HateSpeechParser\Tokenizer.java*
-  - Persistent data in *app\src\main\assets\swear_words.json*
+   * Reasons:
 
-- Reasons:
+     * Tree is easy to use *Gson* to read and store as persistent data(.json).
+     * Compared with binary search tree AVL-Tree is close to balance tree, for look up with a time complexity *O(log(n))*
+     * Compared with Red-Black Tree, the height of an AVL tree is bounded by roughly 1.44 * log2(n), while the height of  a red-black tree may be up to 2 * log2(n). Thus, lookup is slightly faster on the  average in AVL.
+     * The distribution of swear-words is very biased (for example, many f-words but few z-words). It's not efficient to use a Hash-related structure. 
 
-  - Tree is easy to use *Gson* to read and store as persistent data(.json).
-  - Compared with binary search tree AVL-Tree is close to balance tree, for look up with a time complexity *O(log(n))*
-  - Compared with Red-Black Tree, the height of an AVL tree is bounded by roughly 1.44 * log2(n), while the height of  a red-black tree may be up to 2 * log2(n). Thus, lookup is slightly faster on the  average in AVL.
+2. HashMap
+   * Objective: We store different key-value relations of a user, including id -> email, email -> id, and id -> username.
+
+   * Locations: three instances of HashMaps are in util.UserManager
+
+   * Reasons:
+     * We usually want to find a user email or name based on his ID. It's not efficient to always search on Firebase, although that's possible.
+     * HashMap gives a very quick method O(1) to find value given a key.
+
+3. ArrayList
+   * Objective: We store the friend list, the chat list, the message list in ArrayLists.
+
+   * Locations: ChatsAdapter, FriendAdapter, and MessageAdapter under util.Adapter
+
+   * Reasons:
+     * If a user click one of his friend, then the chat interface will pop out. In this case, we need to directly find the friend according to his location in the name list. ArrayList is very useful because it supports O(1) random access, faster than LinkList.
+
 
 *[What data structures did your team utilise? Where and why?]*
 
