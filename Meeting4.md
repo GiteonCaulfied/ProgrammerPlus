@@ -4,6 +4,9 @@ This following is a team meeting template. You may change this template as you l
 ## Team Meeting 03 - Week 11 - Oct. 18 (8:00PM -- 9:00PM)
 **Absent:**
 <br> Checklist:
+Everyone is here
+
+## Previous Tasks
 ✅ Test coverage 70%
 ✅ Report
 

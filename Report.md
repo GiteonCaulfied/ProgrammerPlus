@@ -33,25 +33,33 @@ The following is a report template to help your team successfully provide all th
 | u7212335 | Qinyu Zhao | Member |
 | [uid] | Xiangyu Hui | Member |
 | u7189309 | Xuzeng He | Member |
-| [uid] | Yikai Ge | Member |
+| u7166251 | Yikai Ge | Member |
 
 ## Conflict Resolution Protocol
 
 *[Write a well defined protocol your team can use to handle conflicts. That is, if your group has problems, what is the procedure for reaching consensus or solving a problem? (If you choose to make this an external document, link to it here)]*
+1. *Background picture design*
+  Use white~
+  The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+2. *Data Sotrage*
+  Use Firebase~
+  Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+3. *Sliding mode*
+  Use Vertical sliding~
+  The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
 
 ## Application Description
 
-*[What is your application, what does it do? Include photos or diagrams if necessary]*
-
-*Here is a pet specific social media application example*
-
-*PetBook is a social media application specifically targetting pet owners... it provides... certified practitioners, such as veterians are indicated by a label next to their profile...*
+*Programmer+ is a social communication application specifically targeting programmers. Programmer+ provides a social platform to realize the exclusive social communication between programmers,
+*which can form their own social circle and make the social circle more specialized. Programmer+ has the function of posting to realize the exchange of ideas and daily life between programmers. The private
+*message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
+*to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
 
 **Application Use Cases and or Examples**
 
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
 
-*Targets Users: No specific target users*
+*Targets Users: Programmers
 
 * Users can create an account with a portrait image and intro
 * Users can send a post with image, hashtag and GPS location
@@ -317,11 +325,17 @@ Our group implement the (ii) and (iv) surprise items.
 
 1. *Bug 1:*
 
-- *A space bar (' ') in the sign in email will crash the application.*
-- ... 
+- Error when edit blank profile
+- If the user did not full fill the name or other information in the register page, when the user login and want to change their information in the edit profile page the software will bow out with error.
+  Normally, users would always fill all the blanks when they register their information. Also, we add some colorful logos on each blank input box to attract the user attention psychologically.
+
 
 2. *Bug 2:*
-3. ...
+- Can not give a star in search mode
+- After searching, the user cannot give star to specific posts in list mode, but they could click the post and open the post page to give a star.
+  We think normally user would be more likely to look for something important instead of just to give a star when they are using the search mode.
+  Also, in search mode it would cause false contact give star when they are sliding in search mode and it seems absurd to give stars in the case of read-only titles.
+
 
 *List all the known errors and bugs here. If we find bugs/errors that your team do not know of, it shows that your testing is not through.*
 
@@ -364,6 +378,8 @@ Our group implement the (ii) and (iv) surprise items.
 1. Privacy I: provide users with the ability to ‘block’ users. Preventing them from directly messaging them. (medium)
 
 2. Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)
+
+3. Search functionality can handle partially valid and invalid search queries. (medium)
 
 ### Hard features:
 
