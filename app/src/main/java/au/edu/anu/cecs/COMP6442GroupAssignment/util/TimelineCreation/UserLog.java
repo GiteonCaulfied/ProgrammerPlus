@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 public class UserLog implements Comparable<UserLog> {
+    /**
+     * This class is the user log, including
+     * (1) the latest location (latitude & longitude);
+     * (2) The list of posts that a user likes
+     */
+
     private static final double EARTH_RADIUS = 6378137;
     private String userID;
     private long latitude;
@@ -53,6 +59,14 @@ public class UserLog implements Comparable<UserLog> {
         return d * Math.PI / 180.0;
     }
 
+    /**
+     * Calculate the distance between two locations
+     * @param lon1 longitude of location 1
+     * @param lat1 latitude of location 1
+     * @param lon2 longitude of location 2
+     * @param lat2 latitude of location 2
+     * @return the distance (m)
+     */
     public static double locationDistance(double lon1, double lat1, double lon2, double lat2) {
         double radLat1 = rad(lat1);
         double radLat2 = rad(lat2);
@@ -63,13 +77,20 @@ public class UserLog implements Comparable<UserLog> {
         return s;
     }
 
+    /**
+     * Calculate the distance between two users
+     * @param that another userlog
+     * @return the distance
+     */
     public double calDistance(UserLog that) {
+        // The distance of locations
         double locDist = 1000.0;
         if (this.latitude != 181 && that.latitude != 181) {
             locDist = locationDistance(this.longitude, this.latitude,
                     that.getLongitude(), that.getLatitude()) / 1e10;
         }
 
+        // The coverage of the posts they both like
         double postDist = 1000.0;
         if (!this.posts.isEmpty() && !that.posts.isEmpty()) {
             double i = 0;
@@ -82,6 +103,7 @@ public class UserLog implements Comparable<UserLog> {
         return locDist + postDist;
     }
 
+    // Getters
     public long getLatitude() {
         return latitude;
     }
@@ -102,6 +124,7 @@ public class UserLog implements Comparable<UserLog> {
         return posts;
     }
 
+    // The userlogs can be compared according to their distances
     @Override
     public int compareTo(UserLog userLog) {
         return this.distanceToMe.compareTo(userLog.getDistanceToMe());
@@ -115,6 +138,11 @@ public class UserLog implements Comparable<UserLog> {
         }
     }
 
+    /**
+     * Find the cluster that the current user belongs to
+     * @param centers all centroids of clusters
+     * @return the cluster ID
+     */
     public int findCluster(List<double[]> centers) {
         double best = -1;
         int best_c = -1;
@@ -130,6 +158,11 @@ public class UserLog implements Comparable<UserLog> {
         return best_c;
     }
 
+    /**
+     * Calculate the distance between the current user and the centroid
+     * @param center the center of a cluster
+     * @return the distance
+     */
     public double calDistanceCluster(double[] center) {
         double res = 0;
         for (int i = 0; i < 1000; i++) {

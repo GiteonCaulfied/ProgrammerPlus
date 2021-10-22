@@ -10,6 +10,11 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.PageAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 
 public class SessionState implements UserState {
+    /**
+     * If the user login, then the main interface will be changed
+     * We need to display posts, friends and the user profile.
+     */
+
     private final MainActivity main;
 
     public SessionState(MainActivity main) {

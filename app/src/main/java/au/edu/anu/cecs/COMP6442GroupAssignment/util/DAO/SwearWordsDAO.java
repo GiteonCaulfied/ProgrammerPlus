@@ -35,6 +35,12 @@ public class SwearWordsDAO {
         return false;
 
     }
+
+    /**
+     * Delete a word from the swearword tree
+     * @param s word
+     * @return whether it was deleted
+     */
     public boolean delete (String s){
         if (swearWords.delete(s)){
             JsonUtils.getInstance().saveSwearWordsTree(MyApplication.context,swearWords);
@@ -44,6 +50,11 @@ public class SwearWordsDAO {
         }
     }
 
+    /**
+     * Add a new word into the swearword tree
+     * @param s word
+     * @return whether it was added successfully
+     */
     public boolean add (String s){
         if (contains(s)){
             return false;

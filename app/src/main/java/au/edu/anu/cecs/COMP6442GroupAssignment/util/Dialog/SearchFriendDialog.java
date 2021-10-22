@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,16 +29,12 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class SearchFriendDialog extends Dialog {
-    public SearchFriendDialog(@NonNull Context context) {
-        super(context);
-    }
+    /**
+     * A dialog to search friends using email address
+     */
 
     public SearchFriendDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
-    }
-
-    protected SearchFriendDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
     }
 
     @Override
@@ -50,11 +45,13 @@ public class SearchFriendDialog extends Dialog {
 
         setCanceledOnTouchOutside(false);
 
+        // Create the dialog
         Window win = getWindow();
         WindowManager.LayoutParams lp = win.getAttributes();
         lp.width = 1000;
         win.setAttributes(lp);
 
+        // Recommend three friends using a machine learning model
         FriRecom friRecom = new FriRecom(getContext());
         EditText rec1 = findViewById(R.id.recommend_1);
         EditText rec2 = findViewById(R.id.recommend_2);
@@ -79,18 +76,22 @@ public class SearchFriendDialog extends Dialog {
             dismiss();
         });
 
+        // Search a user
         view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText email = findViewById(R.id.email_search_friend);
                 String email_str = email.getText().toString();
                 UserManager userManager = UserManager.getInstance();
+
+                // If we cannot find the user
                 if (!userManager.emailIsValid(email_str)) {
                     Toast.makeText(getContext(),
                             "Cannot find such a user! Check your email!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                // If the searched user and the current user are already friends
                 UserProfileDAO userProfileDAO = UserProfileDAO.getInstance();
                 Profile me = userProfileDAO.getUserprofile();
                 String friendID = userManager.getIDFromEmail(email_str);
@@ -117,6 +118,10 @@ public class SearchFriendDialog extends Dialog {
         });
     }
 
+    /**
+     * Send the friend request
+     * @param email_str the email address of that user
+     */
     private void sendFriReq(String email_str) {
         FirebaseRef firebaseRef = FirebaseRef.getInstance();
         FirebaseUser currentUser = firebaseRef.getFirebaseAuth().getCurrentUser();

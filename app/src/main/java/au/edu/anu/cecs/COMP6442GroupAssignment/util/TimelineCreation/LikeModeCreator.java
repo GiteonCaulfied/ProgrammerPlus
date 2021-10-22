@@ -23,6 +23,13 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class LikeModeCreator extends TimelineCreator {
+    /**
+     * The like mode is to recommend posts that the user may like.
+     * We create a simple equation to calculate the distance of a
+     * user between others (the distance of their locations minus
+     * the ratio of posts they both like). And then, our app will
+     * recommend posts based on the closest other users.
+     */
     private FirebaseUser currentUser;
     private Random random;
 
@@ -42,6 +49,7 @@ public class LikeModeCreator extends TimelineCreator {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    // Read user data
                     Log.d("Read users", "Current data: " + task);
                     UserLog me = null;
                     ArrayList<UserLog> userLogs = new ArrayList<>();
@@ -55,11 +63,14 @@ public class LikeModeCreator extends TimelineCreator {
                     if (me == null)
                         me = new UserLog(currentUser.getUid());
 
+                    // Calculate the distance between the current user and each other user
                     for (UserLog userLog: userLogs) {
                         userLog.setDistanceToMe(me.calDistance(userLog));
                     }
                     Collections.sort(userLogs);
 
+
+                    // Read the liked posts of the closest users
                     Query query = db.collection("user-posts").orderBy("date").limitToLast(postNum * 10L);
                     query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -102,6 +113,9 @@ public class LikeModeCreator extends TimelineCreator {
         });
     }
 
+    /**
+     * A easy implementation to load more posts
+     */
     @Override
     public void loadMore() {
         posts.remove(posts.size() - 1);

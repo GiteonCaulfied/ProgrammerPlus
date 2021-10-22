@@ -23,6 +23,12 @@ import java.util.Random;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class ActGenerator {
+    /**
+     * This class is used to generate activities
+     * (1) like a post (10,000 times)
+     * (2) make a friend (10,000 times)
+     */
+
     FirebaseFirestore db;
     Context context;
 

@@ -19,6 +19,10 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.TempMess.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class TemplateMessDialog extends Dialog {
+    /**
+     * A dialog where the user can choose template messages
+     */
+
     private String temp;
     private final Profile currentUser;
     private final Profile friend;
@@ -42,6 +46,7 @@ public class TemplateMessDialog extends Dialog {
 
         setCanceledOnTouchOutside(false);
 
+        // Create the diaglog
         Window win = getWindow();
         WindowManager.LayoutParams lp = win.getAttributes();
         lp.width = 920;
@@ -49,6 +54,7 @@ public class TemplateMessDialog extends Dialog {
 
         RadioGroup radio_temp_mess = view.findViewById(R.id.radio_temp_mess);
 
+        // A user can choose a template from provided ones
         radio_temp_mess.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -60,6 +66,7 @@ public class TemplateMessDialog extends Dialog {
         view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Use tokenizer and parser to modify the template
                 EditText text = messageAct.findViewById(R.id.messageText);
                 Tokenizer tokenizer = new Tokenizer(temp);
                 Parser parser = new Parser(tokenizer, currentUser, friend, lastTime);

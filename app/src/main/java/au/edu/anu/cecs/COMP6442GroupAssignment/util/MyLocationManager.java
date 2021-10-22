@@ -26,6 +26,15 @@ import java.util.Locale;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserActivityDAO;
 
 public class MyLocationManager {
+    /**
+     * This class will manage the location permission and
+     * provider of a user, and records his or her location.
+     *
+     * We refer to the Android Developer Document
+     * https://developer.android.com/things/sdk/drivers/location
+     * https://developer.android.com/training/location
+     */
+
     public static final int LOCATION_CODE = 301;
     private final Context context;
     private LocationManager locationManager;

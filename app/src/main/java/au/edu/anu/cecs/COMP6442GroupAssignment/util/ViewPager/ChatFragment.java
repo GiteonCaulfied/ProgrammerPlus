@@ -30,6 +30,10 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class ChatFragment extends Fragment {
+    /**
+     * The chat fragment, showing the chats of the current user.
+     */
+
     private FriendsAdapter friendsAdapter;
     private ArrayList<String> friends;
     private ArrayList<String> uids;

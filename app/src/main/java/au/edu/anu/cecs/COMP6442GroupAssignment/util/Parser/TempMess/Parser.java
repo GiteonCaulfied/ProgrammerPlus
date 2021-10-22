@@ -3,18 +3,11 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.TempMess;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class Parser {
-    public static class IllegalProductionException extends IllegalArgumentException {
-        public IllegalProductionException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
-
     // The tokenizer (class field) this parser will use.
     Tokenizer tokenizer;
     Profile currentUser;
     Profile friend;
     long lastTime;
-
     /**
      * Parser class constructor
      * Simply sets the tokenizer field.
@@ -46,11 +39,17 @@ public class Parser {
                     res.append(currentUser.getEmail());
                     break;
                 case MESSTIME_TO_CURR:
-                    int d = (int) Math.round((int)(System.currentTimeMillis() - lastTime) / 1000.0 / 3600.0);
+                    int d = (int) Math.round((int) (System.currentTimeMillis() - lastTime) / 1000.0 / 3600.0);
                     res.append(d + " hour(s)");
                     break;
             }
         }
         return res.toString();
+    }
+
+    public static class IllegalProductionException extends IllegalArgumentException {
+        public IllegalProductionException(String errorMessage) {
+            super(errorMessage);
+        }
     }
 }

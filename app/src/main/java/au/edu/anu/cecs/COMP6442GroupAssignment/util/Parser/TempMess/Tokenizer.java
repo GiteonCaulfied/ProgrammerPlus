@@ -1,13 +1,10 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.TempMess;
 
 
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.TempMess.Token;
-
 public class Tokenizer {
 
     private String buffer;          // String to be transformed into tokens each time next() is called.
     private Token currentToken;     // The current token. The next token is extracted when next() is called.
-
 
 
     /**
@@ -39,8 +36,7 @@ public class Tokenizer {
 
         if (i == buffer.length() - 1 && currChar != '%') {
             currentToken = new Token(buffer, Token.Type.TEXT);
-        }
-        else {
+        } else {
             String next = buffer.substring(0, i);
             switch (next) {
                 case "FRI_USERNAME":

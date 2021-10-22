@@ -37,6 +37,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
 
 public class ProfileFragment extends Fragment {
+    /**
+     * The profile fragment, showing the user information.
+     */
 
     private TextView name, email, intro;
     private ImageView NowImage;

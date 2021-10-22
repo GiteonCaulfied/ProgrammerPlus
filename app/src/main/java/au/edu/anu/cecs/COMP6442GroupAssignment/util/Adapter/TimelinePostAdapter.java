@@ -31,6 +31,20 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 
 public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /**
+     * This is the adapter for timeline posts
+     * A post item includes:
+     * (1) author name
+     * (2) title
+     * (3) the number of likes
+     * (4) tags
+     *
+     * We planed to show images for each post, but we found that
+     * it's quite slow to load many images at the same time
+     * So we cancel that. Now the image for a post is displayed
+     * in the detailed post page.
+     * Maybe we can try to reduce the image size for timeline creation
+     */
 
     private final StorageReference reference;
     private final String uid;
@@ -88,6 +102,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((TimelinePostViewHolder) holder).getText_tags().setText(parser3.parse());
             }
 
+            // FIXME: Display images, too slow
             String image_url;
             if (posts.get(position).getImageAddress().length() == 0) {
                 image_url = "images/default" + (random.nextInt(8) + 1) + ".jpg";
@@ -121,7 +136,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //            });
             ((TimelinePostViewHolder) holder).getImage().setVisibility(View.GONE);
 
-
+            // Display stars, and a user can directly like the post
             ((TimelinePostViewHolder) holder).getText_star().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -9,6 +9,9 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public abstract class TimelineCreator {
+    /**
+     * The parent class of creators
+     */
     protected final FirebaseFirestore db;
     protected final ArrayList<Post> posts;
     protected final TimelinePostAdapter timelinePostAdapter;

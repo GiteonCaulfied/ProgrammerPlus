@@ -23,11 +23,20 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
 public class TimeModeCreator extends TimelineCreator{
+    /**
+     * The time mode is just to order the pasts according
+     * to their publish time, and display the latest posts.
+     */
+
     public TimeModeCreator(ArrayList<Post> posts, TimelinePostAdapter timelinePostAdapter) {
         super(posts, timelinePostAdapter);
     }
 
+    /**
+     * Load the 10 latest posts to initialize timeline
+     */
     public void getData() {
+        // Read the 10 latest posts as initialization
         Query query = db.collection("user-posts").orderBy("date").limitToLast(10);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -57,6 +66,10 @@ public class TimeModeCreator extends TimelineCreator{
         });
     }
 
+    /**
+     * According to the current number of posts,
+     * load more posts in the time order
+     */
     public void loadMore() {
         posts.add(null);
         timelinePostAdapter.notifyItemInserted(posts.size() - 1);

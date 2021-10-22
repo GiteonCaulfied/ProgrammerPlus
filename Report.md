@@ -1,4 +1,4 @@
-# [Team Name] Report
+# Group Project Report of the Team Only Hard
 
 The following is a report template to help your team successfully provide all the details necessary for your report in a structured and organised manner. Please give a straightforward and concise report that best demonstrates your project. Note that a good report will give a better impression of your project to the reviewers.
 
@@ -32,7 +32,7 @@ The following is a report template to help your team successfully provide all th
 | :--- | :----: | ---: |
 | u7212335 | Qinyu Zhao | Member |
 | [uid] | Xiangyu Hui | Member |
-| [uid] | Xuzeng He | Member |
+| u7189309 | Xuzeng He | Member |
 | [uid] | Yikai Ge | Member |
 
 ## Conflict Resolution Protocol
@@ -51,29 +51,23 @@ The following is a report template to help your team successfully provide all th
 
 *[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
 
-*Here is a pet training application example*
+*Targets Users: No specific target users*
 
-*Molly wants to inquiry about her cat, McPurr's recent troublesome behaviour*
-1. *Molly notices that McPurr has been hostile since...*
-2. *She makes a post about... with the tag...*
-3. *Lachlan, a vet, writes a reply to Molly's post...*
-4. ...
-5. *Molly gives Lachlan's reply a 'tick' response*
+* Users can create an account with a portrait image and intro
+* Users can send a post with image, hashtag and GPS location
+* Users can view personalized timeline of posts with image, hashtag and GPS location and without heat speech
+* Users can search the posts by tags and author with partially valid queries
+* Users can "like"(Give star) to others' posts
+* Users can be notified when the post gets a like
+* Users can send friend requests and become friends with other users
+* Users can message other users
+* Users can block other user from messaging
+* Users can choose to only get message from a friend user
+* Users can set template message
 
-*Here is a map navigation application example*
 
-*Targets Users: Drivers*
 
-* *Users can use it to navigate in order to reach the destinations.*
-* *Users can learn the traffic conditions*
-* ...
 
-*Target Users: Those who want to find some good restaurants*
-
-* *Users can find nearby restaurants and the application can give recommendations*
-* ...
-
-*List all the use cases in text descriptions or create use case diagrams. Please refer to https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/ for use case diagram.*
 
 ## Application UML
 
@@ -129,6 +123,65 @@ Our team use the AVL-Tree in our project.
 **Design Patterns**
 
 *[What design patterns did your team utilise? Where and why?]*
+
+I used the following Design Patterns in my project:
+
+1. State
+
+   * Objective: It is used for changing the main interface based on the session state.
+
+   * Locations: Line 33 - 47 in MainActivity; All classes under the path util.State.
+
+   * Reasons:
+
+     * There could be two different states: session and no-session. The main interface should display different contents.
+
+     * If we used an indicator in the MainActivity, the layout and functions would be combined in a complex way, and the code would be not easy to understand. So we choose the State DP
+
+2. DAO
+
+   * Objective: It is used for storing all kinds of data.
+
+   * Locations: All classes under the path util.DAO.
+
+   * Reasons:
+
+     * We don't want UI classes directly handle data reading and writing.
+
+     * It will be easier to change data store, for example, from storing data locally to using Firebase. We just need to re-write the DAO class, with other classes unchanged.
+
+3. Singleton
+
+   * Objective: It is used when we only need one instance.
+
+   * Locations: All classes under the path util.DAO; the UserManager class; and the FirebaseRef class.
+
+   * Reasons:
+
+     * We only want one instance for each of these classes.
+
+
+4. Strategy
+
+   * Objective: It is used for displaying posts based on different priority.
+
+   * Locations: All classes under the path util.TimelineCreation.
+
+   * Reasons:
+
+     * There will be different algorithms to sort and display posts, for example, according to time order, whether the user will like, and whether the user don't know and so on. A user may choose different modes to show posts for them, and our app can change accordingly.
+
+     * In the future, we may add some other personalization algorithms. At that time, we only need to write a new child class to implement the algorithm. The Strategy DP makes the code easy to extend.
+
+5. Factory
+
+   * Objective: It is used for displaying generating different algorithms to display posts.
+
+   * Locations: The CreatorFactory class under the path util.TimelineCreation.
+
+   * Reasons:
+
+     * There will be different algorithms to sort and display posts. So we create a factory to generate one of them.
 
 **Grammars**
 
@@ -240,6 +293,22 @@ Our search engine also support partially valid and invalid search queries, when 
 
 *[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
+Our group implement the (ii) and (iv) surprise items.
+
+1. Surprise feature (ii)
+      * Description: logging user activity to improve search results and/or timeline creation (simple personalisation);
+
+      * We logged the latest location of each user (GPS information) and the posts a user like. Then we provide three modes to display posts (create timeline) - Time, like and explore
+
+        * The time mode is just to display the 10 latest posts;
+        * The like mode is to recommend posts that the user may like. We create a simple equation to calculate the distance of a user between others (the distance of their locations minus the ratio of posts they both like). And then, our app will recommend posts based on the closest other users.
+        * The explore mode also needs to calculate the user distance. But this mode will recommend posts from the furthest users, in contrast to the like mode.
+
+      * How does our app help the society? I think the most important feature is that we have three modes for a user to choose. 
+        * If he just wants to see the latest posts, then he can choose the time mode;
+        * If I'm on diet, I just want to see healthy lifestyle. I can choose the like mode. Then posts containing only healthy food and exercises will be recommended. *This is a hypothesis, not sure if our algorithm can actually do it.*
+        * In case that our uses will have partial ideas and knowledge, we add the explore mode. In this mode, the users will learn something from the furthest users. That means they will some posts that they may not see in daily life.
+
 **Other**
 
 *[What other design decisions have you made which you feel are relevant? Feel free to separate these into their own subheadings.]*
@@ -278,26 +347,51 @@ Our search engine also support partially valid and invalid search queries, when 
 
 *[What features have you implemented?]*
 
-*Here is an example:*
+### Easy features:
 
-*User Privacy*
+1. User profile activity containing a media file (image, animation (e.g. gif), video). 
 
-1. *Friendship. Users may send friend requests which are then accepted or denied. (easy)*
-2. *Privacy I: A user must approve a friend's request based on privacy settings. (easy)*
-3. *Privacy II: A user can only see a profile that is Public (consider that there are at least two types of profiles: public and private). (easy)*
-4. *Privacy III: A user can only follow someone who shares at least one mutual friend based on privacy settings. (Medium)*
+*A user can upload an image as the portrait.*
 
-*Firebase Integration*
-1. *Use Firebase to implement user Authentication/Authorisation. (easy)*
-2. *Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)*
+2. The ability to micro-interact with 'posts' (e.g. like, report, etc.) [stored in-memory].(easy)
+
+*A user can like a post*
+
+3. Friendship. Users may send friend requests which are then accepted or denied. (easy)
+
+4. Use Firebase to implement user Authentication/Authorisation. (easy)
+
+5. Use GPS information (see the demo presented by our tutors. For example, your app may use the latitude/longitude to show posts). (easy)
+
+### Medium features:
+
+1. Privacy I: provide users with the ability to ‘block’ users. Preventing them from directly messaging them. (medium)
+
+2. Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)
+
+### Hard features:
+
+1. Provide users with the ability to message each other directly. (hard)
+
+2. Privacy II: provide users with the ability to restrict who can message them by some association (e.g. a setting for: can only message me if we are friends). (hard)
+
+3. Template messages or Macros (for peer to peer messaging or template posts (e.g. a quick one-tap post)). (hard)
+
+4. Using Firebase or another remote database to store user posts and having a user’s timeline update as the remote database is updated without restarting the application. (very hard)
+
+5. Deletion method of either a Red-Black Tree and or AVL tree data structure. The
+deletion of nodes must serve a purpose within your application (e.g. deleting posts).
+(hard)
+
+6. Using ML models for efficient user matching (hard)
 
 *List all features you have completed in their separate categories with their difficulty classification. If they are features that are suggested and approved, please state this somewhere as well.*
 
 ## Team Meetings
 
-*Here is an example:*
-
 - *[Team Meeting 1](Meeting1.md)*
-- ...
+- *[Team Meeting 2](Meeting2.md)*
+- *[Team Meeting 3](Meeting3.md)*
+- *[Team Meeting 4](Meeting4.md)*
 
 *Either write your meeting minutes here or link to documents that contain them. There must be at least 3 team meetings.*

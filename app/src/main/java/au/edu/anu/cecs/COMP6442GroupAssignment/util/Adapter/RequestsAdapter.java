@@ -28,6 +28,15 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
+    /**
+     * An adapter to show friend request to the current user on RecyclerView
+     * A request item contains:
+     * (1) that user name
+     * (2) that user email
+     * (3) that user id
+     * (4) decline button
+     * (5) accept button
+     */
 
     private final Context context;
     private final ArrayList<String> req_emails;

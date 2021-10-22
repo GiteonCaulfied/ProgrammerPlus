@@ -29,6 +29,14 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
+    /**
+     * An adapter to show friend list on RecyclerView
+     * A friend item contains:
+     * (1) friend name
+     * (2) friend id
+     * (3) friend portrait
+     */
+
     private final StorageReference reference;
 
     private Context context;
@@ -101,8 +109,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public ImageView imageView;
+        public TextView name; // Friend name
+        public ImageView imageView; // Friend portrait
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -22,22 +22,34 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.TimelinePostAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
 
-public class UncomModeCreator extends TimelineCreator {
+public class ExploreModeCreator extends TimelineCreator {
+    /**
+     * The explore mode also needs to calculate the user distance.
+     * But this mode will recommend posts from the furthest users,
+     * in contrast to the like mode. In case that our uses will
+     * have partial ideas and knowledge, we add the explore mode.
+     * In this mode, the users will learn something from the furthest
+     * users. That means they will some posts that they may not see
+     * in daily life.
+     */
     private FirebaseUser currentUser;
     private Random random;
 
-    public UncomModeCreator(ArrayList<Post> posts, TimelinePostAdapter timelinePostAdapter) {
+    public ExploreModeCreator(ArrayList<Post> posts, TimelinePostAdapter timelinePostAdapter) {
         super(posts, timelinePostAdapter);
         currentUser = FirebaseRef.getInstance().getFirebaseAuth().getCurrentUser();
         random = new Random();
     }
 
+    /**
+     * Get 10 posts that the user may not see in daily life
+     */
     @Override
     public void getData() {
-        getLikePosts(10);
+        getDislikePosts(10);
     }
 
-    private void getLikePosts(int postNum) {
+    private void getDislikePosts(int postNum) {
         db.collection("user-data").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -60,7 +72,7 @@ public class UncomModeCreator extends TimelineCreator {
                     }
                     userLogs.add(me);
                     Collections.sort(userLogs);
-                    Collections.reverse(userLogs);
+                    Collections.reverse(userLogs); // reverse the user list
 
                     Query query = db.collection("user-posts").orderBy("date").limitToLast(postNum * 10);
                     query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -103,11 +115,14 @@ public class UncomModeCreator extends TimelineCreator {
         });
     }
 
+    /**
+     * An easy implementation to load more posts
+     */
     @Override
     public void loadMore() {
         posts.remove(posts.size() - 1);
         int scrollPosition = posts.size();
         timelinePostAdapter.notifyItemRemoved(scrollPosition);
-        getLikePosts(posts.size() + 10);
+        getDislikePosts(posts.size() + 10);
     }
 }
