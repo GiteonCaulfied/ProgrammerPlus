@@ -55,7 +55,7 @@ public class Tokenizer {
         }
         String word = wordBF.toString();
         if (wordBF.length() != 0) {
-                String temp = new String(word);
+
                 String test = word.toLowerCase(Locale.ROOT);
                 test = test.
            replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
