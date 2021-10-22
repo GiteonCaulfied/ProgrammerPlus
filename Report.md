@@ -37,44 +37,80 @@ We learned a 5-step protocol on American Management Association.
 
 Examples of how we solved conflicts
 1. *Background picture design*
-* Conflict: A colorful picture vs white picture
-* Result: Use white
-* Reason: The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+    * Conflict: A colorful picture vs white picture
+    * Result: Use white
+    * Reason: The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
 
-2. *Data Sotrage*
-    Use Firebase~
-    Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+2. *Data Storage*
+    * Conflict: Storing data locally vs using Firebase
+    * Result: Use Firebase
+    * Reason: Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+
 3. *Sliding mode*
-    Use Vertical sliding~
-    The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
+    * Conflict: Vertical vs Horizontal
+    * Result: Use Vertical sliding
+    * Reason: The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
 
 ## Application Description
 
 Programmer+ is a social communication application specifically targeting programmers. Programmer+ provides a social platform to realize the exclusive social communication between programmers,
 which can form their own social circle and make the social circle more specialized. Programmer+ has the function of posting to realize the exchange of ideas and daily life between programmers. The private
-message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
-to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
+message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities to achieve better communication between users. The long-term goal is to build this application into an exclusive research social platform for the computer area.
 
 ![AppDiagram](./assets/Description.jpg)
 
 **Application Use Cases and or Examples**
 
+Main Interface:
+
+<img src="./assets/main_interface.png" alt="main_interface" style="zoom: 33%;" />
+
 Targets Users: Programmers
 
 * Guest:
   * create an account with a portrait image and intro
+
+    <img src="./assets/register.png" alt="register" style="zoom:33%;" />
+  
   * login using a correct email and password
+  
+    <img src="./assets/login.png" alt="register" style="zoom:33%;" />
 * Users
   * send a post with image, hashtag and GPS location
+  
+    <img src="./assets/make_a_new_post.png" alt="register" style="zoom:33%;" />
+  
   * view personalized timeline of posts with image, hashtag and GPS location and without heat speech
+  
+    <img src="./assets/posts_view.png" alt="register" style="zoom:33%;" />
+  
   * search the posts by tags, title, post id and author with partially valid queries
+  
+    <img src="./assets/post_search.png" alt="register" style="zoom:33%;" />
+  
   * "like"(Give star) to others' posts
+  
+    <img src="./assets/like_a_post.png" alt="register" style="zoom:33%;" />
+  
   * be notified when the post gets a like
+  
   * send friend requests and become friends with other users
+  
+    <img src="./assets/friend_list.png" alt="register" style="zoom:33%;" />
+  
   * message other users
+  
+    <img src="./assets/messages.png" alt="register" style="zoom:33%;" />
+  
   * block other user from messaging
+  
   * choose to only get message from a friend user
+  
+    <img src="./assets/edit_profile.png" alt="register" style="zoom:33%;" />
+  
   * set template message
+  
+    <img src="./assets/temp_mess.png" alt="register" style="zoom:33%;" />
 
 
 ## Application UML
@@ -317,10 +353,10 @@ Our group implement the (ii) and (iii) surprise items.
 The number of data that we generated is much more than the project needs.
 * Data generation
     * We uses twint on github (https://github.com/twintproject/twint) to get more than 10,000 posts from Twitter.
-    * Then, we generated 500 users on Firebase
-    * Posts were cleaned and added tags into. 10,000 posts were uploaded to Firebase
-    * 10,000 pair of friends were generated
-    * 10,000 stars were randomly distrbuted to those posts
+    * Then, we generated **500** users on Firebase
+    * Posts were cleaned and added tags into. **10,000** posts were uploaded to Firebase
+    * **10,000** pair of friends were generated
+    * **10,000** stars were randomly distrbuted to those posts
 
 
 
@@ -421,46 +457,49 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
 ## Implemented Features
 
+Improved Search
 
-### Easy features:
+1. Search functionality can handle partially valid and invalid search queries. (medium)
 
-1. User profile activity containing a media file (image, animation (e.g. gif), video). 
+Greater Data Usage, Handling and Sophistication
 
-*A user can upload an image as the portrait.*
+2. User profile activity containing a media file (image, animation (e.g. gif), video). (easy)
+3. Use GPS information (see the demo presented by our tutors. For example, your app may use the latitude/longitude to show posts). (easy)
+4. Deletion method of either a Red-Black Tree and or AVL tree data structure. The deletion of nodes must serve a purpose within your application (e.g. deleting posts). (hard)
 
-2. The ability to micro-interact with 'posts' (e.g. like, report, etc.) [stored in-memory].(easy)
+User Privacy
 
-*A user can like a post*
+1. Friendship. Users may send friend requests which are then accepted or denied. (easy)
 
-3. Friendship. Users may send friend requests which are then accepted or denied. (easy)
+User Interactivity
 
-4. Use Firebase to implement user Authentication/Authorisation. (easy)
+1. The ability to micro-interact with 'posts' (e.g. like, report, etc.) [stored in-memory]. (easy)
 
-5. Use GPS information (see the demo presented by our tutors. For example, your app may use the latitude/longitude to show posts). (easy)
-
-### Medium features:
-
-1. Privacy I: provide users with the ability to ‘block’ users. Preventing them from directly messaging them. (medium)
-
-2. Use Firebase to persist all data used in your app (this item replace the requirement to retrieve data from a local file) (medium)
-
-3. Search functionality can handle partially valid and invalid search queries. (medium)
-
-### Hard features:
+Peer to Peer Messaging
 
 1. Provide users with the ability to message each other directly. (hard)
 
-2. Privacy II: provide users with the ability to restrict who can message them by some association (e.g. a setting for: can only message me if we are friends). (hard)
+2. Privacy I: provide users with the ability to ‘block’ users. Preventing them from directly messaging them. (medium)
 
-3. Template messages or Macros (for peer to peer messaging or template posts (e.g. a quick one-tap post)). (hard)
+3. Privacy II: provide users with the ability to restrict who can message them by some association (e.g. a setting for: can only message me if we are friends). (hard)
 
-4. Using Firebase or another remote database to store user posts and having a user’s timeline update as the remote database is updated without restarting the application. (very hard)
+4. Template messages or Macros (for peer to peer messaging or template posts (e.g. a quick one-tap post)). For example, "Hi %USERNAME%, I am not available now. Call to %PHONE_NUMBER% if it is urgent. Cheers, %MY_USERNAME%". The use of tokenizer and parser is mandatory. (hard)
 
-5. Deletion method of either a Red-Black Tree and or AVL tree data structure. The
-deletion of nodes must serve a purpose within your application (e.g. deleting posts).
-(hard)
+Firebase Integration
 
-6. Using ML models for efficient user matching (hard)
+1. Use Firebase to implement user Authentication/Authorisation. (easy)
+
+2. Use Firebase to persist all data used in your app (this item replace the requirementto retrieve data from a local file) (medium)
+
+3. Using Firebase or another remote database to store user posts and having a user’s timeline update as the remote database is updated without restarting the application. E.g. User A makes a post, user B on a separate instance of the application sees user A’s post appear on their timeline without restarting their application. (very hard)
+
+Wattle Feature Forum
+
+1. Use Machine Learning to recommend friends to a user (hard)
+
+
+
+**In total:** 5 easy, 3 medium, and 6 hard features 
 
 
 ## Team Meetings
@@ -469,7 +508,6 @@ deletion of nodes must serve a purpose within your application (e.g. deleting po
 - *[Team Meeting 2](Meeting2.md)*
 - *[Team Meeting 3](Meeting3.md)*
 - *[Team Meeting 4](Meeting4.md)*
-
 
 
 
