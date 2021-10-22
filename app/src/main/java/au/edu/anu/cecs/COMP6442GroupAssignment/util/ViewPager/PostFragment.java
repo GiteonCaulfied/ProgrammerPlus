@@ -80,6 +80,7 @@ public class PostFragment extends Fragment {
                 }
             }
         });
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         timelinePostView.setLayoutManager(layoutManager);
