@@ -58,7 +58,7 @@ public class Tokenizer {
 
                 String test = word.toLowerCase(Locale.ROOT);
                 test = test.
-           replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
+           replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~]", "");
 
             if (swearWords.contains(test)) {
                 currentToken = new Token(word, Token.Type.Illegal);
