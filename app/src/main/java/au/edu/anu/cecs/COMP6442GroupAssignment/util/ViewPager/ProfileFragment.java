@@ -95,12 +95,13 @@ public class ProfileFragment extends Fragment {
             storageReference.child("portrait/" + currentUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-
-                    Glide.with(getContext())
-                            .load(uri.toString())
-                            .apply(options)
-                            .into(NowImage);
-                    userProfileDao.updatePortraitUploadedStatus();
+                    try {
+                        Glide.with(getContext())
+                                .load(uri.toString())
+                                .apply(options)
+                                .into(NowImage);
+                        userProfileDao.updatePortraitUploadedStatus();
+                    } catch (Exception ignore) {}
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

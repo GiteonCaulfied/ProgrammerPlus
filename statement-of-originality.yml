@@ -32,6 +32,9 @@ code:
   - comment: We learned how to do endless scrolling for the RecyclerView
     url: https://www.journaldev.com/24041/android-recyclerview-load-more-endless-scrolling
     licence: fair use
+  - comment: We learned how to build a AVL-Tree
+    url: https://www.baeldung.com/java-avl-trees
+    licence: fair use
   - comment: We learned how to upload image to Firebase Storage using Glide
     url: https://www.geeksforgeeks.org/android-how-to-upload-an-image-on-firebase-storage/
     licence: fair use

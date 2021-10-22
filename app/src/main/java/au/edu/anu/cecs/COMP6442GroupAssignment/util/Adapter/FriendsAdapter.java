@@ -76,11 +76,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             reference.child("portrait/"+friend.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
+                    try {
+                        Glide.with(context)
+                                .load(uri.toString())
+                                .apply(options)
+                                .into(holder.imageView);
+                    } catch (Exception ignore) {
 
-                    Glide.with(context)
-                            .load(uri.toString())
-                            .apply(options)
-                            .into(holder.imageView);
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

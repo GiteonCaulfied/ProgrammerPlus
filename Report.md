@@ -234,11 +234,11 @@ For example, in our search engine we can do the following query:
 
  This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
 
-![App snapshot1](assets/search_qinyu_zhao.png)
+<img src="assets/search_qinyu_zhao.png" width="200" />
 
 Moreover,our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we our query is "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
 
-![App snapshot2](assets/search_partially_valid.png)
+<img src="assets/search_partially_valid.png" width="200" />
 
 The Grammar Rule
 
@@ -447,13 +447,13 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Test whether the UI is displayed correctly when a guest is registering.
 
-  ![register](assets/register_act_test.png)
+  ![register_act](assets/register_act_test.png)
 
 - UI Test 3. Session test
 
   Test whether the UI is displayed correctly when there is a session.
 
-  ![register](assets/register_act_test.png)
+  ![session_act](assets/session_act_test.png)
 
 ## Implemented Features
 

@@ -42,12 +42,12 @@ public class NoSessionActivityTest {
     }
 
     @Test
-    public void testIsActivityInView() {
+    public void test1_IsActivityInView() {
         onView(withId(R.id.no_session)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testVisibilityOfElements() {
+    public void test2_VisibilityOfElements() {
         int[] ids = new int[]{R.id.imageView2, R.id.textView, R.id.main_sign_in, R.id.main_register,
                 R.id.textView4};
 
@@ -57,7 +57,7 @@ public class NoSessionActivityTest {
     }
 
     @Test
-    public void testContextOfElements() {
+    public void test3_ContextOfElements() {
         onView(withId(R.id.textView)).check(matches(withText(R.string.welcome_to)));
         onView(withId(R.id.main_sign_in)).check(matches(withText(R.string.sign_in)));
         onView(withId(R.id.main_register)).check(matches(withText(R.string.register)));
@@ -65,39 +65,14 @@ public class NoSessionActivityTest {
     }
 
     @Test
-    public void testWrongPasswordSignIn() {
-        onView(withId(R.id.main_sign_in)).perform(click());
-        onView(withId(R.id.activity_sign_in)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.email_signin)).check(matches(withHint(R.string.email)));
-        onView(withId(R.id.password_signin)).check(matches(withHint(R.string.password)));
-        onView(withId(R.id.signin)).check(matches(withText(R.string.sign_in)));
-
-        onView(withId(R.id.email_signin)).perform(typeText("qinyu.zhao@anu.edu.au"));
-        onView(withId(R.id.password_signin)).perform(typeText("123555")).perform(closeSoftKeyboard());
-        onView(withId(R.id.signin)).perform(click());
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser == null;
-    }
-
-    @Test
-    public void testZSignIn() {
-        onView(withId(R.id.main_sign_in)).perform(click());
-        onView(withId(R.id.activity_sign_in)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.email_signin)).check(matches(withHint(R.string.email)));
-        onView(withId(R.id.password_signin)).check(matches(withHint(R.string.password)));
-        onView(withId(R.id.signin)).check(matches(withText(R.string.sign_in)));
-
-        onView(withId(R.id.email_signin)).perform(typeText("qinyu.zhao@anu.edu.au"));
-        onView(withId(R.id.password_signin)).perform(typeText("123456")).perform(closeSoftKeyboard());
-        onView(withId(R.id.signin)).perform(click());
-    }
-
-    @Test
-    public void testNavRegister() {
+    public void test4_NavRegister() {
         onView(withId(R.id.main_register)).perform(click());
         onView(withId(R.id.register)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test5_NavSignIn() {
+        onView(withId(R.id.main_sign_in)).perform(click());
+        onView(withId(R.id.activity_sign_in)).check(matches(isDisplayed()));
     }
 }
