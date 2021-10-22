@@ -22,10 +22,6 @@ public class Token {
 
     public enum Type {Title, Author, Tag, Id, LBRA, RBRA, AND, OR, Illegal}
 
-    public static class IllegalTokenException extends IllegalArgumentException {
-        public IllegalTokenException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
+
 
 }

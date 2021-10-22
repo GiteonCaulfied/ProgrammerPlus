@@ -35,9 +35,13 @@ public class JsonUtils {
     private DatabaseReference myRef;
 
 
-    private JsonUtils(){
-        FirebaseRef firebaseRef = FirebaseRef.getInstance();
-        myRef = firebaseRef.getDatabaseRef();
+    private JsonUtils(boolean online){
+
+        if (online){
+            FirebaseRef firebaseRef = FirebaseRef.getInstance();
+            myRef = firebaseRef.getDatabaseRef();
+        }
+
 
     }
 
@@ -50,11 +54,19 @@ public class JsonUtils {
 
         if (jsonUtils == null){
 
-            jsonUtils = new JsonUtils();
+            jsonUtils = new JsonUtils(true);
         }
         return jsonUtils;
     }
 
+    public static JsonUtils getInstanceOffLine(){
+
+        if (jsonUtils == null){
+
+            jsonUtils = new JsonUtils(false);
+        }
+        return jsonUtils;
+    }
 
     /**
      * read the json file
@@ -99,11 +111,9 @@ public class JsonUtils {
     public AVLTree<String> getSwearWordsTree (Context context){
 
             Gson gson = new Gson();
-//            JsonReader jsonReader = null;
             AVLTree<String> output = null;
             String json = null;
-//        final Type CUS_LIST_TYPE = new TypeToken<AVLTree<String>>() {}.getType();
-            //or TypeToken.getParameterized(ArrayList.class, PersonJSON.class).getType();
+
 
             try{
                 json = read(context.getResources().getAssets().open("swear_words.json"));
@@ -112,9 +122,6 @@ public class JsonUtils {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-//        Config c = gson.fromJson(jsonReader, AVLTree.class);
-//        AVLTree<String> w = gson.fromJson(jsonReader, new TypeToken<AVLTree<String>>(){}.getType());
-//        AVLTree<String> w = (AVLTree<String>) c.getWords();
 
             return output;
 
@@ -132,43 +139,7 @@ public class JsonUtils {
         }
     }
 
-    public HashMap<String, Profile> getProfiles (Context context){
-        HashMap<String,  Profile> profiles = null;
-        InputStream is = null;
-        try {
-            is = context.getResources().getAssets().open("profile.json");
-            String json = read(is); // invoke the read method to transfer the json file to String
 
-            Gson gson = new Gson();
-//
-//            Type MapType = new TypeToken<HashMap<String,Profile>>(){}.getType();
-//
-//
-//            profiles=gson.fromJson(json,MapType);
-            Config c = gson.fromJson(json, Config.class);
-
-            profiles = c.getProfiles();
-
-//            Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
-//                    .create();
-//
-//            profiles = gson.fromJson(
-//                    json,
-//                    new TypeToken<HashMap<String, Profile>>() {
-//                    }.getType());
-
-
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            try {
-                if (is != null) is.close();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-        return profiles ;
-    }
 
     /**
      * Read the Local files and upload data instances to the Firebase.

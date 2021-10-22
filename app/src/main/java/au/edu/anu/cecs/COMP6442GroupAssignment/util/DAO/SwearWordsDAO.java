@@ -2,7 +2,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.MyApplication;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
 
 public class SwearWordsDAO {
 
@@ -10,7 +10,11 @@ public class SwearWordsDAO {
     private static SwearWordsDAO instance;
 
     private SwearWordsDAO() {
-        this.swearWords = JsonUtils.getInstance().getSwearWordsTree(MyApplication.context);
+        this.swearWords = JsonUtils.getInstanceOffLine().getSwearWordsTree(MyApplication.context);
+    }
+
+    private SwearWordsDAO(AVLTree<String> swearWords){
+        this.swearWords=swearWords;
     }
 
     /**
@@ -19,6 +23,13 @@ public class SwearWordsDAO {
     public static SwearWordsDAO getInstance() {
         if (instance == null) {
             instance = new SwearWordsDAO();
+        }
+        return instance;
+    }
+
+    public static SwearWordsDAO getInstanceOffline(AVLTree<String> swearwords){
+        if (instance == null) {
+            instance = new SwearWordsDAO(swearwords);
         }
         return instance;
     }

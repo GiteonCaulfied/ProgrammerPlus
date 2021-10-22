@@ -38,15 +38,31 @@ The following is a report template to help your team successfully provide all th
 ## Conflict Resolution Protocol
 
 *[Write a well defined protocol your team can use to handle conflicts. That is, if your group has problems, what is the procedure for reaching consensus or solving a problem? (If you choose to make this an external document, link to it here)]*
+
+We learned a 5-step protocol on American Management Association.
+*https://www.amanet.org/articles/the-five-steps-to-conflict-resolution/*
+* Step 1: Define the source of the conflict.
+
+* Step 2: Look beyond the incident.
+
+* Step 3: Request solutions.
+
+* Step 4: Identify solutions both disputants can support.
+
+* Step 5: Agreement.
+
+Examples of how we solved conflicts
 1. *Background picture design*
-  Use white~
-  The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+* Conflict: A colorful picture vs white picture
+* Result: Use white
+* Reason: The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+
 2. *Data Sotrage*
-  Use Firebase~
-  Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+    Use Firebase~
+    Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
 3. *Sliding mode*
-  Use Vertical sliding~
-  The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
+    Use Vertical sliding~
+    The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
 
 ## Application Description
 
@@ -63,25 +79,25 @@ The following is a report template to help your team successfully provide all th
 
 *Targets Users: Programmers
 
-* Users can create an account with a portrait image and intro
-* Users can send a post with image, hashtag and GPS location
-* Users can view personalized timeline of posts with image, hashtag and GPS location and without heat speech
-* Users can search the posts by tags, title, post id and author with partially valid queries
-* Users can "like"(Give star) to others' posts
-* Users can be notified when the post gets a like
-* Users can send friend requests and become friends with other users
-* Users can message other users
-* Users can block other user from messaging
-* Users can choose to only get message from a friend user
-* Users can set template message
-
-
-
+* Guest:
+  * create an account with a portrait image and intro
+  * login using a correct email and password
+* Users
+  * send a post with image, hashtag and GPS location
+  * view personalized timeline of posts with image, hashtag and GPS location and without heat speech
+  * search the posts by tags, title, post id and author with partially valid queries
+  * "like"(Give star) to others' posts
+  * be notified when the post gets a like
+  * send friend requests and become friends with other users
+  * message other users
+  * block other user from messaging
+  * choose to only get message from a friend user
+  * set template message
 
 
 ## Application UML
 
-![ClassDiagramExample](./assets/UMLdiagram.jpg)
+![ClassDiagramExample](./images/ClassDiagramExample.png)
 *[Replace the above with a class diagram. You can look at how we have linked an image here as an example of how you can do it too.]*
 
 ## Application Design and Decisions
@@ -92,40 +108,59 @@ The following is a report template to help your team successfully provide all th
 
 1. *LinkedList*
 * *Objective: It is used for storing xxxx for xxx feature.*
-   
+  
 * *Locations: line xxx in XXX.java, ..., etc.*
-   
+  
 * *Reasons:*
-   
+  
   * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-   
+  
   * *We don't need to access the item by index for this feature*
-   
+  
 2. ...
 
 3. ...
 
 **Data Structures**
 
-Our team use the AVL-Tree in our project.
+Our team use the following data structures in our project.
 
-- Objective: 
+1. AVL-Tree
+   * Objective:
+     * It is used for storing the swearwords for  surprise feature(iii) removing/hiding hate speech in posts;
 
-  - It is used for storing the swearwords for  surprise feature(iii) removing/hiding hate speech in posts;
+     * We will search the stored swearwords to find out whether the target word is a swearword.
 
-  - We will search the stored swearwords to find out whether the target word is a swearword.
+   * Locations:
 
-- Locations: 
+     * Declared in *DataStructure\AVLTree.java* and used in *SwearWordsDAO.java* line *9*.
+     * Used for removing hate speech in line *52* in *HateSpeechParser\Tokenizer.java*
+     * Persistent data in *app\src\main\assets\swear_words.json*
 
-  - Declared in *DataStructure\AVLTree.java* and used in *SwearWordsDAO.java* line *9*. 
-  - Used for removing hate speech in line *52* in *HateSpeechParser\Tokenizer.java*
-  - Persistent data in *app\src\main\assets\swear_words.json*
+   * Reasons:
 
-- Reasons:
+     * Tree is easy to use *Gson* to read and store as persistent data(.json).
+     * Compared with binary search tree AVL-Tree is close to balance tree, for look up with a time complexity *O(log(n))*
+     * Compared with Red-Black Tree, the height of an AVL tree is bounded by roughly 1.44 * log2(n), while the height of  a red-black tree may be up to 2 * log2(n). Thus, lookup is slightly faster on the  average in AVL.
+     * The distribution of swear-words is very biased (for example, many f-words but few z-words). It's not efficient to use a Hash-related structure.
 
-  - Tree is easy to use *Gson* to read and store as persistent data(.json).
-  - Compared with binary search tree AVL-Tree is close to balance tree, for look up with a time complexity *O(log(n))*
-  - Compared with Red-Black Tree, the height of an AVL tree is bounded by roughly 1.44 * log2(n), while the height of  a red-black tree may be up to 2 * log2(n). Thus, lookup is slightly faster on the  average in AVL.
+2. HashMap
+   * Objective: We store different key-value relations of a user, including id -> email, email -> id, and id -> username.
+
+   * Locations: three instances of HashMaps are in util.UserManager
+
+   * Reasons:
+     * We usually want to find a user email or name based on his ID. It's not efficient to always search on Firebase, although that's possible.
+     * HashMap gives a very quick method O(1) to find value given a key.
+
+3. ArrayList
+   * Objective: We store the friend list, the chat list, the message list in ArrayLists.
+
+   * Locations: ChatsAdapter, FriendAdapter, and MessageAdapter under util.Adapter
+
+   * Reasons:
+     * If a user click one of his friend, then the chat interface will pop out. In this case, we need to directly find the friend according to his location in the name list. ArrayList is very useful because it supports O(1) random access, faster than LinkList.
+
 
 *[What data structures did your team utilise? Where and why?]*
 
@@ -206,11 +241,11 @@ For example, in our search engine we can do the following query:
 
  This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
 
-![App snapshot1](image-20211021211723190.png)
+![App snapshot1](assets\image-20211021211723190.png)
 
 Moreover,our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we our query is "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
 
-![App snapshot2](image-20211021215235048.png)
+![App snapshot2](assets\image-20211021215235048.png)
 
 The Grammar Rule
 
@@ -285,13 +320,13 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
     - Title=A|Tag=B&Author=C&Id=123
 
-      ![derivation chart](image-20211022010726837.png)
+      ![derivation chart](assets\image-20211022010726837.png)
 
   - Derivation for expression executing 
 
     - Title=A|Tag=B&Author=C&Id=123
 
-    ![logic flow chart](image-20211022011019037.png)
+    ![logic flow chart](assets\image-20211022011019037.png)
 
 ~~*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*~~
 
@@ -299,7 +334,7 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
 *[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
-Our group implement the (ii) and (iv) surprise items.
+Our group implement the (ii) and (iii) surprise items.
 
 1. Surprise feature (ii)
       * Description: logging user activity to improve search results and/or timeline creation (simple personalisation);
@@ -315,7 +350,27 @@ Our group implement the (ii) and (iv) surprise items.
         * If I'm on diet, I just want to see healthy lifestyle. I can choose the like mode. Then posts containing only healthy food and exercises will be recommended. *This is a hypothesis, not sure if our algorithm can actually do it.*
         * In case that our uses will have partial ideas and knowledge, we add the explore mode. In this mode, the users will learn something from the furthest users. That means they will some posts that they may not see in daily life.
 
+2. Surprise feature (iii)
+    * Description: removing/hiding hate speech in posts;
+
+    * Method
+
+        * We use tokenizer and parser to change content of a post. Swear words are hided like "****"
+        * Swear words are stored in an AVL-tree for quick search.
+        * A user can add or delete swear words by himself.
+
+    * How does our app help the society?
+        * Our application can hide swear words, maintaining a good community atmosphere.
+
 **Other**
+
+The number of data that we generated is much more than the project needs.
+* Data generation
+    * We uses twint on github (https://github.com/twintproject/twint) to get more than 10,000 posts from Twitter.
+    * Then, we generated 500 users on Firebase
+    * Posts were cleaned and added tags into. 10,000 posts were uploaded to Firebase
+    * 10,000 pair of friends were generated
+    * 10,000 stars were randomly distrbuted to those posts
 
 *[What other design decisions have you made which you feel are relevant? Feel free to separate these into their own subheadings.]*
 
@@ -342,6 +397,55 @@ Our group implement the (ii) and (iv) surprise items.
 *List all the known errors and bugs here. If we find bugs/errors that your team do not know of, it shows that your testing is not through.*
 
 ## Testing Summary
+
+Our Test test all utility classes that are not interacted with UI(activities) and Firebase. We didn't include Firebase tests is because when we interact with Firebase it will create another thread to communicate with the Online Server, and JUnit is not capable of doing concurrency programming test. When we test the classes which used Firebase JUnit will throw an exception.
+
+- Test 1. AVL-Tree Test
+
+  In this test we have 3 sub-tests
+
+  - Search Test: We tested whether the search function can return the correct result, when we search an exist element or non exist element.
+
+  - Insert Test: After insertion, whether the AVL-Tree contains the added element. In addition the AVL-Tree should keep balance after insertion.
+  - Remove Test: After deletion, whether we can still find the removed element in our Tree, and the AVL-Tree should keep balance after deletion.
+
+  Test coverage:
+
+  Our AVL-Tree Test covered 100% classes in Data Structure and 84% methods and 70% lines.
+
+  ![image-20211022132452422](assets\image-20211022132452422.png)
+
+- Test 2. Heat Speech Remove Test
+
+  This test has 3 sub-tests
+
+  - No Mask Test:  In this Test, we Tested whether the parser will mis-mask the sentence without heat speech.
+  - Mask Test: In this Test, we Tested whether the parser can properly remove the swearword in the given sentence.
+  - Long Sentence Test: Given a long sentence, whether the parser could remove the swear word precisely.
+
+  Test Coverage:
+
+  Our Heat Speech Remove Test covered 100% classes in HateSpeechParser and 90% methods and 90% lines.
+
+  ![image-20211022133435491](assets\image-20211022133435491.png)
+
+- Test 3. Search Parser Test
+
+  Our Search Parser' job is parse the request and processing the posts from Firebase; Therefore, we can only test the functionality of the evaluate method of Exp nodes.
+
+  There are 3 sub-tests.
+
+  - AndExp Test: Test whether AndExp can give the intersection of two lists.
+  - OrExp Test: Test whether OrExp can give the union of two lists.
+  - NonExp Test:  Test AndExp or OrExp which contains NonExp, whether it can give correct non empty list.
+
+  Test Coverage:
+
+  The Search Parser Test covered 100% Exp classes and 100% methods and 84% lines.
+
+  ![image-20211022135112540](assets\image-20211022135112540.png)
+
+
 
 *[What features have you tested? What is your testing coverage?]*
 
