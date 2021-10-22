@@ -7,20 +7,25 @@ declaration: >-
   own work, with the following exceptions:
 
 
-# add as many "name+comment" entries as necessary
-# (or remove it altogether if you haven't collaborated with anyone outside your group)
-collaboration:
-  - name:
-    comment: >-
+## add as many "name+comment" entries as necessary
+## (or remove it altogether if you haven't collaborated with anyone outside your group)
+#collaboration:
+#  - name:
+#    comment: >-
 
 
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
 code:
-  - comment:
-    url:
-    licence:
-
+  - comment: We learned how to use Firebase from the official document
+    url: https://firebase.google.com/docs?authuser=0
+    licence: https://firebase.google.com/terms/?authuser=0
+  - comment: We learned how to develop a chat app online
+      url: https://www.bilibili.com/s/video/BV12q4y177FW
+      licence: CC BY
+  - comment: We learned how to use GPS information and how to test a UI class on Android Developer
+      url: https://www.bilibili.com/s/video/BV12q4y177FW
+      licence: CC BY
 
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
@@ -36,11 +41,11 @@ assets:
 # for each member, write your name and uid here
 # remove any empty "name+uid" entries
 members:
-  - name:
-    uid: 
-  - name:
-    uid:
-  - name:
-    uid:
-  - name:
-    uid:
+  - name: Qinyu Zhao
+    uid: u7212335
+  - name: Xiangyu Hui
+    uid: u7238607
+  - name: Xuzeng He
+    uid: u7189309
+  - name: Yikai Ge
+    uid: u7166251
