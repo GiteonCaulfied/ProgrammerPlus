@@ -22,11 +22,13 @@ public class UserManager {
     private final HashMap<String, String> id_email_map;
     private final HashMap<String, String> email_id_map;
     private final HashMap<String, String> id_name_map;
+    private final HashMap<String, Boolean> id_por_map;
 
     public UserManager() {
         id_email_map = new HashMap<>();
         id_name_map = new HashMap<>();
         email_id_map = new HashMap<>();
+        id_por_map = new HashMap<>();
     }
 
     /**
@@ -50,6 +52,7 @@ public class UserManager {
         else
             id_name_map.put(p.getUid(), p.getName());
         email_id_map.put(p.getEmail(), p.getUid());
+        id_por_map.put(p.getUid(), p.isPortraitUploaded());
     }
 
     public String getEmailFromID(String id) {
@@ -62,6 +65,10 @@ public class UserManager {
 
     public String getIDFromEmail(String email) {
         return email_id_map.get(email);
+    }
+
+    public boolean getPorFromID(String id) {
+        return id_por_map.get(id);
     }
 
     public boolean emailIsValid(String email) {

@@ -35,6 +35,7 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserProfileDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.DataGenerator;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataGenerator.JsonUtils;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.Profile;
 
 public class ProfileFragment extends Fragment {
     /**
@@ -83,28 +84,34 @@ public class ProfileFragment extends Fragment {
         userProfileDao.getDataInProfileFrag();
 
         //Display Portrait Image
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.face_id_1)
-                .error(R.drawable.face_id_1)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false);
-        storageReference.child("portrait/"+currentUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        Profile me = UserProfileDAO.getInstance().getUserprofile();
+        if (me.isPortraitUploaded()) {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.face_id_1)
+                    .error(R.drawable.face_id_1)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false);
+            storageReference.child("portrait/" + currentUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                Glide.with(getContext())
-                        .load(uri.toString())
-                        .apply(options)
-                        .into(NowImage);
-                userProfileDao.updatePortraitUploadedStatus();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+                    Glide.with(getContext())
+                            .load(uri.toString())
+                            .apply(options)
+                            .into(NowImage);
+                    userProfileDao.updatePortraitUploadedStatus();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        else {
+            NowImage.setImageResource(R.drawable.face_id_1);
+        }
 
         // Log out
         logOut.setOnClickListener(new View.OnClickListener() {
