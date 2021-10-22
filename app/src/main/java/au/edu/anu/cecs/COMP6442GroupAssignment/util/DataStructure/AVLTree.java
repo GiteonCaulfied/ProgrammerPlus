@@ -69,13 +69,7 @@ public class AVLTree<T extends Comparable<T>> {
         return 0;
     }
 
-    /**
-     * return the height of the whole tree
-     * @return
-     */
-    public int height() {
-        return getHeight(root);
-    }
+
 
 
     private int max(int a, int b) {

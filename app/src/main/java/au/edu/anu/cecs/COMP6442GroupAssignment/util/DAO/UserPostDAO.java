@@ -24,7 +24,7 @@ import java.util.Map;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.DetailedPostActivity;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.MyApplication;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Exp;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search.Tokenizer;

@@ -2,6 +2,8 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.Search;
 
 import android.widget.Toast;
 
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.MyApplication;
+
 public class Parser {
     // The tokenizer (class field) this parser will use.
     Tokenizer tokenizer;

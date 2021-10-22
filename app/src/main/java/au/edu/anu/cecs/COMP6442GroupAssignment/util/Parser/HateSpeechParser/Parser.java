@@ -3,11 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser;
 
 
 public class Parser {
-    public static class IllegalProductionException extends IllegalArgumentException {
-        public IllegalProductionException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
+
 
     // The tokenizer (class field) this parser will use.
     Tokenizer tokenizer;

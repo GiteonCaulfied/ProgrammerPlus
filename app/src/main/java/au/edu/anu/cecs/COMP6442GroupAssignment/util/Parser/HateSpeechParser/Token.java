@@ -3,11 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser;
 public class Token {
 
     public enum Type {Legal,Illegal,Space}
-    public static class IllegalTokenException extends IllegalArgumentException {
-        public IllegalTokenException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
+
 
     // Fields of the class Token.
     private final String token; // Token representation in String form.

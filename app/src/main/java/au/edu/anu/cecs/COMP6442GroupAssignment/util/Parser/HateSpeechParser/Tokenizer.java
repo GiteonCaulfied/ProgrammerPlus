@@ -3,6 +3,7 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser;
 import java.util.Locale;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.SwearWordsDAO;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure.AVLTree;
 
 public class Tokenizer {
 
@@ -19,6 +20,12 @@ public class Tokenizer {
         swearWords = (SwearWordsDAO) SwearWordsDAO.getInstance();
         buffer = text;          // save input text (string)
         next();                 // extracts the first token.
+    }
+
+    public Tokenizer(AVLTree<String> swearWordsTree, String text){
+        swearWords= SwearWordsDAO.getInstanceOffline(swearWordsTree);
+        buffer = text;          // save input text (string)
+        next();
     }
 
     /**

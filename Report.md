@@ -39,14 +39,14 @@ The following is a report template to help your team successfully provide all th
 
 *[Write a well defined protocol your team can use to handle conflicts. That is, if your group has problems, what is the procedure for reaching consensus or solving a problem? (If you choose to make this an external document, link to it here)]*
 1. *Background picture design*
-  Use white~
-  The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
+    Use white~
+    The background picture changing in different versions and after discussion it would be better to stay in white and use the post pictures for a decoration and beautification.
 2. *Data Sotrage*
-  Use Firebase~
-  Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
+    Use Firebase~
+    Storing files locally will become very cumbersome and complex, which will affect the loading speed of applications.
 3. *Sliding mode*
-  Use Vertical sliding~
-  The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
+    Use Vertical sliding~
+    The horizontal sliding operation interface will make many users unaccustomed and inconvenient for the display of posts with long content.
 
 ## Application Description
 
@@ -90,15 +90,15 @@ The following is a report template to help your team successfully provide all th
 
 1. *LinkedList*
 * *Objective: It is used for storing xxxx for xxx feature.*
-   
+  
 * *Locations: line xxx in XXX.java, ..., etc.*
-   
+  
 * *Reasons:*
-   
+  
   * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-   
+  
   * *We don't need to access the item by index for this feature*
-   
+  
 2. ...
 
 3. ...
@@ -340,6 +340,55 @@ Our group implement the (ii) and (iv) surprise items.
 *List all the known errors and bugs here. If we find bugs/errors that your team do not know of, it shows that your testing is not through.*
 
 ## Testing Summary
+
+Our Test test all utility classes that are not interacted with UI(activities) and Firebase. We didn't include Firebase tests is because when we interact with Firebase it will create another thread to communicate with the Online Server, and JUnit is not capable of doing concurrency programming test. When we test the classes which used Firebase JUnit will throw an exception.
+
+- Test 1. AVL-Tree Test
+
+  In this test we have 3 sub-tests
+
+  - Search Test: We tested whether the search function can return the correct result, when we search an exist element or non exist element. 
+
+  - Insert Test: After insertion, whether the AVL-Tree contains the added element. In addition the AVL-Tree should keep balance after insertion.
+  - Remove Test: After deletion, whether we can still find the removed element in our Tree, and the AVL-Tree should keep balance after deletion.
+
+  Test coverage:
+
+  Our AVL-Tree Test covered 100% classes in Data Structure and 84% methods and 70% lines.
+
+  ![image-20211022132452422](C:\Users\xiang\AppData\Roaming\Typora\typora-user-images\image-20211022132452422.png)
+
+- Test 2. Heat Speech Remove Test
+
+  This test has 3 sub-tests
+
+  - No Mask Test:  In this Test, we Tested whether the parser will mis-mask the sentence without heat speech.
+  - Mask Test: In this Test, we Tested whether the parser can properly remove the swearword in the given sentence.
+  - Long Sentence Test: Given a long sentence, whether the parser could remove the swear word precisely.
+
+  Test Coverage:
+
+  Our Heat Speech Remove Test covered 100% classes in HateSpeechParser and 90% methods and 90% lines.
+
+  ![image-20211022133435491](C:\Users\xiang\AppData\Roaming\Typora\typora-user-images\image-20211022133435491.png)
+
+- Test 3. Search Parser Test
+
+  Our Search Parser' job is parse the request and processing the posts from Firebase; Therefore, we can only test the functionality of the evaluate method of Exp nodes. 
+
+  There are 3 sub-tests.
+
+  - AndExp Test: Test whether AndExp can give the intersection of two lists.
+  - OrExp Test: Test whether OrExp can give the union of two lists.
+  - NonExp Test:  Test AndExp or OrExp which contains NonExp, whether it can give correct non empty list.
+
+  Test Coverage:
+
+  The Search Parser Test covered 100% Exp classes and 100% methods and 84% lines.
+
+  ![image-20211022135112540](C:\Users\xiang\AppData\Roaming\Typora\typora-user-images\image-20211022135112540.png)
+
+  
 
 *[What features have you tested? What is your testing coverage?]*
 
