@@ -20,10 +20,4 @@ public class Token {
 
 
     public enum Type {TEXT, FRI_USERNAME, MESSTIME_TO_CURR, MY_USERNAME, MY_EMAILADDRESS}
-
-    public static class IllegalTokenException extends IllegalArgumentException {
-        public IllegalTokenException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
 }

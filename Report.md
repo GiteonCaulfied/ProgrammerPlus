@@ -18,13 +18,13 @@ The following is a report template to help your team successfully provide all th
 
 1. [Team Members and Roles](#team-members-and-roles)
 2. [Conflict Resolution Protocol](#conflict-resolution-protocol)
-2. [Application Description](#application-description)
-3. [Application UML](#application-uml)
-3. [Application Design and Decisions](#application-design-and-decisions)
-4. [Summary of Known Errors and Bugs](#summary-of-known-errors-and-bugs)
-5. [Testing Summary](#testing-summary)
-6. [Implemented Features](#implemented-features)
-7. [Team Meetings](#team-meetings)
+3. [Application Description](#application-description)
+4. [Application UML](#application-uml)
+5. [Application Design and Decisions](#application-design-and-decisions)
+6. [Summary of Known Errors and Bugs](#summary-of-known-errors-and-bugs)
+7. [Testing Summary](#testing-summary)
+8. [Implemented Features](#implemented-features)
+9. [Team Meetings](#team-meetings)
 
 ## Team Members and Roles
 
@@ -97,7 +97,7 @@ Examples of how we solved conflicts
 
 ## Application UML
 
-![ClassDiagramExample](./images/ClassDiagramExample.png)
+![ClassDiagram](./assets/UMLdiagram.jpg)
 *[Replace the above with a class diagram. You can look at how we have linked an image here as an example of how you can do it too.]*
 
 ## Application Design and Decisions
@@ -241,11 +241,11 @@ For example, in our search engine we can do the following query:
 
  This query will return all Qinyu Zhao's posts with tag containing BotTalk or with tag containing ANU
 
-![App snapshot1](./assets/image-20211021211723190.png)
+![App snapshot1](assets/search_qinyu_zhao.png)
 
 Moreover,our search engine also support partially valid and invalid search queries, when encounters an invalid section, it will toast a message indicating which section is invalid. After that, the search engine will search the neighbor section, and if the current section is a intersection query it will be casted to union query. For example, if we our query is "TTTT=aaa&Author=Qinyu Zhao" , the result will be all the posts that written by QInyu Zhao, even though there is a & in the syntax.
 
-![App snapshot2](./assets/image-20211021215235048.png)
+![App snapshot2](assets/search_partially_valid.png)
 
 The Grammar Rule
 
@@ -320,13 +320,13 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
     - Title=A|Tag=B&Author=C&Id=123
 
-      ![derivation chart](./assets/image-20211022010726837.png)
+      ![derivation chart](assets/derivation_chart.png)
 
   - Derivation for expression executing 
 
     - Title=A|Tag=B&Author=C&Id=123
 
-    ![logic flow chart](./assets/image-20211022011019037.png)
+    ![logic flow chart](assets/logic_flow_chart.png)
 
 ~~*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*~~
 
@@ -400,7 +400,7 @@ The number of data that we generated is much more than the project needs.
 
 Our Test test all utility classes that are not interacted with UI(activities) and Firebase. We didn't include Firebase tests is because when we interact with Firebase it will create another thread to communicate with the Online Server, and JUnit is not capable of doing concurrency programming test. When we test the classes which used Firebase JUnit will throw an exception.
 
-- Test 1. AVL-Tree Test
+- JUNIT Test 1. AVL-Tree Test
 
   In this test we have 3 sub-tests
 
@@ -413,9 +413,9 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Our AVL-Tree Test covered 100% classes in Data Structure and 84% methods and 70% lines.
 
-  ![image-20211022132452422](./assets/image-20211022132452422.png)
+  ![avl_tree_test](assets/avl_tree_test.png)
 
-- Test 2. Heat Speech Remove Test
+- JUNIT Test 2. Hate Speech Remove Test
 
   This test has 3 sub-tests
 
@@ -425,11 +425,11 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Test Coverage:
 
-  Our Heat Speech Remove Test covered 100% classes in HateSpeechParser and 90% methods and 90% lines.
+  Our Hate Speech Remove Test covered 100% classes in HateSpeechParser and 90% methods and 90% lines.
 
-  ![image-20211022133435491](./assets/image-20211022133435491.png)
+  ![hate_speech_test](assets/hate_speech.png)
 
-- Test 3. Search Parser Test
+- JUNIT Test 3. Search Parser Test
 
   Our Search Parser' job is parse the request and processing the posts from Firebase; Therefore, we can only test the functionality of the evaluate method of Exp nodes.
 
@@ -443,8 +443,36 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   The Search Parser Test covered 100% Exp classes and 100% methods and 84% lines.
 
-  ![image-20211022135112540](./assets/image-20211022135112540.png)
+  ![search_parser_test](assets/search_parser_test.png)
 
+- JUNIT Test 4. Template Message Test
+
+  Test whether the template message can be correctly converted to a actual message.
+  
+  Test Coverage:
+
+  The TempMessageTest Test covered 100% of the three classes.
+
+  ![temp_mess_test](assets/temp_mess_test.png)
+
+
+- UI Test 1. No session activity test
+
+  Test whether the UI is displayed correctly when there is no session.
+
+  ![no_session](assets/no_session_act_test.png)
+
+- UI Test 2. Register test
+
+  Test whether the UI is displayed correctly when a guest is registering.
+
+  ![register](assets/register_act_test.png)
+
+- UI Test 3. Session test
+
+  Test whether the UI is displayed correctly when there is a session.
+
+  ![register](assets/register_act_test.png)
 
 
 *[What features have you tested? What is your testing coverage?]*

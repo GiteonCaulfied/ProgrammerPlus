@@ -46,10 +46,4 @@ public class Parser {
         }
         return res.toString();
     }
-
-    public static class IllegalProductionException extends IllegalArgumentException {
-        public IllegalProductionException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
 }

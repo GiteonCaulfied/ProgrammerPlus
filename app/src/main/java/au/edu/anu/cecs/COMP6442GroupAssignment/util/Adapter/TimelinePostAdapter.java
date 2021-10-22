@@ -28,6 +28,7 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.DAO.UserPostDAO;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 
 public class TimelinePostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

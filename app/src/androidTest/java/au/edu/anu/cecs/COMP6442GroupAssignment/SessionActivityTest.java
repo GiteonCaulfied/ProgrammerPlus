@@ -63,19 +63,25 @@ public class SessionActivityTest {
     }
 
     @Test
-    public void testNavBetweenFragments() {
+    public void testNavToFriends() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(1));
         onView(withId(R.id.layout_friend)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void testNavToChats() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(2));
-        onView(withId(R.id.layout_chat)).check(matches(isDisplayed()));
+        onView(withId(R.id.chatRecycleView)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void testNavToProfiles() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(3));
         onView(withId(R.id.layout_profile)).check(matches(isDisplayed()));
     }
 
     @NonNull
-    private static ViewAction selectTabAtPosition(final int position) {
+    private static ViewAction selectTabAtPosition(int position) {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {
