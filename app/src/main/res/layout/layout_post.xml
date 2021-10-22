@@ -21,7 +21,7 @@
         android:id="@+id/searchText"
         android:layout_width="407dp"
         android:layout_height="49dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:ems="10"
         android:hint="@string/author_someone"
         android:inputType="textPersonName"
@@ -60,10 +60,10 @@
         android:layout_width="341dp"
         android:layout_height="298dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_grammar">
+        app:layout_constraintTop_toBottomOf="@+id/searchText">
 
     </ListView>
 
@@ -138,12 +138,12 @@
         android:id="@+id/search_grammar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
         android:text="@string/search_grammar"
         android:textColor="@color/black"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+        app:layout_constraintTop_toBottomOf="@+id/radio_post_mode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
