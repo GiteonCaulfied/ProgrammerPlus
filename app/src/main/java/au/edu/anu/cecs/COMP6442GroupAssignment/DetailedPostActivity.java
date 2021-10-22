@@ -36,6 +36,7 @@ import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Parser;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Parser.HateSpeechParser.Tokenizer;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Post;
+import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
 public class DetailedPostActivity extends AppCompatActivity {
     /**
@@ -105,28 +106,34 @@ public class DetailedPostActivity extends AppCompatActivity {
                         }
 
                         //Display Portrait of the Author
-                        RequestOptions optionsPortrait = new RequestOptions()
-                                .override(800, 600)
-                                .centerCrop()
-                                .placeholder(R.drawable.face_id_1)
-                                .error(R.drawable.face_id_1)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false);
-                        sto_ref.child("portrait/" + p.getAuthorID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                        UserManager userManager = UserManager.getInstance();
+                        if (userManager.getPorFromID(p.getAuthorID())) {
+                            RequestOptions optionsPortrait = new RequestOptions()
+                                    .override(800, 600)
+                                    .centerCrop()
+                                    .placeholder(R.drawable.face_id_1)
+                                    .error(R.drawable.face_id_1)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(false);
+                            sto_ref.child("portrait/" + p.getAuthorID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                                Glide.with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .apply(optionsPortrait)
-                                        .into(portrait);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                            }
-                        });
+                                    Glide.with(getApplicationContext())
+                                            .load(uri.toString())
+                                            .apply(optionsPortrait)
+                                            .into(portrait);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
+                        }
+                        else {
+                            portrait.setImageResource(R.drawable.face_id_1);
+                        }
 
                         //Display Image of the Post (if Any)
                         Random random = new Random();
