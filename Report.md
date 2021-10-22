@@ -337,7 +337,7 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
 *[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
-Our group implement the (ii) and (iv) surprise items.
+Our group implement the (ii) and (iii) surprise items.
 
 1. Surprise feature (ii)
       * Description: logging user activity to improve search results and/or timeline creation (simple personalisation);
@@ -353,7 +353,27 @@ Our group implement the (ii) and (iv) surprise items.
         * If I'm on diet, I just want to see healthy lifestyle. I can choose the like mode. Then posts containing only healthy food and exercises will be recommended. *This is a hypothesis, not sure if our algorithm can actually do it.*
         * In case that our uses will have partial ideas and knowledge, we add the explore mode. In this mode, the users will learn something from the furthest users. That means they will some posts that they may not see in daily life.
 
+2. Surprise feature (iii)
+    * Description: removing/hiding hate speech in posts;
+
+    * Method
+
+        * We use tokenizer and parser to change content of a post. Swear words are hided like "****"
+        * Swear words are stored in an AVL-tree for quick search.
+        * A user can add or delete swear words by himself.
+
+    * How does our app help the society? 
+        * Our application can hide swear words, maintaining a good community atmosphere.
+
 **Other**
+
+The number of data that we generated is much more than the project needs.
+* Data generation
+    * We uses twint on github (https://github.com/twintproject/twint) to get more than 10,000 posts from Twitter.
+    * Then, we generated 500 users on Firebase
+    * Posts were cleaned and added tags into. 10,000 posts were uploaded to Firebase
+    * 10,000 pair of friends were generated
+    * 10,000 stars were randomly distrbuted to those posts
 
 *[What other design decisions have you made which you feel are relevant? Feel free to separate these into their own subheadings.]*
 
