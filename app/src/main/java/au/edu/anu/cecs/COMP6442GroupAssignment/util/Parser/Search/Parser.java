@@ -119,7 +119,10 @@ public class Parser {
 
             tokenizer.next();
         } else {
-            throw new IllegalProductionException("");
+            keyExp = new NonExp();
+            Toast.makeText(MyApplication.context,
+                    "Illegal syntax " + tokenizer.current().getToken(), Toast.LENGTH_SHORT).show();
+            tokenizer.next();
         }
 
         return keyExp;
