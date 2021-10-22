@@ -1,19 +1,5 @@
 # Group Project Report of the Team Only Hard
 
-The following is a report template to help your team successfully provide all the details necessary for your report in a structured and organised manner. Please give a straightforward and concise report that best demonstrates your project. Note that a good report will give a better impression of your project to the reviewers.
-
-*Here are some tips to write a good report:*
-
-* *Try to summarise and list the `bullet points` of your project as much as possible rather than give long, tedious paragraphs that mix up everything together.*
-
-* *Try to create `diagrams` instead of text descriptions, which are more straightforward and explanatory.*
-
-* *Try to make your report `well structured`, which is easier for the reviewers to capture the necessary information.*
-
-*We give instructions enclosed in square brackets [...] and examples for each sections to demonstrate what are expected for your project report.*
-
-*Please remove the instructions or examples in `italic` in your final report.*
-
 ## Table of Contents
 
 1. [Team Members and Roles](#team-members-and-roles)
@@ -36,8 +22,6 @@ The following is a report template to help your team successfully provide all th
 | u7166251 | Yikai Ge | Member |
 
 ## Conflict Resolution Protocol
-
-*[Write a well defined protocol your team can use to handle conflicts. That is, if your group has problems, what is the procedure for reaching consensus or solving a problem? (If you choose to make this an external document, link to it here)]*
 
 We learned a 5-step protocol on American Management Association.
 *https://www.amanet.org/articles/the-five-steps-to-conflict-resolution/*
@@ -66,18 +50,16 @@ Examples of how we solved conflicts
 
 ## Application Description
 
-*Programmer+ is a social communication application specifically targeting programmers. Programmer+ provides a social platform to realize the exclusive social communication between programmers,
-*which can form their own social circle and make the social circle more specialized. Programmer+ has the function of posting to realize the exchange of ideas and daily life between programmers. The private
-*message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
-*to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
+Programmer+ is a social communication application specifically targeting programmers. Programmer+ provides a social platform to realize the exclusive social communication between programmers,
+which can form their own social circle and make the social circle more specialized. Programmer+ has the function of posting to realize the exchange of ideas and daily life between programmers. The private
+message function allows programmers to have more in-depth communication, such as discussing some programming problems or new ideas. The official account of the software will hold some offline activities
+to achieve better communication between users.The long-term goal is to build this application into an exclusive research social platform for the computer area.
 
 ![AppDiagram](./assets/Description.jpg)
 
 **Application Use Cases and or Examples**
 
-*[Provide use cases and examples of people using your application. Who are the target users of your application? How do the users use your application?]*
-
-*Targets Users: Programmers
+Targets Users: Programmers
 
 * Guest:
   * create an account with a portrait image and intro
@@ -98,28 +80,8 @@ Examples of how we solved conflicts
 ## Application UML
 
 ![ClassDiagramExample](./images/ClassDiagramExample.png)
-*[Replace the above with a class diagram. You can look at how we have linked an image here as an example of how you can do it too.]*
 
 ## Application Design and Decisions
-
-*Please give clear and concise descriptions for each subsections of this part. It would be better to list all the concrete items for each subsection and give no more than `5` concise, crucial reasons of your design. Here is an example for the subsection `Data Structures`:*
-
-*I used the following data structures in my project:*
-
-1. *LinkedList*
-* *Objective: It is used for storing xxxx for xxx feature.*
-  
-* *Locations: line xxx in XXX.java, ..., etc.*
-  
-* *Reasons:*
-  
-  * *It is more efficient than Arraylist for insertion with a time complexity O(1)*
-  
-  * *We don't need to access the item by index for this feature*
-  
-2. ...
-
-3. ...
 
 **Data Structures**
 
@@ -162,13 +124,8 @@ Our team use the following data structures in our project.
      * If a user click one of his friend, then the chat interface will pop out. In this case, we need to directly find the friend according to his location in the name list. ArrayList is very useful because it supports O(1) random access, faster than LinkList.
 
 
-*[What data structures did your team utilise? Where and why?]*
-
 **Design Patterns**
 
-*[What design patterns did your team utilise? Where and why?]*
-
-I used the following Design Patterns in my project:
 
 1. State
 
@@ -271,10 +228,6 @@ Example
 
 A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
-~~*[How do you design the grammar? What are the advantages of your designs?]*~~
-
-~~*If there are several grammars, list them all under this section and what they relate to.*>~~
-
 **Tokenizer and Parsers**
 
 - Tokenizer and Parsers used in search engine
@@ -328,11 +281,8 @@ A correct syntax will looks like `((Title=A|Tag=B)&Author=C)|Id=a123`
 
     ![logic flow chart](./assets/image-20211022011019037.png)
 
-~~*[Where do you use tokenisers and parsers? How are they built? What are the advantages of the designs?]*~~
 
 **Surprise Item**
-
-*[If you implement the surprise item, explain how your solution addresses the surprise task. What decisions do your team make in addressing the problem?]*
 
 Our group implement the (ii) and (iii) surprise items.
 
@@ -372,13 +322,9 @@ The number of data that we generated is much more than the project needs.
     * 10,000 pair of friends were generated
     * 10,000 stars were randomly distrbuted to those posts
 
-*[What other design decisions have you made which you feel are relevant? Feel free to separate these into their own subheadings.]*
+
 
 ## Summary of Known Errors and Bugs
-
-*[Where are the known errors and bugs? What consequences might they lead to?]*
-
-*Here is an example:*
 
 1. *Bug 1:*
 
@@ -394,7 +340,6 @@ The number of data that we generated is much more than the project needs.
   Also, in search mode it would cause false contact give star when they are sliding in search mode and it seems absurd to give stars in the case of read-only titles.
 
 
-*List all the known errors and bugs here. If we find bugs/errors that your team do not know of, it shows that your testing is not through.*
 
 ## Testing Summary
 
@@ -446,22 +391,8 @@ Our Test test all utility classes that are not interacted with UI(activities) an
   ![image-20211022135112540](./assets/image-20211022135112540.png)
 
 
-
-*[What features have you tested? What is your testing coverage?]*
-
-*Here is an example:*
-
-*Number of test cases: ...*
-
-*Code coverage: ...*
-
-*Types of tests created: ...*
-
-*Please provide some screenshots of your testing summary, showing the achieved testing coverage. Feel free to provide further details on your tests.*
-
 ## Implemented Features
 
-*[What features have you implemented?]*
 
 ### Easy features:
 
@@ -503,7 +434,6 @@ deletion of nodes must serve a purpose within your application (e.g. deleting po
 
 6. Using ML models for efficient user matching (hard)
 
-*List all features you have completed in their separate categories with their difficulty classification. If they are features that are suggested and approved, please state this somewhere as well.*
 
 ## Team Meetings
 
@@ -512,14 +442,6 @@ deletion of nodes must serve a purpose within your application (e.g. deleting po
 - *[Team Meeting 3](Meeting3.md)*
 - *[Team Meeting 4](Meeting4.md)*
 
-*Either write your meeting minutes here or link to documents that contain them. There must be at least 3 team meetings.*
 
-## Reference
 
-- comment: the little blue bird logo
-  url: https://www.58pic.com/zhuangshituan/28606268.html
-  licence: https://www.58pic.com/copyright.html
-- comment: 
-  url: 
-  licence:
 
