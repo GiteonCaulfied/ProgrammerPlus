@@ -22,13 +22,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SessionActivityTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule
@@ -47,12 +51,12 @@ public class SessionActivityTest {
     }
 
     @Test
-    public void testIsActivityInView() {
+    public void test1_IsActivityInView() {
         onView(withId(R.id.session)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testVisibilityOfElements() {
+    public void test2_VisibilityOfElements() {
         int[] ids = new int[]{R.id.viewPager, R.id.tabLayout};
 
         for (int id : ids) {
@@ -63,20 +67,30 @@ public class SessionActivityTest {
     }
 
     @Test
-    public void testNavToFriends() {
+    public void test3_NavToFriends() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(1));
         onView(withId(R.id.layout_friend)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testNavToChats() {
+    public void test4_NavToChats() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(2));
-        onView(withId(R.id.chatRecycleView)).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(100);
+        } catch (Exception ignored) {
+
+        }
+        onView(withId(R.id.layout_chat)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testNavToProfiles() {
+    public void test5_NavToProfiles() {
         onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(3));
+        try {
+            Thread.sleep(100);
+        } catch (Exception ignored) {
+
+        }
         onView(withId(R.id.layout_profile)).check(matches(isDisplayed()));
     }
 

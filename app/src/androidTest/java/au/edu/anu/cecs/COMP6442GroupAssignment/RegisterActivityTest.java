@@ -13,12 +13,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RegisterActivityTest {
     private String stringToBetyped;
 
@@ -33,12 +36,12 @@ public class RegisterActivityTest {
     }
 
     @Test
-    public void testIsActivityInView() {
+    public void test1_IsActivityInView() {
         onView(withId(R.id.register)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testVisibilityOfElements() {
+    public void test2_VisibilityOfElements() {
         int[] ids = new int[]{R.id.password_signup, R.id.confirm_signup, R.id.email_signup, R.id.name_signup,
                 R.id.portrait_signup, R.id.signUp, R.id.intro_signup, R.id.selectImage_signup, R.id.friend_switch};
 
@@ -48,7 +51,7 @@ public class RegisterActivityTest {
     }
 
     @Test
-    public void testContextOfElements() {
+    public void test3_ContextOfElements() {
         onView(withId(R.id.password_signup)).check(matches(withHint(R.string.hintPassword)));
         onView(withId(R.id.confirm_signup)).check(matches(withHint(R.string.confirm_password)));
         onView(withId(R.id.email_signup)).check(matches(withHint(R.string.email)));
@@ -58,10 +61,5 @@ public class RegisterActivityTest {
         onView(withId(R.id.selectImage_signup)).check(matches(withText(R.string.select_image)));
         onView(withId(R.id.signUp)).check(matches(withText(R.string.Sign_up)));
         onView(withId(R.id.friend_switch)).check(matches(withText(R.string.friendSend)));
-    }
-
-    @Test
-    public void testIntent() {
-
     }
 }

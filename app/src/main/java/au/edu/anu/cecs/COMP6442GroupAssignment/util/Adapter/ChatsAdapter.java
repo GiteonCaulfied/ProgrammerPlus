@@ -84,11 +84,13 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
             reference.child("portrait/" + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-
-                    Glide.with(context)
-                            .load(uri.toString())
-                            .apply(options)
-                            .into(holder.imageView);
+                    try {
+                        Glide.with(context)
+                                .load(uri.toString())
+                                .apply(options)
+                                .into(holder.imageView);
+                    } catch (Exception ignore) {
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

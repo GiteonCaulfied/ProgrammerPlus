@@ -447,13 +447,13 @@ Our Test test all utility classes that are not interacted with UI(activities) an
 
   Test whether the UI is displayed correctly when a guest is registering.
 
-  ![register](assets/register_act_test.png)
+  ![register_act](assets/register_act_test.png)
 
 - UI Test 3. Session test
 
   Test whether the UI is displayed correctly when there is a session.
 
-  ![register](assets/register_act_test.png)
+  ![session_act](assets/session_act_test.png)
 
 ## Implemented Features
 

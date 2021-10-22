@@ -68,7 +68,10 @@ public class UserManager {
     }
 
     public boolean getPorFromID(String id) {
-        return id_por_map.get(id);
+        if (id_por_map.containsKey(id))
+            return id_por_map.get(id);
+        else
+            return false;
     }
 
     public boolean emailIsValid(String email) {
