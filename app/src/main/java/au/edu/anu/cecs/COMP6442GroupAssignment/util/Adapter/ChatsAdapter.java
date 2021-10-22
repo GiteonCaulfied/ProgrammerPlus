@@ -41,13 +41,16 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     private final ArrayList<String> uids;
     private final ArrayList<String> friends;
     private final ArrayList<String> latestMess;
+    private final ArrayList<Boolean> porUploaded;
 
     public ChatsAdapter(Context context, ArrayList<String> uids,
-                        ArrayList<String> friends, ArrayList<String> latestMess) {
+                        ArrayList<String> friends, ArrayList<String> latestMess,
+                        ArrayList<Boolean> porUploaded) {
         this.context = context;
         this.uids = uids;
         this.friends = friends;
         this.latestMess = latestMess;
+        this.porUploaded = porUploaded;
         FirebaseStorage instance = FirebaseStorage.getInstance("gs://comp6442groupassignment.appspot.com");
         reference = instance.getReference();
     }
@@ -70,28 +73,32 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         holder.name.setText(friend);
         holder.text.setText(latest);
 
-        //Display Portrait Image
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.face_id_1)
-                .error(R.drawable.face_id_1)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false);
-        reference.child("portrait/" + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        if (porUploaded.get(position)) {
+            //Display Portrait Image
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.face_id_1)
+                    .error(R.drawable.face_id_1)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false);
+            reference.child("portrait/" + key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                Glide.with(context)
-                        .load(uri.toString())
-                        .apply(options)
-                        .into(holder.imageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+                    Glide.with(context)
+                            .load(uri.toString())
+                            .apply(options)
+                            .into(holder.imageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        } else {
+            holder.imageView.setImageResource(R.drawable.face_id_1);
+        }
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

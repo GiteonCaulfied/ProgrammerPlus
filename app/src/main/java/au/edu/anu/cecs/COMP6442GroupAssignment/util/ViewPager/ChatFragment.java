@@ -2,9 +2,6 @@ package au.edu.anu.cecs.COMP6442GroupAssignment.util.ViewPager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,7 +22,6 @@ import java.util.HashMap;
 
 import au.edu.anu.cecs.COMP6442GroupAssignment.R;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.ChatsAdapter;
-import au.edu.anu.cecs.COMP6442GroupAssignment.util.Adapter.FriendsAdapter;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.FirebaseRef;
 import au.edu.anu.cecs.COMP6442GroupAssignment.util.UserManager;
 
@@ -34,8 +30,8 @@ public class ChatFragment extends Fragment {
      * The chat fragment, showing the chats of the current user.
      */
 
-    private FriendsAdapter friendsAdapter;
     private ArrayList<String> friends;
+    private ArrayList<Boolean> porUploaded;
     private ArrayList<String> uids;
     private ArrayList<String> latestMess;
     private FirebaseRef firebaseRef;
@@ -60,8 +56,9 @@ public class ChatFragment extends Fragment {
 
         friends = new ArrayList<>();
         uids = new ArrayList<>();
+        porUploaded = new ArrayList<>();
         latestMess = new ArrayList<>();
-        ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), uids, friends, latestMess);
+        ChatsAdapter chatsAdapter = new ChatsAdapter(getContext(), uids, friends, latestMess, porUploaded);
         recyclerView.setAdapter(chatsAdapter);
 
         // Load the Latest message of a friend
@@ -72,6 +69,7 @@ public class ChatFragment extends Fragment {
                         friends.clear();
                         uids.clear();
                         latestMess.clear();
+                        porUploaded.clear();
                         UserManager userManager = UserManager.getInstance();
                         HashMap<String, Object> chats = (HashMap<String, Object>) snapshot.getValue();
                         // Loop for all chats
@@ -79,6 +77,7 @@ public class ChatFragment extends Fragment {
                         for (String key : chats.keySet()) {
                             friends.add(userManager.getNameFromID(key));
                             uids.add(key);
+                            porUploaded.add(userManager.getPorFromID(key));
 
                             HashMap<String, Object> messages = (HashMap<String, Object>) chats.get(key);
                             long bt = -1;
