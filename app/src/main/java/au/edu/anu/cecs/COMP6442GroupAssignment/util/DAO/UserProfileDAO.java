@@ -151,6 +151,11 @@ public class UserProfileDAO {
                         }
                     }
                 });
+
+        Map<String, Object> c = new HashMap<>();
+        c.put("id", key);
+        db.collection("user-data").document(key)
+                .set(c);
     }
 
     /**
