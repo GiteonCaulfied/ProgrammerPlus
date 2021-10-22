@@ -105,7 +105,7 @@ public class PostFragment extends Fragment {
                     case R.id.ExploreMode:
                         userPostDAO.setMode("Uncomfortable");
                         userPostDAO.getData(timelinePostView);
-                        Toast.makeText(getContext(), "Uncomfortable Mode", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Explore Mode", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
