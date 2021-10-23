@@ -1,24 +1,30 @@
 package au.edu.anu.cecs.COMP6442GroupAssignment.util.DataStructure;
 
+/**
+ * Dear instructors, the previous version AVLTree was wrongly replaced by a version on the Web for IO testing purposes,
+ * Because the parameter and the public function names are not different, so it didn't raise my notice in time.
+ * For the purpose of honesty, I think it is necessary for me to replace the previous version and give explanation.
+ */
 
-public class AVLTree<T extends Comparable<T>> {
+import java.util.ListResourceBundle;
+
+/**
+ * @Author
+ */
+public class AVLTree <T extends Comparable<T>>{
     private AVLTreeNode<T> root;
 
     public class AVLTreeNode<T extends Comparable<T>> {
         T key;
         int height;
         AVLTreeNode<T> leftNode;
-
         AVLTreeNode<T> rightNode;
 
-
-        public AVLTreeNode(T key, AVLTreeNode<T> left, AVLTreeNode<T> right) {
+        public AVLTreeNode(T key, AVLTreeNode<T> leftNode, AVLTreeNode<T> rightNode) {
             this.key = key;
-            this.leftNode = left;
-            this.rightNode = right;
-            this.height = 0;
+            this.leftNode = leftNode;
+            this.rightNode = rightNode;
         }
-
         public T getKey() {
             return key;
         }
@@ -50,172 +56,202 @@ public class AVLTree<T extends Comparable<T>> {
         public void setRightNode(AVLTreeNode<T> rightNode) {
             this.rightNode = rightNode;
         }
+
+        public AVLTreeNode searchRecur(T key) {
+            if (this == null) {
+                return null;
+            }
+            if (key.compareTo(this.key) < 0) {
+                if (this.leftNode==null){
+                    return null;
+                }
+                return this.leftNode.searchRecur(key);
+            } else if (key.compareTo(this.key) > 0) {
+                if (this.rightNode==null){
+                    return null;
+                }
+                return this.rightNode.searchRecur(key);
+            } else {
+                return this;
+            }
+        }
+
+
+        public AVLTreeNode findMaxRecur() {
+            if (this.rightNode == null) {
+                return this;
+            } else {
+                return this.rightNode.findMaxRecur();
+            }
+        }
+
+
+        public int getHeightDa() {
+
+            int leftNodeHeight = leftNode == null ? 1 : 1 + leftNode.getHeightDa();
+            int rightNodeHeight = rightNode == null ? 1 : 1 + rightNode.getHeightDa();
+
+            this.height =  Math.max(leftNodeHeight, rightNodeHeight);
+            return this.height;
+        }
+
+        public int getBalance(){
+            int leftNodeHeight = leftNode == null ? 1 : 1 + leftNode.getHeightDa();
+            int rightNodeHeight = rightNode == null ? 1 : 1 + rightNode.getHeightDa();
+            return (leftNodeHeight - rightNodeHeight);
+        }
+
+        public AVLTreeNode insert(AVLTreeNode node) {
+            AVLTreeNode output = null;
+
+
+            if (node.key.compareTo(this.key) < 0) {
+                if (this.leftNode==null){
+                    this.leftNode=node;
+                    this.height=this.getHeightDa();
+                    return this;
+                }
+                this.leftNode = this.leftNode.insert(node);
+                if (Math.abs(this.getBalance()) >= 2) {
+                    if (node.key.compareTo(this.leftNode.key) < 0) {
+                        output = rightRotation(this);
+                    } else {
+                        output = lrRotation(this);
+                        output.getHeightDa();
+                    }
+
+                }else {
+                    output =this;
+                }
+            } else if (node.key.compareTo(this.key) > 0) {
+                if (this.rightNode==null){
+                    this.rightNode=node;
+                    this.height=getHeightDa();
+                    return this;
+                }
+                this.rightNode = this.rightNode.insert(node);
+                if (Math.abs(this.getBalance()) >= 2) {
+                    if (node.key.compareTo(this.rightNode.key) > 0) {
+                        output = leftRotation(this);
+                    } else {
+                        output = rlRotation(this);
+                        output.getHeightDa();
+                    }
+                }else {
+                    output = this;
+                }
+            }
+
+            output.height=output.getHeightDa();
+            return output;
+        }
+
+        public AVLTreeNode<T> delete(AVLTreeNode<T> target) {
+            AVLTreeNode output = null;
+            if (target.key.compareTo(key)<0){
+                this.leftNode=this.leftNode.delete(target);
+                if (Math.abs(this.getBalance())>=2){
+//                    AVLTreeNode out = this.rightNode;
+                    if (this.getBalance()>0){
+                        output=rlRotation(this);
+                    }else {
+                        output = leftRotation(this);
+                    }
+                }
+            }else if (target.key.compareTo(key)>0){
+                this.rightNode=this.rightNode.delete(target);
+                if (Math.abs(this.getBalance())>=2){
+                    if (getBalance()<0){
+                        output = lrRotation(this);
+                    }else {
+                        output=rightRotation(this);
+                    }
+                }
+            }else {
+                if (this.leftNode !=null && this.rightNode != null){
+                    if (getBalance()>0){
+                        AVLTreeNode maxl = leftNode.findMaxRecur();
+                        this.key = (T) maxl.key;
+                        this.leftNode = this.leftNode.delete(maxl);
+                        output = this;
+                    }else {
+                        AVLTreeNode maxr = rightNode.findMaxRecur();
+                        this.key = (T) maxr.key;
+                        this.rightNode = this.rightNode.delete(maxr);
+                        output = this;
+                    }
+                }else {
+                    output = (this.leftNode != null) ? this.leftNode : this.rightNode;
+                }
+            }
+            if (output!=null){
+                output.getHeightDa();
+            }
+            return output;
+        }
     }
 
 
-    public AVLTree() {
-        root = null;
-    }
 
-    /**
-     * this function will return the height of the given node
-     * @param tree
-     * @return height
-     */
-    private int getHeight(AVLTreeNode<T> tree) {
-        if (tree != null)
-            return tree.height;
-
-        return 0;
-    }
-
-    /**
-     * return the height of the whole tree
-     * @return
-     */
-    public int height() {
-        return getHeight(root);
-    }
-
-
-    private int max(int a, int b) {
-        return a > b ? a : b;
-    }
-
-
-    /**
-     * search the target value form given node
-     * @param x given node
-     * @param key target value
-     * @return return the node contains the target value
-     */
-    private AVLTreeNode<T> search(AVLTreeNode<T> x, T key) {
-        if (x == null)
-            return x;
-
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0)
-            return search(x.leftNode, key);
-        else if (cmp > 0)
-            return search(x.rightNode, key);
-        else
-            return x;
-    }
-
-    /**
-     * search the target form the root
-     * @param key
-     * @return
-     */
-    public AVLTreeNode<T> search(T key) {
-        return search(root, key);
-    }
-
-
-
-
-    /**
-     * find the max value
-     * @param tree
-     * @return
-     */
-    private AVLTreeNode<T> maximum(AVLTreeNode<T> tree) {
-        if (tree == null)
-            return null;
-
-        while (tree.rightNode != null)
-            tree = tree.rightNode;
-        return tree;
-    }
-
-
-
-
-    private AVLTreeNode<T> leftLeftRotation(AVLTreeNode<T> k2) {
-        AVLTreeNode<T> k1;
-
-        k1 = k2.leftNode;
-        k2.leftNode = k1.rightNode;
-        k1.rightNode = k2;
-
-        k2.height = max(getHeight(k2.leftNode), getHeight(k2.rightNode)) + 1;
-        k1.height = max(getHeight(k1.leftNode), k2.height) + 1;
-
-        return k1;
-    }
-
-
-    private AVLTreeNode<T> rightRightRotation(AVLTreeNode<T> k1) {
-        AVLTreeNode<T> k2;
-
-        k2 = k1.rightNode;
-        k1.rightNode = k2.leftNode;
-        k2.leftNode = k1;
-
-        k1.height = max(getHeight(k1.leftNode), getHeight(k1.rightNode)) + 1;
-        k2.height = max(getHeight(k2.rightNode), k1.height) + 1;
-
-        return k2;
-    }
-
-
-    private AVLTreeNode<T> leftRightRotation(AVLTreeNode<T> k3) {
-        k3.leftNode = rightRightRotation(k3.leftNode);
-
-        return leftLeftRotation(k3);
-    }
-
-    private AVLTreeNode<T> rightLeftRotation(AVLTreeNode<T> k1) {
-        k1.rightNode = leftLeftRotation(k1.rightNode);
-
-        return rightRightRotation(k1);
-    }
+    public AVLTree(){};
 
     public AVLTreeNode<T> createANode (T key){
         return new AVLTreeNode<T>(key, null, null);
     }
 
-    /**
-     * insert a new key to given tree
-     * @param node
-     * @param key
-     * @return
-     */
-    private AVLTreeNode<T> insert(AVLTreeNode<T> node, T key) {
-        if (node == null) {
-            node = new AVLTreeNode<T>(key, null, null);
-            if (node == null) {
-                return null;
-            }
-        } else {
+
+    public AVLTreeNode search( T key){
+        if (key==null) return null;
+        return root.searchRecur(key);
+    }
+
+    public AVLTreeNode findMax(T key){
+        return root.findMaxRecur();
+    }
 
 
-            if (key.compareTo(node.key) < 0) {
-                node.leftNode = insert(node.leftNode, key);
+    public AVLTreeNode rightRotation( AVLTreeNode node ){
+        AVLTreeNode newRoot = node.leftNode;
+        AVLTreeNode newLeft = node.leftNode.rightNode;
+        AVLTreeNode newRight = node;
 
-                if (getHeight(node.leftNode) - getHeight(node.rightNode) == 2) {
-                    if (key.compareTo(node.leftNode.key) < 0)
-                        node = leftLeftRotation(node);
-                    else
-                        node = leftRightRotation(node);
-                }
-            } else if (key.compareTo(node.key)> 0) {
-                node.rightNode = insert(node.rightNode, key);
 
-                if (getHeight(node.rightNode) - getHeight(node.leftNode) == 2) {
-                    if (key.compareTo(node.rightNode.key) > 0)
-                        node = rightRightRotation(node);
-                    else
-                        node = rightLeftRotation(node);
-                }
-            } else {    // cmp==0
+        newRoot.rightNode=newRight;
+        newRight.leftNode=newLeft;
+//        newRoot.height = newRoot.getHeight();
+//        newRight.height = newRight.getHeight();
 
-            }
-        }
+        return newRoot;
 
-        node.height = max(getHeight(node.leftNode), getHeight(node.rightNode)) + 1;
+    }
 
-        return node;
+    public AVLTreeNode leftRotation( AVLTreeNode node ){
+        AVLTreeNode newRoot = node.rightNode;
+        AVLTreeNode newRight = node.rightNode.leftNode;
+        AVLTreeNode newLeft = node;
+
+
+        newRoot.leftNode=newLeft;
+        newLeft.rightNode=newRight;
+//        newRoot.height = newRoot.getHeight();
+//        newLeft.height = newLeft.getHeight();
+        return newRoot;
+
+    }
+
+
+    public AVLTreeNode lrRotation (AVLTreeNode node){
+        node.leftNode = leftRotation(node.leftNode);
+        AVLTreeNode newNode = rightRotation(node);
+        return newNode;
+
+    }
+
+    public AVLTreeNode rlRotation (AVLTreeNode node){
+        node.rightNode = rightRotation(node.rightNode);
+        AVLTreeNode newNode = leftRotation(node);
+        return newNode;
+
     }
 
     public AVLTreeNode<T> getroot() {
@@ -226,70 +262,22 @@ public class AVLTree<T extends Comparable<T>> {
         this.root = root;
     }
 
-    public void insert(T key) {
-        root = insert(root, key);
-    }
-
-    /**
-     * remove a key form the AVL tree
-     * @param tree
-     * @param target
-     * @return
-     */
-    private AVLTreeNode<T> delete(AVLTreeNode<T> tree, AVLTreeNode<T> target) {
-
-        if (tree == null || target == null)
-            return null;
-
-
-        if (target.key.compareTo(tree.key) < 0) {
-            tree.leftNode = delete(tree.leftNode, target);
-
-            if (getHeight(tree.rightNode) - getHeight(tree.leftNode) == 2) {
-                AVLTreeNode<T> r = tree.rightNode;
-                if (getHeight(r.leftNode) > getHeight(r.rightNode))
-                    tree = rightLeftRotation(tree);
-                else
-                    tree = rightRightRotation(tree);
-            }
-        } else if (target.key.compareTo(tree.key) > 0) {
-            tree.rightNode = delete(tree.rightNode, target);
-
-            if (getHeight(tree.leftNode) - getHeight(tree.rightNode) == 2) {
-                AVLTreeNode<T> l = tree.leftNode;
-                if (getHeight(l.rightNode) > getHeight(l.leftNode))
-                    tree = leftRightRotation(tree);
-                else
-                    tree = leftLeftRotation(tree);
-            }
-        } else {
-
-            if ((tree.leftNode != null) && (tree.rightNode != null)) {
-                if (getHeight(tree.leftNode) > getHeight(tree.rightNode)) {
-
-                    AVLTreeNode<T> max = maximum(tree.leftNode);
-                    tree.key = max.key;
-                    tree.leftNode = delete(tree.leftNode, max);
-                } else {
-
-                    AVLTreeNode<T> min = maximum(tree.rightNode);
-                    tree.key = min.key;
-                    tree.rightNode = delete(tree.rightNode, min);
-                }
-            } else {
-                AVLTreeNode<T> tmp = tree;
-                tree = (tree.leftNode != null) ? tree.leftNode : tree.rightNode;
-                tmp = null;
-            }
+    public void insert( T key){
+        if (root==null){
+            root = new AVLTreeNode<>(key,null,null);
+        }else {
+            AVLTreeNode node = new AVLTreeNode<>(key,null,null);
+            root=root.insert(node);
         }
-
-        return tree;
     }
 
     public boolean delete(T key) {
         AVLTreeNode<T> target;
-        if ((target = search(root, key)) != null){
-            root = delete(root, target);
+        if (root==null){
+            return false;
+        }
+        if ((target = search(key)) != null){
+            root = root.delete(target);
             return true;
         }else {
             return false;
@@ -299,3 +287,5 @@ public class AVLTree<T extends Comparable<T>> {
 
 
 }
+
+
