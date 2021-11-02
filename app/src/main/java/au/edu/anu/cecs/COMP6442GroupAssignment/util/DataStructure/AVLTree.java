@@ -14,7 +14,7 @@ import java.util.ListResourceBundle;
 public class AVLTree <T extends Comparable<T>>{
     private AVLTreeNode<T> root;
 
-    public class AVLTreeNode<T extends Comparable<T>> {
+    public static class AVLTreeNode<T extends Comparable<T>> {
         T key;
         int height;
         AVLTreeNode<T> leftNode;
@@ -210,7 +210,7 @@ public class AVLTree <T extends Comparable<T>>{
     }
 
 
-    public AVLTreeNode rightRotation( AVLTreeNode node ){
+    public static AVLTreeNode rightRotation(AVLTreeNode node){
         AVLTreeNode newRoot = node.leftNode;
         AVLTreeNode newLeft = node.leftNode.rightNode;
         AVLTreeNode newRight = node;
@@ -225,7 +225,7 @@ public class AVLTree <T extends Comparable<T>>{
 
     }
 
-    public AVLTreeNode leftRotation( AVLTreeNode node ){
+    public static AVLTreeNode leftRotation(AVLTreeNode node){
         AVLTreeNode newRoot = node.rightNode;
         AVLTreeNode newRight = node.rightNode.leftNode;
         AVLTreeNode newLeft = node;
@@ -240,14 +240,14 @@ public class AVLTree <T extends Comparable<T>>{
     }
 
 
-    public AVLTreeNode lrRotation (AVLTreeNode node){
+    public static AVLTreeNode lrRotation (AVLTreeNode node){
         node.leftNode = leftRotation(node.leftNode);
         AVLTreeNode newNode = rightRotation(node);
         return newNode;
 
     }
 
-    public AVLTreeNode rlRotation (AVLTreeNode node){
+    public static AVLTreeNode rlRotation(AVLTreeNode node){
         node.rightNode = rightRotation(node.rightNode);
         AVLTreeNode newNode = leftRotation(node);
         return newNode;
@@ -266,6 +266,7 @@ public class AVLTree <T extends Comparable<T>>{
         if (root==null){
             root = new AVLTreeNode<>(key,null,null);
         }else {
+
             AVLTreeNode node = new AVLTreeNode<>(key,null,null);
             root=root.insert(node);
         }

@@ -39,7 +39,7 @@ public class AVLTreeTest {
         test.insert("5");
         test.insert("6");
         test.insert("7");
-        test.insert("2");
+        test.insert("20");
         assertEquals(test.search("2").getKey(), "2");
         assertEquals(test.search("4").getKey(), "4");
 
